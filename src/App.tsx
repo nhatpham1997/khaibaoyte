@@ -1,10 +1,9 @@
+import LayoutAdmin from './components/LayoutAdmin'
+
 function App() {
   return (
     <div>
-      helle
-      <div>
-        <ul></ul>
-      </div>
+      <LayoutAdmin>Hello</LayoutAdmin>
     </div>
   )
 }
