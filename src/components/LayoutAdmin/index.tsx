@@ -13,6 +13,8 @@ import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive'
 import styled from '@emotion/styled'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import { Link, Route, Routes, Outlet } from 'react-router-dom'
+import AccountAdmin from '../../containers/AdminPage/AccountAdmin'
 
 function Item(props: BoxProps) {
   const { sx, ...other } = props
@@ -55,11 +57,11 @@ const StyledToggleButton = styled(ToggleButton)(() => ({
   '&:hover': { backgroundColor: 'gray' },
 }))
 
-type LayoutProps = {
-  children: ReactNode
-}
+// type LayoutProps = {
+//   children: ReactNode
+// }
 
-function LayoutAdmin({ children }: LayoutProps) {
+function LayoutAdmin() {
   const [alignment, setAlignment] = useState('1')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
@@ -104,18 +106,36 @@ function LayoutAdmin({ children }: LayoutProps) {
           }}
           color="primary"
         >
-          <StyledToggleButton value="1">
-            <SupervisorAccountIcon sx={{ pr: 2 }} />
-            <Typography>Quản lý tài khoản</Typography>
-          </StyledToggleButton>
-          <StyledToggleButton value="2">
-            <AirplanemodeActiveIcon sx={{ pr: 2 }} />
-            <Typography>Quản lý di chuyển</Typography>
-          </StyledToggleButton>
-          <StyledToggleButton value="3">
-            <ListAltIcon sx={{ pr: 2 }} />
-            <Typography>Danh sách vùng dịch</Typography>
-          </StyledToggleButton>
+          <Link to="/admin">
+            <StyledToggleButton value="1">
+              <SupervisorAccountIcon sx={{ pr: 2 }} />
+              <Typography>Trang chủ</Typography>
+            </StyledToggleButton>
+          </Link>
+          <Link to="/admin/account-admin">
+            <StyledToggleButton value="2">
+              <SupervisorAccountIcon sx={{ pr: 2 }} />
+              <Typography>Quản lý Admin</Typography>
+            </StyledToggleButton>
+          </Link>
+          <Link to="/admin/account-user">
+            <StyledToggleButton value="3">
+              <SupervisorAccountIcon sx={{ pr: 2 }} />
+              <Typography>Quản lý User</Typography>
+            </StyledToggleButton>
+          </Link>
+          <Link to="/admin/account-user">
+            <StyledToggleButton value="4">
+              <AirplanemodeActiveIcon sx={{ pr: 2 }} />
+              <Typography>Quản lý di chuyển</Typography>
+            </StyledToggleButton>
+          </Link>
+          <Link to="/admin/account-user">
+            <StyledToggleButton value="5">
+              <ListAltIcon sx={{ pr: 2 }} />
+              <Typography>Danh sách vùng dịch</Typography>
+            </StyledToggleButton>
+          </Link>
         </StyledToggleButtonGroup>
       </Box>
       <Box gridColumn="span 4">
@@ -140,7 +160,13 @@ function LayoutAdmin({ children }: LayoutProps) {
             </Box>
           </Box>
         </Box>
-        <Box>{children}</Box>
+        <Box>
+          <Outlet />
+          {/* <Routes>
+            <Route path='/' element={<Link to='/admin/account-admin'>hello</Link>} />
+            <Route path='/account-admin' element={<AccountAdmin />} />
+          </Routes> */}
+        </Box>
       </Box>
     </Box>
   )
