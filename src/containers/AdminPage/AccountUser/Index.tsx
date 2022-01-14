@@ -32,6 +32,7 @@ const MyComponent = styled('button')({
 function App() {
   return (
     <TableContainer component={Paper}>
+      <h2>User</h2>
       <Table sx={{ minWidth: 650 }} color="primary" size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
