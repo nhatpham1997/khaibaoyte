@@ -1,21 +1,20 @@
-import ContextProvider, { context } from 'contexts'
+import GlobalProvider, { GlobalContext } from 'contexts'
 import { useContext } from 'react'
-import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LayoutUser from './components/LayoutUser'
 import AccountAdmin from './containers/AdminPage/AccountAdmin'
-import AccountUser from './containers/AdminPage/AccountUser'
+import AccountUser from 'containers/AdminPage/AccountUser'
 import LayoutAdmin from './components/LayoutAdmin'
 
 function App() {
-  const data = useContext(context)
+  const data = useContext(GlobalContext)
   console.log(data)
 
   return (
     <BrowserRouter>
-      <ContextProvider>
+      <GlobalProvider>
         <Routes>
           <Route path="/" element={<LayoutUser />} />
-
           <Route path="/admin/*" element={<LayoutAdmin />}>
             <Route path="" element={'Dây là trang Admin'} />
             <Route path="account-admin" element={<AccountAdmin />} />
@@ -24,7 +23,7 @@ function App() {
             <Route path="account-user/:id" element={'đây là trang chi tiết'} />
           </Route>
         </Routes>
-      </ContextProvider>
+      </GlobalProvider>
     </BrowserRouter>
   )
 }

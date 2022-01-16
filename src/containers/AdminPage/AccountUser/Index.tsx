@@ -29,7 +29,7 @@ const MyComponent = styled('button')({
   borderRadius: 4,
 })
 
-function App() {
+function AccountUser() {
   return (
     <TableContainer component={Paper}>
       <h2>User</h2>
@@ -81,4 +81,4 @@ function App() {
   )
 }
 
-export default App
+export default AccountUser

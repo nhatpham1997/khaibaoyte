@@ -29,7 +29,7 @@ const MyComponent = styled('button')({
   borderRadius: 4,
 })
 
-function App() {
+function AccountAdmin() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} color="primary" size="small" aria-label="a dense table">
@@ -80,4 +80,4 @@ function App() {
   )
 }
 
-export default App
+export default AccountAdmin
