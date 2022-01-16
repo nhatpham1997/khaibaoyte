@@ -1,84 +1,50 @@
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
-import { styled } from '@mui/system'
+import AccountManagement from '../../../components/accountManagement'
 
-function createData(stt: number, fullname: string, username: string, email: string, sdt: string) {
-  return { stt, fullname, username, email, sdt }
-}
+type createData = {
+  id: number
+  username: string
+  full_name: string
+  year_of_birth: string
+  citizen_identificatio: string //căn cước
+  sex: string
+  nationality: string //quốc tịch
+  address: string
+  phone: string
+  email: string
+  createDate: string
+}[]
 
-const rows = [
-  createData(1, 'Nguyễn Văn Duy', 'NguyenDuy', 'duy124678@gmail.com', '0349170065'),
-  createData(2, 'Nguyễn Văn Duy', 'NguyenDuy', 'duy124678@gmail.com', '0349170065'),
-  createData(3, 'Nguyễn Văn Duy', 'NguyenDuy', 'duy124678@gmail.com', '0349170065'),
-  createData(4, 'Nguyễn Văn Duy', 'NguyenDuy', 'duy124678@gmail.com', '0349170065'),
-  createData(5, 'Nguyễn Văn Duy', 'NguyenDuy', 'duy124678@gmail.com', '0349170065'),
+const rows: createData = [
+  {
+    id: 1,
+    username: 'NguyenDuysssssss',
+    full_name: 'Nguyen Van Duy ssss',
+    year_of_birth: '15/06/1999',
+    citizen_identificatio: '1234567890ss', //căn cước
+    sex: 'Nam',
+    nationality: 'Việt Nam sss', //quốc tịch
+    address: 'Liên Hà - Đan Phượng sss',
+    phone: '0123456789 sss',
+    email: 'duy124678@gmail.comsss',
+    createDate: '01/01/2022',
+  },
+  {
+    id: 2,
+    username: 'NguyenDuy',
+    full_name: 'Nguyen Van Duy',
+    year_of_birth: '15/06/1999',
+    citizen_identificatio: '1234567890', //căn cước
+    sex: 'Nam',
+    nationality: 'Việt Nam', //quốc tịch
+    address: 'Liên Hà - Đan Phượng',
+    phone: '0123456789',
+    email: 'duy124678@gmail.com',
+    createDate: '01/01/2022',
+  },
 ]
 
-const classes = { width: '30px', color: 'red' }
-
-const MyComponent = styled('button')({
-  color: 'red',
-  backgroundColor: 'aliceblue',
-  padding: 8,
-  borderRadius: 4,
-})
-
 function AccountUser() {
-  return (
-    <TableContainer component={Paper}>
-      <h2>User</h2>
-      <Table sx={{ minWidth: 650 }} color="primary" size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell sx={classes}>STT</TableCell>
-            <TableCell align="left">Tài khoản</TableCell>
-            <TableCell sx={{ minWidth: '150px' }} align="left">
-              Tên người dùng
-            </TableCell>
-            <TableCell align="left">Email</TableCell>
-            <TableCell align="left">Số điện thoại</TableCell>
-            <TableCell align="left">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.stt}
-              sx={{
-                '&:nth-of-type(odd)': { backgroundColor: '#ccc' },
-                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-              }}
-            >
-              <TableCell component="th" scope="row">
-                {row.stt}
-              </TableCell>
-              <TableCell onClick={() => alert('hello')} align="left">
-                {row.username}
-              </TableCell>
-              <TableCell align="left">{row.fullname}</TableCell>
-              <TableCell align="left">{row.email}</TableCell>
-              <TableCell align="left">{row.sdt}</TableCell>
-              <TableCell align="left">
-                <Button variant="contained" color="primary" size="small">
-                  Delete
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Button color="error" variant="contained">
-        Submit
-      </Button>
-      <MyComponent>Styled div</MyComponent>
-    </TableContainer>
-  )
+  return <AccountManagement data={rows} name="User" />
 }
 
 export default AccountUser
