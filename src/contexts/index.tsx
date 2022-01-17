@@ -1,28 +1,43 @@
-import React, { createContext, ReactNode, useState } from 'react'
+import { locationApi } from 'apis/covid'
+import { createContext, ReactNode, useState, useEffect } from 'react'
 
 type Props = {
   children: ReactNode
 }
 
+type Location = {
+  name: string
+  cases: number
+  casesToday: number
+  death: number
+  recovered: number
+  treating: number
+}
+
 type InitialStateContextType = {
-  miniSidenav: boolean
-  transparentSidenav: boolean
+  covidLocations: Location[]
 }
 
 const initialStateContextValue: InitialStateContextType = {
-  miniSidenav: false,
-  transparentSidenav: false,
+  covidLocations: [],
 }
 
 export const GlobalContext = createContext<InitialStateContextType>(initialStateContextValue)
 
 export default function GlobalProvider({ children }: Props) {
-  const [miniSidenav, setMiniSidenav] = useState(false)
-  const [transparentSidenav, setTransparentSidenav] = useState(false)
+  const [covidLocations, setCovidLocations] = useState<Location[]>([])
 
-  return (
-    <GlobalContext.Provider value={{ miniSidenav, transparentSidenav }}>
-      {children}
-    </GlobalContext.Provider>
-  )
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await locationApi.getAll()
+        setCovidLocations(response.data.locations)
+      } catch (error) {
+        console.log('Failed to fetch post list: ', error)
+      }
+    }
+    fetchLocations()
+  }, [])
+
+  return <GlobalContext.Provider value={{ covidLocations }}>{children}</GlobalContext.Provider>
 }

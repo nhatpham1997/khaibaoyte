@@ -56,25 +56,12 @@ const LinkNavbar = styled(Link)(() => ({
 
 function Sidebar() {
   const [alignment, setAlignment] = useState('1')
-  const [stickyClass, setStickyClass] = useState('hidden')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment)
     }
   }
-
-  useEffect(() => {
-    function handleMiniSidenav() {
-      if (window !== undefined) {
-        window.innerWidth < 1200 ? setStickyClass('hidden') : setStickyClass('block')
-      }
-    }
-    window.addEventListener('resize', handleMiniSidenav)
-    return () => {
-      window.removeEventListener('resize', handleMiniSidenav)
-    }
-  }, [])
 
   return (
     <Box
@@ -84,10 +71,10 @@ function Sidebar() {
         textAlign: 'center',
         minHeight: '95vh',
         boxSizing: 'content-box',
-        top: { xs: '20px', lg: '0' },
-        left: { xs: '20px', lg: '0' },
+        top: '10px',
+        left: '20px',
         display: { xs: 'none', lg: 'block' },
-        position: { xs: 'fixed', lg: 'unset' },
+        position: 'fixed',
         mt: 1,
         ml: 1,
       }}
@@ -137,14 +124,14 @@ function Sidebar() {
         </StyledToggleButton>
 
         <StyledToggleButton value="4">
-          <LinkNavbar to="/admin/account-user">
+          <LinkNavbar to="/admin/application-for-moving">
             <AirplanemodeActiveIcon sx={{ pr: 2 }} />
             <Typography>Quản lý di chuyển</Typography>
           </LinkNavbar>
         </StyledToggleButton>
 
         <StyledToggleButton value="5">
-          <LinkNavbar to="/admin/account-user">
+          <LinkNavbar to="/admin/epidemic-area">
             <ListAltIcon sx={{ pr: 2 }} />
             <Typography>Danh sách vùng dịch</Typography>
           </LinkNavbar>

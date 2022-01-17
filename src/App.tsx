@@ -7,10 +7,11 @@ import AccountAdmin from './containers/AdminPage/AccountAdmin'
 import AdminDetail from 'containers/AdminPage/AdminDetail'
 import AccountUser from 'containers/AdminPage/AccountUser'
 import UserDetail from 'containers/AdminPage/UserDetail'
+import EpidemicArea from 'containers/AdminPage/EpidemicArea'
+import ApplicationForMoving from 'containers/AdminPage/ApplicationForMoving'
 
 function App() {
   const data = useContext(GlobalContext)
-  console.log(data)
 
   return (
     <BrowserRouter>
@@ -23,6 +24,9 @@ function App() {
             <Route path="account-admin/:id" element={<AdminDetail />} />
             <Route path="account-user" element={<AccountUser />} />
             <Route path="account-user/:id" element={<UserDetail />} />
+            <Route path="account-user/:id" element={'đây là trang chi tiết'} />
+            <Route path="application-for-moving" element={<ApplicationForMoving />} />
+            <Route path="epidemic-area" element={<EpidemicArea />} />
           </Route>
         </Routes>
       </GlobalProvider>
