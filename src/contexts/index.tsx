@@ -1,37 +1,28 @@
-import { createContext, ReactNode, useState } from 'react'
-
-type todosObj = {
-  number: number
-  handleNumber: () => void
-}
-// The Soft UI Dashboard PRO Material main context
-export const context = createContext<todosObj>({
-  number: 0,
-  handleNumber: () => {
-    //nothing
-  },
-})
+import React, { createContext, ReactNode, useState } from 'react'
 
 type Props = {
   children: ReactNode
 }
 
-// Material Dashboard 2 PRO React context provider
-function ContextProvider({ children }: Props) {
-  const [number, setNumber] = useState(0)
-
-  const handleNumber = () => {
-    setNumber(number + 1)
-  }
-
-  const value = {
-    number,
-    handleNumber,
-  }
-
-  return <context.Provider value={value}>{children}</context.Provider>
+type InitialStateContextType = {
+  miniSidenav: boolean
+  transparentSidenav: boolean
 }
 
-export default ContextProvider
+const initialStateContextValue: InitialStateContextType = {
+  miniSidenav: false,
+  transparentSidenav: false,
+}
 
-// Context module functions
+export const GlobalContext = createContext<InitialStateContextType>(initialStateContextValue)
+
+export default function GlobalProvider({ children }: Props) {
+  const [miniSidenav, setMiniSidenav] = useState(false)
+  const [transparentSidenav, setTransparentSidenav] = useState(false)
+
+  return (
+    <GlobalContext.Provider value={{ miniSidenav, transparentSidenav }}>
+      {children}
+    </GlobalContext.Provider>
+  )
+}
