@@ -9,6 +9,7 @@ import AccountUser from 'containers/AdminPage/AccountUser'
 import UserDetail from 'containers/AdminPage/UserDetail'
 import EpidemicArea from 'containers/AdminPage/EpidemicArea'
 import ApplicationForMoving from 'containers/AdminPage/ApplicationForMoving'
+import HomePage from 'containers/AdminPage'
 
 function App() {
   const data = useContext(GlobalContext)
@@ -19,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LayoutUser />} />
           <Route path="/admin/*" element={<LayoutAdmin />}>
-            <Route path="" element={'Dây là trang Admin'} />
+            <Route path="" element={<HomePage />} />
             <Route path="account-admin/*" element={<AccountAdmin />} />
             <Route path="account-admin/:id" element={<AdminDetail />} />
             <Route path="account-user" element={<AccountUser />} />

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import AccountInformation from 'components/accountInformation'
 import Button from '@mui/material/Button'
+import TravelSchedule from 'components/travelSchedule'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -94,13 +95,16 @@ export default function UserDetail() {
             />
           </ListItem>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Button variant="contained" color="primary" size="small">
-            Nơi đã đi
-          </Button>
-          <Button variant="contained" color="primary" size="small" sx={{ margin: '0 20px' }}>
-            yêu cầu đã xác nhận
-          </Button>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: '20px',
+          }}
+        >
+          <TravelSchedule name="Lịch sử di chuyển" />
+          <TravelSchedule name="Yêu cầu đã xác nhận" />
         </Box>
       </Box>
       <Box sx={{ flexGrow: 1, margin: '0 20px' }}>

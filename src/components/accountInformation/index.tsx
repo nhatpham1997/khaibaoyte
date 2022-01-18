@@ -40,7 +40,7 @@ const styleBox = {
 
 const AccountInformation = (props: data) => {
   return (
-    <Item sx={{ display: 'flex', flexDirection: 'column', textAlign: 'start' }}>
+    <Item sx={{ display: 'flex', flexDirection: 'column', textAlign: 'start', boxShadow: 3 }}>
       <Box sx={styleBox}>
         <Typography component="span" sx={styleSpan}>
           Tên tài khoản:

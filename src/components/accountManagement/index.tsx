@@ -50,7 +50,7 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
     <>
       <h3 style={{ marginTop: 0 }}>Danh sách {props.name}</h3>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} color="primary" size="small" aria-label="a dense table">
+        <Table sx={{ minWidth: 650 }} color="primary" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell sx={{ width: '30px' }}>STT</TableCell>
@@ -59,7 +59,7 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
                 Tên người dùng
               </TableCell>
               <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Số điện thoại</TableCell>
+              <TableCell align="left">Điện thoại</TableCell>
               <TableCell align="center">Chi tiết</TableCell>
             </TableRow>
           </TableHead>
@@ -105,22 +105,22 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
                     </Link>
                   )}
                   {props.name === 'User' && (
-                    <Link to={`/admin/account-user/${row.id}`} style={{ textDecoration: 'none' }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        startIcon={<FileOpenIcon />}
-                      >
-                        Xem
-                      </Button>
-                    </Link>
-                  )}
-                  {props.name !== 'Admin' && (
-                    <ConfirmAdmin
-                      title="Bạn có chắc muốn xóa không?"
-                      content={`Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ! Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ!`}
-                    />
+                    <>
+                      <Link to={`/admin/account-user/${row.id}`} style={{ textDecoration: 'none' }}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          startIcon={<FileOpenIcon />}
+                        >
+                          Xem
+                        </Button>
+                      </Link>
+                      <ConfirmAdmin
+                        title="Bạn có chắc muốn xóa không?"
+                        content={`Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ! Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ!`}
+                      />
+                    </>
                   )}
                 </TableCell>
               </TableRow>
