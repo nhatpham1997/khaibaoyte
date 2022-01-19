@@ -10,6 +10,12 @@ import UserDetail from 'containers/AdminPage/UserDetail'
 import EpidemicArea from 'containers/AdminPage/EpidemicArea'
 import ApplicationForMoving from 'containers/AdminPage/ApplicationForMoving'
 import HomePage from 'containers/AdminPage'
+import ChangePassword from 'containers/UserPage/ChangePassword'
+import ListDeclaration from 'containers/UserPage/ListDeclaration'
+import ListMovingRegister from 'containers/UserPage/ListMovingRegister'
+import MovingDeclaration from 'containers/UserPage/MovingDeclaration'
+import MovingRegister from 'containers/UserPage/MovingRegister'
+import PersonalInformation from 'containers/UserPage/PersonalInformation'
 
 function App() {
   const data = useContext(GlobalContext)
@@ -18,7 +24,14 @@ function App() {
     <BrowserRouter>
       <GlobalProvider>
         <Routes>
-          <Route path="/" element={<LayoutUser />} />
+          <Route path="/" element={<LayoutUser />}>
+            <Route path="" element={<MovingDeclaration />}></Route>
+            <Route path="list-declaration" element={<ListDeclaration />}></Route>
+            <Route path="moving-register" element={<MovingRegister />}></Route>
+            <Route path="list-moving-register" element={<ListMovingRegister />}></Route>
+            <Route path="personal-information" element={<PersonalInformation />}></Route>
+            <Route path="change-password" element={<ChangePassword />}></Route>
+          </Route>
           <Route path="/admin/*" element={<LayoutAdmin />}>
             <Route path="" element={<HomePage />} />
             <Route path="account-admin/*" element={<AccountAdmin />} />

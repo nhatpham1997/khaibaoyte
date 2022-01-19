@@ -1,0 +1,30 @@
+.modal-detail-moving-declaration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+  z-index: 1;
+}
+.modal-detail-moving-declaration.is-show {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-detail-moving-declaration-content {
+  width: 100rem;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border: 1px solid silver;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-collapse: collapse;
+  padding: 2rem;
+}

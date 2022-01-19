@@ -1,0 +1,31 @@
+.nav {
+  background-color: #ffffff;
+  color: #485976;
+  width: 25rem;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  position: fixed;
+  height: calc(100vh - 4rem);
+  margin: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.nav-header {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-bottom: 2.2rem;
+  border-bottom: 1px solid silver;
+  cursor: pointer;
+}
+.nav-text {
+  color: #949192;
+}
+.nav-logo {
+  height: 5rem;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+.nav-list {
+  margin: 2rem 0;
+}

@@ -1,0 +1,27 @@
+.nav-item {
+  padding: 1rem 1.5rem;
+  margin: 4px 0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s linear;
+  cursor: pointer;
+  color: #485976;
+}
+.nav-item.selected {
+  background: linear-gradient(195deg, #42424a, #191919);
+  color: #ffffff;
+}
+.nav-item:hover {
+  background-color: #edeff2;
+}
+.nav-item-icon {
+  margin-right: 2.2rem;
+  width: 1rem;
+  pointer-events: none;
+}
+.nav-item-text {
+  pointer-events: none;
+  font-weight: 400;
+  line-height: 1.8;
+}

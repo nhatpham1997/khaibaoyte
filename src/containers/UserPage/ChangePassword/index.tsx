@@ -1,0 +1,69 @@
+function ChangePassword() {
+  return (
+    <div>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+      <p>Đổi mật khẩu</p>
+    </div>
+  )
+}
+
+export default ChangePassword
