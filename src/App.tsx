@@ -24,7 +24,7 @@ function App() {
     <BrowserRouter>
       <GlobalProvider>
         <Routes>
-          <Route path="/" element={<LayoutUser />}>
+          <Route path="/user/*" element={<LayoutUser />}>
             <Route path="" element={<MovingDeclaration />}></Route>
             <Route path="list-declaration" element={<ListDeclaration />}></Route>
             <Route path="moving-register" element={<MovingRegister />}></Route>

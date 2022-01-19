@@ -13,36 +13,36 @@ function Nav() {
         <p className="nav-text">Khai Báo Y Tế</p>
       </div>
       <div className="nav-list">
-        <NavItem selected className="fas fa-laptop-medical" text="Khai báo di chuyển" to="/" />
+        <NavItem selected className="fas fa-laptop-medical" text="Khai báo di chuyển" to="/user" />
         <NavItem
           selected={false}
           className="fas fa-book-medical"
           text="Tờ khai di chuyển của tôi"
-          to="/list-declaration"
+          to="/user/list-declaration"
         />
         <NavItem
           selected={false}
           className="fas fa-suitcase-rolling"
           text="Đăng kí di chuyển"
-          to="/moving-register"
+          to="/user/moving-register"
         />
         <NavItem
           selected={false}
           className="fas fa-receipt"
           text="Thông tin đăng ký di chuyển"
-          to="/list-moving-register"
+          to="/user/list-moving-register"
         />
         <NavItem
           selected={false}
           className="fas fa-user"
           text="Thay đổi thông tin cá nhân"
-          to="/personal-information"
+          to="/user/personal-information"
         />
         <NavItem
           selected={false}
           className="fas fa-key"
           text="Đổi mật khẩu"
-          to="/change-password"
+          to="/user/change-password"
         />
       </div>
     </div>
