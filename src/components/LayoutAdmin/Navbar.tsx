@@ -5,6 +5,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SettingsIcon from '@mui/icons-material/Settings'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import MenuIcon from '@mui/icons-material/Menu'
+import MenuOpenIcon from '@mui/icons-material/MenuOpen'
+import { useContext } from 'react'
+import { GlobalContext } from 'contexts'
 
 function Item(props: BoxProps) {
   const { sx, ...other } = props
@@ -20,6 +23,12 @@ function Item(props: BoxProps) {
 }
 
 function Navbar() {
+  const { miniSideNav, setMiniSideNav } = useContext(GlobalContext)
+
+  const handleMenuButton = () => {
+    setMiniSideNav(!miniSideNav)
+  }
+
   return (
     <Box color="inherit" position={'sticky'}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -33,8 +42,8 @@ function Navbar() {
           <Item>
             <AccountCircleIcon />
           </Item>
-          <Item>
-            <MenuIcon />
+          <Item sx={{ display: { xs: 'block', lg: 'none' } }} onClick={handleMenuButton}>
+            {miniSideNav === false ? <MenuIcon /> : <MenuOpenIcon />}
           </Item>
           <Item>
             <SettingsIcon />

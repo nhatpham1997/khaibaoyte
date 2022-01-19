@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
@@ -73,7 +73,6 @@ function Sidebar() {
         boxSizing: 'content-box',
         top: '10px',
         left: '20px',
-        display: { xs: 'none', lg: 'block' },
         position: 'fixed',
         mt: 1,
         ml: 1,

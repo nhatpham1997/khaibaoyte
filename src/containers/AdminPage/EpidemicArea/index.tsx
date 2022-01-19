@@ -52,11 +52,10 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 function EpidemicArea() {
-  const locationsContext = useContext(GlobalContext)
+  const { covidLocations } = useContext(GlobalContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(7)
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - locationsContext.covidLocations.length) : 0
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - covidLocations.length) : 0
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage)
   }
@@ -73,7 +72,9 @@ function EpidemicArea() {
       <Table sx={{ minWidth: 650, minHeight: '88vh' }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Khu vực</TableCell>
+            <TableCell align="left" sx={{ minWidth: '150px' }}>
+              Khu vực
+            </TableCell>
             <TableCell align="right">Tổng số ca nhiễm</TableCell>
             <TableCell align="right">Tổng số ca nhiễm hôm nay</TableCell>
             <TableCell align="right">Tổng số ca tủ vong</TableCell>
@@ -82,11 +83,8 @@ function EpidemicArea() {
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? locationsContext.covidLocations.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : locationsContext.covidLocations
+            ? covidLocations.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : covidLocations
           ).map((item) => (
             <TableRow key={item.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell
@@ -123,9 +121,10 @@ function EpidemicArea() {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              align="right"
+              rowsPerPageOptions={[7, 14, 21, { label: 'All', value: -1 }]}
               colSpan={3}
-              count={locationsContext.covidLocations.length}
+              count={covidLocations.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{

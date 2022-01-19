@@ -6,7 +6,6 @@ import { useLocation, Link } from 'react-router-dom'
 
 function Breadcrumbs() {
   const route = useLocation().pathname.split('/').slice(1)
-  console.log(route)
   return (
     <MuiBreadcrumbs aria-label="breadcrumb">
       <Link to="/admin" style={{ color: 'grey', textDecoration: 'none' }}>
