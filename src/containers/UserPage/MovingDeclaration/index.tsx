@@ -1,14 +1,14 @@
 import { TextField } from '@mui/material'
 import LabelHeading from 'components/LabelHeading'
 import MenuItem from '@mui/material/MenuItem'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState, useRef } from 'react'
 import BasicDatePicker from 'components/BasicDatePicker'
 import BasicTimePicker from 'components/BasicTimePicker'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
 
 function MovingDeclaration() {
-  const [sex, setSex] = useState('')
+  const userAPI = 'http://localhost:3000/user'
 
   const [provinceResidence, setProvinceResidence] = useState('')
   const [provinceResidences, setProvinceResidences] = useState<any[]>([])
@@ -26,18 +26,49 @@ function MovingDeclaration() {
 
   const sexs = [
     {
-      value: 1,
+      value: '1',
       label: 'Nam',
     },
     {
-      value: 2,
+      value: '2',
       label: 'Nữ',
     },
     {
-      value: 0,
+      value: '0',
       label: 'Khác',
     },
   ]
+
+  // Lấy ra id tài khoản lưu ở local storage
+  const userId = localStorage.getItem('userId')
+  console.log(userId)
+
+  // Lấy ra thông tin tài khoản
+
+  interface IUser {
+    fullName?: string
+    yearOfBirth?: string
+    gender?: string
+    citizenIdentification?: string
+    email?: string
+    phone?: string
+  }
+
+  const [currentUser, setCurrentUser] = useState<IUser>({})
+
+  useEffect(() => {
+    fetch(`${userAPI}/${userId}`)
+      .then((res) => res.json())
+      .then((user) => {
+        setCurrentUser(user)
+      })
+  }, [])
+
+  const [sex, setSex] = useState('1')
+
+  console.log(currentUser)
+
+  const nameRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fetch('https://provinces.open-api.vn/api/?depth=3')
@@ -48,9 +79,50 @@ function MovingDeclaration() {
       })
   }, [])
 
+  // Hàm xử lý thay đổi tên
+  /**
+   * kjf
+   * ai
+   * nagy
+   * @param e hàm
+   */
+  function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
+    setCurrentUser((prev) => {
+      return { ...prev, fullName: e.target.value }
+    })
+  }
+
+  // Hàm thay đổi năm sinh
+  function handleChangeYOB(e: React.ChangeEvent<HTMLInputElement>) {
+    setCurrentUser((prev) => {
+      return { ...prev, yearOfBirth: e.target.value }
+    })
+  }
+
+  // Hàm thay đổi CMT
+  function handleChangeCitiIden(e: React.ChangeEvent<HTMLInputElement>) {
+    setCurrentUser((prev) => {
+      return { ...prev, citizenIdentification: e.target.value }
+    })
+  }
+  // Hàm thay đổi email
+  function handleChangeEmail(e: React.ChangeEvent<HTMLInputElement>) {
+    setCurrentUser((prev) => {
+      return { ...prev, email: e.target.value }
+    })
+  }
+  // Hàm thay đổi số điện thoại
+  function handleChangePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    setCurrentUser((prev) => {
+      return { ...prev, phone: e.target.value }
+    })
+  }
+
   // Hàm xử lý chọn giới tính
   function handleChangeSex(e: React.ChangeEvent<HTMLInputElement>) {
-    setSex(e.target.value)
+    setCurrentUser((prev) => {
+      return { ...prev, gender: e.target.value }
+    })
   }
 
   // Hàm xử lý chọn tỉnh/thành phố cư trú
@@ -125,6 +197,7 @@ function MovingDeclaration() {
         <LabelHeading text="Thông tin cá nhân" />
       </div>
       <TextField
+        ref={nameRef}
         id="name"
         label="Họ và tên"
         variant="outlined"
@@ -133,6 +206,8 @@ function MovingDeclaration() {
         InputLabelProps={{ style: { fontSize: '1.2rem' } }}
         required
         fullWidth
+        value={currentUser.fullName || ''}
+        onChange={handleChangeName}
       />
       <div className="row">
         <TextField
@@ -143,6 +218,8 @@ function MovingDeclaration() {
           InputProps={{ style: { fontSize: '1.2rem' } }}
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
+          value={currentUser.yearOfBirth || ''}
+          onChange={handleChangeYOB}
         />
         <TextField
           id="sex"
@@ -153,7 +230,7 @@ function MovingDeclaration() {
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
           select
-          value={sex}
+          value={currentUser.gender || ''}
           onChange={handleChangeSex}
         >
           {sexs.map((option) => (
@@ -173,6 +250,8 @@ function MovingDeclaration() {
         InputLabelProps={{ style: { fontSize: '1.2rem' } }}
         required
         fullWidth
+        value={currentUser.citizenIdentification || ''}
+        onChange={handleChangeCitiIden}
       />
       <div className="row">
         <TextField
@@ -183,6 +262,8 @@ function MovingDeclaration() {
           InputProps={{ style: { fontSize: '1.2rem' } }}
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
+          value={currentUser.email || ''}
+          onChange={handleChangeEmail}
         />
         <TextField
           id="phone"
@@ -192,6 +273,8 @@ function MovingDeclaration() {
           InputProps={{ style: { fontSize: '1.2rem' } }}
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
+          value={currentUser.phone || ''}
+          onChange={handleChangePhone}
         />
       </div>
       <div className="row">
