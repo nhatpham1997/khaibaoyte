@@ -2,6 +2,7 @@
 import adminApi from 'apis/adminApi'
 import { locationApi } from 'apis/covid'
 import movingDeclarationApi from 'apis/movingDeclaration'
+import movingRegisterApi from 'apis/movingRegister'
 import userApi from 'apis/userApi'
 import { createContext, ReactNode, useState, useEffect } from 'react'
 
@@ -42,11 +43,23 @@ type movingDeclaration = {
   id: 1
 }
 
+type movingRegister = {
+  userId: string
+  time: string
+  province: string
+  district: string
+  ward: string
+  status: string
+  confirm: string
+  id: number
+}
+
 type InitialStateContextType = {
   covidLocations: Location[]
   users: userType[]
   admins: userType[]
   movingDeclaration: movingDeclaration[]
+  movingRegister: movingRegister[]
   miniSideNav: boolean
   setMiniSideNav: (miniSideNav: boolean) => void
 }
@@ -56,6 +69,7 @@ const initialStateContextValue: InitialStateContextType = {
   users: [],
   admins: [],
   movingDeclaration: [],
+  movingRegister: [],
   miniSideNav: false,
   setMiniSideNav: () => {},
 }
@@ -67,6 +81,7 @@ export default function GlobalProvider({ children }: Props) {
   const [users, setUsers] = useState<any>([])
   const [admins, setAdmins] = useState<any>([])
   const [movingDeclaration, setMovingDeclaration] = useState<any>([])
+  const [movingRegister, setMovingRegister] = useState<any>([])
   const [miniSideNav, setMiniSideNav] = useState(false)
 
   useEffect(() => {
@@ -117,9 +132,29 @@ export default function GlobalProvider({ children }: Props) {
     fetchMovingDeclaration()
   }, [])
 
+  useEffect(() => {
+    const fetchMovingRegister = async () => {
+      try {
+        const response = await movingRegisterApi.getAll()
+        setMovingRegister(response)
+      } catch (error) {
+        console.log('Failed to fetch post list: ', error)
+      }
+    }
+    fetchMovingRegister()
+  }, [])
+
   return (
     <GlobalContext.Provider
-      value={{ covidLocations, miniSideNav, setMiniSideNav, users, admins, movingDeclaration }}
+      value={{
+        covidLocations,
+        miniSideNav,
+        setMiniSideNav,
+        users,
+        admins,
+        movingDeclaration,
+        movingRegister,
+      }}
     >
       {children}
     </GlobalContext.Provider>

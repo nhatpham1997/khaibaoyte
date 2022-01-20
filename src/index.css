@@ -1,6 +1,7 @@
 html {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  font-size: 62.5%;
 }
 * {
   margin: 0;
@@ -48,7 +49,6 @@ input {
   display: flex;
   background-color: #edeff2;
   height: 100vh;
-  font-size: 62.5%;
 }
 
 .wrap {

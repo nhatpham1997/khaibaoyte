@@ -1,5 +1,4 @@
-import GlobalProvider, { GlobalContext } from 'contexts'
-import { useContext } from 'react'
+import GlobalProvider from 'contexts'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LayoutUser from './components/LayoutUser'
 import LayoutAdmin from './components/LayoutAdmin'
@@ -19,10 +18,9 @@ import PersonalInformation from 'containers/UserPage/PersonalInformation'
 import LoginPage from 'containers/UserPage/LoginForm'
 import RegisterForm from 'components/RegisterForm'
 import ForgotPassword from 'components/ForgotPassword'
+import LoginAdmin from 'containers/AdminPage/LoginAdmin'
 
 function App() {
-  const data = useContext(GlobalContext)
-
   return (
     <BrowserRouter>
       <GlobalProvider>
@@ -38,7 +36,7 @@ function App() {
             <Route path="personal-information" element={<PersonalInformation />}></Route>
             <Route path="change-password" element={<ChangePassword />}></Route>
           </Route>
-          <Route path="/admin/login" element={<LoginPage />} />
+          <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/*" element={<LayoutAdmin />}>
             <Route path="" element={<HomePage />} />
             <Route path="account-admin/*" element={<AccountAdmin />} />

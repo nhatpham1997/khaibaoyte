@@ -54,7 +54,15 @@ function LayoutAdmin() {
           <Sidebar />
         </SidebarAnimation>
       </Box>
-      <Box sx={{ gridColumn: { xs: 'span 5', lg: 'span 4' } }}>
+      <Box
+        sx={{
+          gridColumn: {
+            xs: 'span 5',
+            lg: 'span 4',
+          },
+          '& .MuiTableCell-root': { fontSize: '1.6rem' },
+        }}
+      >
         <Navbar />
         <Box>
           <Outlet />

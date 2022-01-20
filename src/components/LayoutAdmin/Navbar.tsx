@@ -32,23 +32,29 @@ function Navbar() {
   return (
     <Box color="inherit" position={'sticky'}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 1, '& .MuiTypography-root': { fontSize: '1.8rem' } }}>
           <Breadcrumbs />
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
           <Item>
             <TextField label="Search here" size="small" />
           </Item>
-          <Item>
+          <Item sx={{ '& .MuiSvgIcon-root': { fontSize: '2.5rem' } }}>
             <AccountCircleIcon />
           </Item>
-          <Item sx={{ display: { xs: 'block', lg: 'none' } }} onClick={handleMenuButton}>
+          <Item
+            sx={{
+              display: { xs: 'block', lg: 'none' },
+              '& .MuiSvgIcon-root': { fontSize: '2.5rem' },
+            }}
+            onClick={handleMenuButton}
+          >
             {miniSideNav === false ? <MenuIcon /> : <MenuOpenIcon />}
           </Item>
-          <Item>
+          <Item sx={{ '& .MuiSvgIcon-root': { fontSize: '2.5rem' } }}>
             <SettingsIcon />
           </Item>
-          <Item>
+          <Item sx={{ '& .MuiSvgIcon-root': { fontSize: '2.5rem' } }}>
             <NotificationsIcon />
           </Item>
         </Box>
