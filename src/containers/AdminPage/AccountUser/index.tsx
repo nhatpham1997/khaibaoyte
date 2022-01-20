@@ -1,3 +1,5 @@
+import { GlobalContext } from 'contexts'
+import { useContext } from 'react'
 import AccountManagement from '../../../components/accountManagement'
 
 type createData = {
@@ -44,6 +46,8 @@ const rows: createData = [
 ]
 
 function AccountUser() {
+  const { users } = useContext(GlobalContext)
+  console.log(users)
   return <AccountManagement data={rows} name="User" />
 }
 

@@ -79,6 +79,7 @@ function Sidebar() {
         position: 'fixed',
         mt: 1,
         ml: 1,
+        fontSize: '50px !important',
       }}
       color="white"
     >
