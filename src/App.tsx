@@ -16,6 +16,7 @@ import ListMovingRegister from 'containers/UserPage/ListMovingRegister'
 import MovingDeclaration from 'containers/UserPage/MovingDeclaration'
 import MovingRegister from 'containers/UserPage/MovingRegister'
 import PersonalInformation from 'containers/UserPage/PersonalInformation'
+import LoginPage from 'containers/AdminPage/Login'
 
 function App() {
   const data = useContext(GlobalContext)
@@ -32,6 +33,7 @@ function App() {
             <Route path="personal-information" element={<PersonalInformation />}></Route>
             <Route path="change-password" element={<ChangePassword />}></Route>
           </Route>
+          <Route path="/admin/login" element={<LoginPage />} />
           <Route path="/admin/*" element={<LayoutAdmin />}>
             <Route path="" element={<HomePage />} />
             <Route path="account-admin/*" element={<AccountAdmin />} />

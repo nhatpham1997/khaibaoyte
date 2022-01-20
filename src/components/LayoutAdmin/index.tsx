@@ -35,7 +35,14 @@ const SidebarAnimation = styled(Box)(() => ({
 function LayoutAdmin() {
   const { miniSideNav } = useContext(GlobalContext)
   return (
-    <Box display="grid" gridTemplateColumns="repeat(5, 1fr)" gap={1}>
+    <Box
+      display="grid"
+      gridTemplateColumns="repeat(5, 1fr)"
+      gap={1}
+      sx={{
+        fontSize: '1rem',
+      }}
+    >
       <Box
         gridColumn="span 1"
         sx={{
