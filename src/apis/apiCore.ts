@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiCore = axios.create({
-  baseURL: 'https://my-json-server.typicode.com/nhatpham1997/dbkhaibaoyte',
+  baseURL: 'https://dbkhaibaoyte.herokuapp.com',
   headers: {
     'content-type': 'application/json',
   },

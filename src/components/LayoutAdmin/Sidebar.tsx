@@ -111,28 +111,24 @@ function Sidebar() {
             <Typography>Trang chủ</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
         <StyledToggleButton value="2">
           <LinkNavbar to="/admin/account-admin">
             <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Quản lý Admin</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
         <StyledToggleButton value="3">
           <LinkNavbar to="/admin/account-user">
             <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Quản lý User</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
         <StyledToggleButton value="4">
           <LinkNavbar to="/admin/application-for-moving">
             <AirplanemodeActiveIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Quản lý di chuyển</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
         <StyledToggleButton value="5">
           <LinkNavbar to="/admin/epidemic-area">
             <ListAltIcon sx={{ pr: 2, fontSize: '2.5rem' }} />

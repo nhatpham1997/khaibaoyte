@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { type } from '@testing-library/user-event/dist/type'
 import adminApi from 'apis/adminApi'
 import { locationApi } from 'apis/covid'
 import movingDeclarationApi from 'apis/movingDeclaration'
