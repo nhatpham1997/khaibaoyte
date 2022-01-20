@@ -33,6 +33,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
 const StyledToggleButton = styled(ToggleButton)(() => ({
   color: 'white',
   borderRadius: '8px',
+  padding: 0,
   '&.Mui-selected': {
     backgroundColor: '#2196f3',
     color: 'whitesmoke',
@@ -45,7 +46,8 @@ const LinkNavbar = styled(Link)(() => ({
   textDecoration: 'none',
   display: 'flex',
   color: 'white',
-  alignItems: 'flex-end',
+  alignItems: 'center',
+  padding: '5px 10px',
   width: '100%',
   height: '100%',
   '& p': {
@@ -69,10 +71,11 @@ function Sidebar() {
         bgcolor: 'text.primary',
         borderRadius: 4,
         textAlign: 'center',
+        minWidth: '250px',
         minHeight: '95vh',
         boxSizing: 'content-box',
         top: '10px',
-        left: '20px',
+        left: '10px',
         position: 'fixed',
         mt: 1,
         ml: 1,
@@ -103,35 +106,35 @@ function Sidebar() {
       >
         <StyledToggleButton value="1">
           <LinkNavbar to="/admin/">
-            <SupervisorAccountIcon sx={{ pr: 2 }} />
+            <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Trang chủ</Typography>
           </LinkNavbar>
         </StyledToggleButton>
 
         <StyledToggleButton value="2">
           <LinkNavbar to="/admin/account-admin">
-            <SupervisorAccountIcon sx={{ pr: 2 }} />
+            <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Quản lý Admin</Typography>
           </LinkNavbar>
         </StyledToggleButton>
 
         <StyledToggleButton value="3">
           <LinkNavbar to="/admin/account-user">
-            <SupervisorAccountIcon sx={{ pr: 2 }} />
+            <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Quản lý User</Typography>
           </LinkNavbar>
         </StyledToggleButton>
 
         <StyledToggleButton value="4">
           <LinkNavbar to="/admin/application-for-moving">
-            <AirplanemodeActiveIcon sx={{ pr: 2 }} />
+            <AirplanemodeActiveIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Quản lý di chuyển</Typography>
           </LinkNavbar>
         </StyledToggleButton>
 
         <StyledToggleButton value="5">
           <LinkNavbar to="/admin/epidemic-area">
-            <ListAltIcon sx={{ pr: 2 }} />
+            <ListAltIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
             <Typography>Danh sách vùng dịch</Typography>
           </LinkNavbar>
         </StyledToggleButton>
