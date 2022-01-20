@@ -9,7 +9,6 @@ export interface ILocation {
   recovered: number
   casesToday: number
 }
-
 export const locationApi = {
   getAll: () => {
     return axios.get(

@@ -1,67 +1,9 @@
+import ForgotPassword from 'components/ForgotPassword'
+
 function ChangePassword() {
   return (
     <div>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
-      <p>Đổi mật khẩu</p>
+      <ForgotPassword />
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import LoginPage from 'containers/UserPage/LoginForm'
 import React from 'react'
 import Header from './Header'
 import Content from './Content'

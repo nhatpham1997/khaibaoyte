@@ -16,7 +16,9 @@ import ListMovingRegister from 'containers/UserPage/ListMovingRegister'
 import MovingDeclaration from 'containers/UserPage/MovingDeclaration'
 import MovingRegister from 'containers/UserPage/MovingRegister'
 import PersonalInformation from 'containers/UserPage/PersonalInformation'
-import LoginPage from 'containers/AdminPage/Login'
+import LoginPage from 'containers/UserPage/LoginForm'
+import RegisterForm from 'components/RegisterForm'
+import ForgotPassword from 'components/ForgotPassword'
 
 function App() {
   const data = useContext(GlobalContext)
@@ -25,6 +27,9 @@ function App() {
     <BrowserRouter>
       <GlobalProvider>
         <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/user/*" element={<LayoutUser />}>
             <Route path="" element={<MovingDeclaration />}></Route>
             <Route path="list-declaration" element={<ListDeclaration />}></Route>
