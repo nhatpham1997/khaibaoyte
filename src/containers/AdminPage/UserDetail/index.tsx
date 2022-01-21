@@ -7,6 +7,9 @@ import { useParams } from 'react-router-dom'
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import AccountInformation from 'components/accountInformation'
 import Button from '@mui/material/Button'
+import TravelSchedule from 'components/travelSchedule'
+import userApi from 'apis/userApi'
+import axios from 'axios'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -14,48 +17,24 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
 }))
 
-type createData = {
-  id: number
-  username: string
-  full_name: string
-  year_of_birth: string
-  citizen_identificatio: string //căn cước
-  sex: string
-  nationality: string //quốc tịch
-  address: string
-  phone: string
-  email: string
-  createDate: string
-}[]
-
-const rows: createData = [
-  {
-    id: 1,
-    username: 'NguyenDuy',
-    full_name: 'Nguyen Van Duy',
-    year_of_birth: '15/06/1999',
-    citizen_identificatio: '1234567890', //căn cước
-    sex: 'Nam',
-    nationality: 'Việt Nam', //quốc tịch
-    address: 'Liên Hà - Đan Phượng',
-    phone: '0123456789',
-    email: 'duy124678@gmail.com',
-    createDate: '01/01/2022',
-  },
-  {
-    id: 2,
-    username: 'NguyenDuy',
-    full_name: 'Nguyen Van Duy',
-    year_of_birth: '15/06/1999',
-    citizen_identificatio: '1234567890', //căn cước
-    sex: 'Nam',
-    nationality: 'Việt Nam', //quốc tịch
-    address: 'Liên Hà - Đan Phượng',
-    phone: '0123456789',
-    email: 'duy124678@gmail.com',
-    createDate: '01/01/2022',
-  },
-]
+// type dataType = {
+//   data: {
+//     citizenIdentification: string
+//     createdDate: string
+//     district: number
+//     email: string
+//     fullName: string
+//     gender: number
+//     id: number
+//     password: string
+//     phone: string
+//     province: number
+//     provinceName: string
+//     specificAddress: string
+//     ward: number
+//     yearOfBirth: number
+//   }
+// }
 
 const headerStyle = {
   display: 'flex',
@@ -66,54 +45,73 @@ const headerStyle = {
 }
 
 export default function UserDetail() {
+  const [users, setUsers] = React.useState<any>({})
   const params = useParams()
-  const data = rows.filter((data) => data.id.toString() === params.id)[0]
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://dbkhaibaoyte.herokuapp.com/user?id=${params.id}`)
+        setUsers(response.data[0])
+        console.log(response)
+      } catch (error) {
+        console.log('Failed to fetch post list: ', error)
+      }
+    }
+    fetchData()
+  }, [])
   return (
     <>
       <Box sx={headerStyle}>
         <Box>
-          <ListItem alignItems="flex-start">
+          <ListItem
+            alignItems="flex-start"
+            sx={{ '& .MuiListItemText-primary': { fontSize: '1.6rem' } }}
+          >
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <ListItemText
-              primary={data.full_name}
+              primary={users.fullName}
               secondary={
                 <React.Fragment>
                   <Typography
-                    sx={{ display: 'inline' }}
+                    sx={{ display: 'inline', fontSize: '1.3rem' }}
                     component="span"
                     variant="body2"
                     color="text.primary"
                   >
-                    Tài khoản
+                    Tài khoản — Người dùng
                   </Typography>
-                  {' — Quản trị viên'}
                 </React.Fragment>
               }
             />
           </ListItem>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Button variant="contained" color="primary" size="small">
-            Nơi đã đi
-          </Button>
-          <Button variant="contained" color="primary" size="small" sx={{ margin: '0 20px' }}>
-            yêu cầu đã xác nhận
-          </Button>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: '20px',
+            '& .MuiButton-root': { fontSize: '1.3rem' },
+          }}
+        >
+          <TravelSchedule name="Lịch sử di chuyển" />
+          <TravelSchedule name="Yêu cầu đã xác nhận" />
         </Box>
       </Box>
       <Box sx={{ flexGrow: 1, margin: '0 20px' }}>
         <Grid container spacing={2}>
           <Grid item xs={7}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <h3>Thông tin chi tiết</h3>
+              <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Thông tin chi tiết</h3>
             </Box>
-            <AccountInformation data={data} />
+            <AccountInformation />
           </Grid>
           <Grid item xs={5}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <h3>Yêu cầu xác nhận</h3>
+              <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Yêu cầu xác nhận</h3>
             </Box>
             <Item>Không có yêu cầu nào!</Item>
           </Grid>

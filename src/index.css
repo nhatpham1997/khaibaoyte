@@ -1,0 +1,64 @@
+html {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 62.5%;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+input {
+  line-height: normal;
+}
+label,
+button {
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+
+body {
+  font-size: 1.4rem;
+  height: 100vh;
+}
+
+button,
+input {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.4rem;
+}
+
+/* common */
+.app {
+  display: flex;
+  background-color: #edeff2;
+  height: 100vh;
+}
+
+.wrap {
+  width: 100%;
+  margin: 2rem 2rem 2rem 29rem;
+}
+
+/* container */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

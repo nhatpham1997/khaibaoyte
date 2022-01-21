@@ -8,7 +8,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
   '& .MuiToggleButtonGroup-grouped': {
@@ -33,19 +33,24 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
 const StyledToggleButton = styled(ToggleButton)(() => ({
   color: 'white',
   borderRadius: '8px',
+  padding: 0,
   '&.Mui-selected': {
     backgroundColor: '#2196f3',
     color: 'whitesmoke',
     '&:hover': { backgroundColor: '#2196f3' },
   },
   '&:hover': { backgroundColor: 'gray' },
+  '& .MuiToggleButton-root': {
+    fontSize: '2rem',
+  },
 }))
 
 const LinkNavbar = styled(Link)(() => ({
   textDecoration: 'none',
   display: 'flex',
   color: 'white',
-  alignItems: 'flex-end',
+  alignItems: 'center',
+  padding: '5px 10px',
   width: '100%',
   height: '100%',
   '& p': {
@@ -55,8 +60,9 @@ const LinkNavbar = styled(Link)(() => ({
 }))
 
 function Sidebar() {
-  const [alignment, setAlignment] = useState('1')
-  const [stickyClass, setStickyClass] = useState('hidden')
+  const route = useLocation().pathname
+  console.log(route)
+  const [alignment, setAlignment] = useState('/admin')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
@@ -65,15 +71,7 @@ function Sidebar() {
   }
 
   useEffect(() => {
-    function handleMiniSidenav() {
-      if (window !== undefined) {
-        window.innerWidth < 1200 ? setStickyClass('hidden') : setStickyClass('block')
-      }
-    }
-    window.addEventListener('resize', handleMiniSidenav)
-    return () => {
-      window.removeEventListener('resize', handleMiniSidenav)
-    }
+    setAlignment(route)
   }, [])
 
   return (
@@ -82,18 +80,19 @@ function Sidebar() {
         bgcolor: 'text.primary',
         borderRadius: 4,
         textAlign: 'center',
+        minWidth: '250px',
         minHeight: '95vh',
         boxSizing: 'content-box',
-        top: { xs: '20px', lg: '0' },
-        left: { xs: '20px', lg: '0' },
-        display: { xs: 'none', lg: 'block' },
-        position: { xs: 'fixed', lg: 'unset' },
+        top: '10px',
+        left: '10px',
+        position: 'fixed',
         mt: 1,
         ml: 1,
+        fontSize: '50px !important',
       }}
       color="white"
     >
-      <Box sx={{ pt: 2 }}>
+      <Box sx={{ pt: 2, '& .MuiTypography-root': { fontSize: '2rem', fontWeight: 600 } }}>
         <Typography>Menu Dashboard</Typography>
       </Box>
       <Divider
@@ -112,39 +111,39 @@ function Sidebar() {
         orientation="vertical"
         sx={{
           justifyContent: 'flex-start',
+          '& .MuiButtonBase-root a p': { fontSize: '1.6rem' },
+          '& .MuiButtonBase-root a svg': {
+            fontSize: '4rem',
+          },
         }}
         color="primary"
       >
-        <StyledToggleButton value="1">
-          <LinkNavbar to="/admin/">
+        <StyledToggleButton value="/admin">
+          <LinkNavbar to="/admin">
             <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Trang chủ</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
-        <StyledToggleButton value="2">
+        <StyledToggleButton value="/admin/account-admin">
           <LinkNavbar to="/admin/account-admin">
             <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Quản lý Admin</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
-        <StyledToggleButton value="3">
+        <StyledToggleButton value="/admin/account-user">
           <LinkNavbar to="/admin/account-user">
             <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Quản lý User</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
-        <StyledToggleButton value="4">
-          <LinkNavbar to="/admin/account-user">
+        <StyledToggleButton value="/admin/application-for-moving">
+          <LinkNavbar to="/admin/application-for-moving">
             <AirplanemodeActiveIcon sx={{ pr: 2 }} />
             <Typography>Quản lý di chuyển</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-
-        <StyledToggleButton value="5">
-          <LinkNavbar to="/admin/account-user">
+        <StyledToggleButton value="/admin/epidemic-area">
+          <LinkNavbar to="/admin/epidemic-area">
             <ListAltIcon sx={{ pr: 2 }} />
             <Typography>Danh sách vùng dịch</Typography>
           </LinkNavbar>

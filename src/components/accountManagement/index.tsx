@@ -13,53 +13,39 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 
 type dataAdmin = {
   data: {
-    id: number
-    username: string
-    full_name: string
-    year_of_birth: string
-    citizen_identificatio: string //căn cước
-    sex: string
-    nationality: string //quốc tịch
-    address: string
-    phone: string
-    email: string
-    createDate: string
+    citizenIdentification?: string
+    createdDate?: string
+    district?: number
+    email?: string
+    fullName?: string
+    gender?: number
+    id?: number
+    password?: string
+    phone?: string
+    province?: number
+    provinceName?: string
+    specificAddress?: string
+    ward?: number
+    yearOfBirth?: number
   }[]
   name: string
 }
 
-type dataUser = {
-  data: {
-    id: number
-    username: string
-    full_name: string
-    year_of_birth: string
-    citizen_identificatio: string //căn cước
-    sex: string
-    nationality: string //quốc tịch
-    address: string
-    phone: string
-    email: string
-    createDate: string
-  }[]
-  name: string
-}
-
-const AccountManagement = (props: dataAdmin & dataUser) => {
+const AccountManagement = (props: dataAdmin) => {
   return (
     <>
-      <h3 style={{ marginTop: 0 }}>Danh sách {props.name}</h3>
+      <h3 style={{ margin: '16px', fontSize: '1.6rem' }}>Danh sách {props.name}</h3>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} color="primary" size="small" aria-label="a dense table">
+        <Table sx={{ minWidth: 650 }} color="primary" aria-label="a dense table">
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem' } }}>
               <TableCell sx={{ width: '30px' }}>STT</TableCell>
-              <TableCell align="left">Tài khoản</TableCell>
+              <TableCell align="left">Email</TableCell>
               <TableCell sx={{ minWidth: '150px' }} align="left">
                 Tên người dùng
               </TableCell>
-              <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Số điện thoại</TableCell>
+              <TableCell align="left">Điện thoại</TableCell>
+              <TableCell align="left">Ngày tạo</TableCell>
               <TableCell align="center">Chi tiết</TableCell>
             </TableRow>
           </TableHead>
@@ -74,15 +60,16 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
                     transition: '0.2s ease-in-out',
                   },
+                  '& .MuiTableCell-root': { fontSize: '1.6rem' },
                 }}
               >
                 <TableCell component="th" scope="row" align="center">
                   {row.id}
                 </TableCell>
-                <TableCell align="left">{row.username}</TableCell>
-                <TableCell align="left">{row.full_name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
+                <TableCell align="left">{row.fullName}</TableCell>
                 <TableCell align="left">{row.phone}</TableCell>
+                <TableCell align="left">{row.createdDate}</TableCell>
                 <TableCell
                   align="left"
                   sx={{
@@ -90,6 +77,9 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
                     minHeight: '31.226px',
                     alignItems: 'center',
                     justifyContent: 'space-evenly',
+                    '& button': {
+                      fontSize: '1.6rem',
+                    },
                   }}
                 >
                   {props.name === 'Admin' && (
@@ -105,22 +95,22 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
                     </Link>
                   )}
                   {props.name === 'User' && (
-                    <Link to={`/admin/account-user/${row.id}`} style={{ textDecoration: 'none' }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        startIcon={<FileOpenIcon />}
-                      >
-                        Xem
-                      </Button>
-                    </Link>
-                  )}
-                  {props.name !== 'Admin' && (
-                    <ConfirmAdmin
-                      title="Bạn có chắc muốn xóa không?"
-                      content={`Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ! Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ!`}
-                    />
+                    <>
+                      <Link to={`/admin/account-user/${row.id}`} style={{ textDecoration: 'none' }}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          startIcon={<FileOpenIcon />}
+                        >
+                          Xem
+                        </Button>
+                      </Link>
+                      <ConfirmAdmin
+                        title={`Bạn có chắc muốn xóa "${row.email}" không?`}
+                        content={`Khi xác nhận thì toàn bộ thông tin tài khoản "${row.email}" bao gồm cả thông tin liên quan sẽ bị xóa!`}
+                      />
+                    </>
                   )}
                 </TableCell>
               </TableRow>

@@ -53,11 +53,13 @@ export default function ConfirmAdmin(props: message) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{props.title}</DialogTitle>
+        <DialogTitle sx={{ fontSize: '2rem' }}>{props.title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">{props.content}</DialogContentText>
+          <DialogContentText sx={{ fontSize: '1.6rem' }} id="alert-dialog-slide-description">
+            {props.content}
+          </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ '& .MuiButton-root': { fontSize: '1.4rem' } }}>
           <Button onClick={handleClose}>Xác nhận</Button>
           <Button onClick={handleClose}>Hủy</Button>
         </DialogActions>
