@@ -5,12 +5,14 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { ListItem, ListItemText, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
 type typeProps = {
   name: string
 }
 
 export default function TravelSchedule(props: typeProps) {
+  const params = useParams()
   const [open, setOpen] = React.useState(false)
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper')
 
@@ -51,7 +53,7 @@ export default function TravelSchedule(props: typeProps) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle color="primary" id="scroll-dialog-title">
+        <DialogTitle color="primary" id="scroll-dialog-title" sx={{ fontSize: '1.6rem' }}>
           {props.name}
         </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
@@ -68,7 +70,7 @@ export default function TravelSchedule(props: typeProps) {
                   display: 'flex',
                   flexDirection: 'column',
                   margin: 'auto',
-                  border: '1px solid #1976d2',
+                  border: '2px solid #1976d2',
                   minWidth: { lg: '400px' },
                   borderRadius: '15px',
                   marginBottom: '20px',
@@ -77,12 +79,21 @@ export default function TravelSchedule(props: typeProps) {
               >
                 <Typography
                   m={0}
-                  sx={{ borderBottom: '1px solid #1976d2', fontWeight: 'bold', width: '100%' }}
+                  sx={{
+                    borderBottom: '1px solid #1976d2',
+                    fontWeight: 'bold',
+                    width: '100%',
+                    fontSize: '1.6rem',
+                  }}
                 >
                   Ngày 01 tháng 01 năm 2021
                 </Typography>
                 <ListItemText
-                  sx={{ color: 'black', width: '100%' }}
+                  sx={{
+                    color: 'black',
+                    width: '100%',
+                    '& .MuiTypography-root': { fontSize: '1.4rem', fontWeight: '500' },
+                  }}
                   primary="Công viên Hòa Bình"
                   secondary="Liên Hà - Đan Phượng - Hà Nội"
                 />
@@ -91,7 +102,9 @@ export default function TravelSchedule(props: typeProps) {
           </DialogContent>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Đóng</Button>
+          <Button onClick={handleClose} sx={{ fontSize: '1.4rem' }}>
+            Đóng
+          </Button>
         </DialogActions>
       </Dialog>
     </>

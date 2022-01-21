@@ -20,18 +20,20 @@ type Location = {
 }
 
 type userType = {
-  email: string
-  password: string
-  fullName: string
-  yearOfBirth: string
-  citizenIdentification: string
-  gender: string
-  province: string
-  district: string
-  ward: string
-  phone: string
-  createdDate: string
-  id: number
+  citizenIdentification?: string
+  createdDate?: string
+  district?: number
+  email?: string
+  fullName?: string
+  gender?: number
+  id?: number
+  password?: string
+  phone?: string
+  province?: number
+  provinceName?: string
+  specificAddress?: string
+  ward?: number
+  yearOfBirth?: number
 }
 
 type movingDeclaration = {
@@ -128,6 +130,7 @@ export default function GlobalProvider({ children }: Props) {
       } catch (error) {
         console.log('Failed to fetch post list: ', error)
       }
+      console.log(1)
     }
     fetchAdmin()
   }, [])
