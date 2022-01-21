@@ -40,18 +40,30 @@ type movingDeclaration = {
   province: string
   district: string
   ward: string
-  id: 1
+  id: number
 }
 
 type movingRegister = {
-  userId: string
+  fullName: string
+  yearOfBirth: number
+  gender: number
+  citizenIdentification: string
+  email: string
+  phone: string
+  provinceResidence: number
+  districtResidence: number
+  wardResidence: number
+  specificAddressResidence: string
+  userId: number
   time: string
-  province: string
-  district: string
-  ward: string
-  status: string
-  confirm: string
+  province: number
+  district: number
+  ward: number
+  specificAddress: string
+  status: boolean
+  confirm: boolean
   id: number
+  createdAt: number
 }
 
 type InitialStateContextType = {
