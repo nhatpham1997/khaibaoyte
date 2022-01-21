@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import adminApi from 'apis/adminApi'
-import { locationApi } from 'apis/covid'
-import movingDeclarationApi from 'apis/movingDeclaration'
-import movingRegisterApi from 'apis/movingRegister'
-import userApi from 'apis/userApi'
+import adminApi from '../apis/adminApi'
+import { locationApi } from '../apis/covid'
+import movingDeclarationApi from '../apis/movingDeclaration'
+import movingRegisterApi from '../apis/movingRegister'
+import userApi from '../apis/userApi'
 import { createContext, ReactNode, useState, useEffect } from 'react'
 
 type Props = {
