@@ -7,6 +7,22 @@ import { useLocation, useParams } from 'react-router-dom'
 import { addressApi } from 'apis/addressApi'
 import axios from 'axios'
 
+type data = {
+  data: {
+    id: number
+    username: string
+    full_name: string
+    year_of_birth: string
+    citizen_identificatio: string
+    sex: string
+    nationality: string
+    address: string
+    phone: string
+    email: string
+    createDate: string
+  }
+}
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -24,13 +40,11 @@ const styleBox = {
   padding: '10px',
   borderBottom: '1px solid #ccc',
   '&:last-child': { borderBottom: 'none' },
-  fontSize: '1.6rem',
 }
 
 const AccountInformation = () => {
   const [data, setData] = useState<any>({})
   const [address, setAddress] = useState<any>([])
-  console.log(address)
   const [loading, setLoading] = useState(true)
   const params = useParams()
   const match = useLocation()
@@ -83,7 +97,15 @@ const AccountInformation = () => {
   return (
     <div>
       {!loading && (
-        <Item sx={{ display: 'flex', flexDirection: 'column', textAlign: 'start', boxShadow: 3 }}>
+        <Item
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            textAlign: 'start',
+            boxShadow: 3,
+            fontSize: '1.6rem',
+          }}
+        >
           <Box sx={styleBox}>
             <Typography component="span" sx={styleSpan}>
               Tên tài khoản:
@@ -143,8 +165,8 @@ const AccountInformation = () => {
             <Typography component="span" sx={styleSpan}>
               Địa chỉ hiện tại:
             </Typography>
-            {responseWard.name || ''} - {responseDistrict.name || ''} -{' '}
-            {responseProvince.name || ''}
+            {responseWard.name || data.ward || ''} - {responseDistrict.name || data.district || ''}{' '}
+            - {responseProvince.name || data.provinceName || ''}
           </Box>
         </Item>
       )}

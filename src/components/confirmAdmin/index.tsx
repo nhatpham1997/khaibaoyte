@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -9,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Slide from '@mui/material/Slide'
 import { TransitionProps } from '@mui/material/transitions'
 import DeleteIcon from '@mui/icons-material/Delete'
+import axios from 'axios'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,6 +22,8 @@ const Transition = React.forwardRef(function Transition(
 type message = {
   title: string
   content: string
+  account: string
+  id?: number
 }
 
 export default function ConfirmAdmin(props: message) {
@@ -33,6 +35,15 @@ export default function ConfirmAdmin(props: message) {
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const handleDelete = () => {
+    const deleteAccount = async () => {
+      const response = await axios.delete(`https://dbkhaibaoyte.herokuapp.com/user/${props.id}`)
+      console.log(response)
+      setOpen(false)
+    }
+    deleteAccount()
   }
 
   return (
@@ -53,14 +64,14 @@ export default function ConfirmAdmin(props: message) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle sx={{ fontSize: '2rem' }}>{props.title}</DialogTitle>
+        <DialogTitle sx={{ fontSize: '1.6rem' }}>{props.title}</DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ fontSize: '1.6rem' }} id="alert-dialog-slide-description">
+          <DialogContentText id="alert-dialog-slide-description" sx={{ fontSize: '1.6rem' }}>
             {props.content}
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ '& .MuiButton-root': { fontSize: '1.4rem' } }}>
-          <Button onClick={handleClose}>Xác nhận</Button>
+          <Button onClick={handleDelete}>Xác nhận</Button>
           <Button onClick={handleClose}>Hủy</Button>
         </DialogActions>
       </Dialog>

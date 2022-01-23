@@ -10,6 +10,7 @@ import Button from '@mui/material/Button'
 import TravelSchedule from 'components/travelSchedule'
 import userApi from 'apis/userApi'
 import axios from 'axios'
+import Confirmation from 'components/confirmation'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -17,31 +18,13 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
 }))
 
-// type dataType = {
-//   data: {
-//     citizenIdentification: string
-//     createdDate: string
-//     district: number
-//     email: string
-//     fullName: string
-//     gender: number
-//     id: number
-//     password: string
-//     phone: string
-//     province: number
-//     provinceName: string
-//     specificAddress: string
-//     ward: number
-//     yearOfBirth: number
-//   }
-// }
-
 const headerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   backgroundColor: '#ccc',
   borderRadius: '10px',
   margin: '0 20px',
+  boxShadow: 3,
 }
 
 export default function UserDetail() {
@@ -90,7 +73,7 @@ export default function UserDetail() {
         </Box>
         <Box
           sx={{
-            display: 'flex',
+            display: { md: 'flex', xs: 'none' },
             alignItems: 'center',
             justifyContent: 'center',
             marginRight: '20px',
@@ -103,17 +86,17 @@ export default function UserDetail() {
       </Box>
       <Box sx={{ flexGrow: 1, margin: '0 20px' }}>
         <Grid container spacing={2}>
-          <Grid item xs={7}>
+          <Grid item xs={12} md={7}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Thông tin chi tiết</h3>
             </Box>
             <AccountInformation />
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={0} md={5}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Yêu cầu xác nhận</h3>
             </Box>
-            <Item>Không có yêu cầu nào!</Item>
+            <Confirmation />
           </Grid>
         </Grid>
       </Box>
