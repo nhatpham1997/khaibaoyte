@@ -17,8 +17,7 @@ interface movingRegisterType {
   district: number
   ward: number
   specificAddress: string
-  status: boolean
-  confirm: boolean
+  status: number
   id: number
   createdAt: number
 }

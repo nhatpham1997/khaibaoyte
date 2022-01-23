@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import adminApi from 'apis/adminApi'
-import { locationApi } from 'apis/covid'
-import movingDeclarationApi from 'apis/movingDeclaration'
-import movingRegisterApi from 'apis/movingRegister'
-import userApi from 'apis/userApi'
-import { createContext, ReactNode, useState, useEffect } from 'react'
+import adminApi from '../apis/adminApi'
+import { locationApi } from '../apis/covid'
+import movingDeclarationApi from '../apis/movingDeclaration'
+import movingRegisterApi from '../apis/movingRegister'
+import userApi from '../apis/userApi'
+import { createContext, ReactNode, useState, useEffect, useContext } from 'react'
 
 type Props = {
   children: ReactNode
@@ -62,8 +62,7 @@ type movingRegister = {
   district: number
   ward: number
   specificAddress: string
-  status: boolean
-  confirm: boolean
+  status: number
   id: number
   createdAt: number
 }
@@ -76,6 +75,7 @@ type InitialStateContextType = {
   movingRegister: movingRegister[]
   miniSideNav: boolean
   setMiniSideNav: (miniSideNav: boolean) => void
+  editMovingRegister: (data: movingRegister[]) => void
 }
 
 const initialStateContextValue: InitialStateContextType = {
@@ -86,6 +86,7 @@ const initialStateContextValue: InitialStateContextType = {
   movingRegister: [],
   miniSideNav: false,
   setMiniSideNav: () => {},
+  editMovingRegister: () => {},
 }
 
 export const GlobalContext = createContext<InitialStateContextType>(initialStateContextValue)
@@ -97,6 +98,12 @@ export default function GlobalProvider({ children }: Props) {
   const [movingDeclaration, setMovingDeclaration] = useState<any>([])
   const [movingRegister, setMovingRegister] = useState<any>([])
   const [miniSideNav, setMiniSideNav] = useState(false)
+
+  const editMovingRegister = (data: movingRegister[]) => {
+    console.log(data)
+    console.log(movingRegister)
+    setMovingRegister(data)
+  }
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -169,9 +176,14 @@ export default function GlobalProvider({ children }: Props) {
         admins,
         movingDeclaration,
         movingRegister,
+        editMovingRegister,
       }}
     >
       {children}
     </GlobalContext.Provider>
   )
+}
+
+export const useGlobalContext = () => {
+  return useContext(GlobalContext)
 }

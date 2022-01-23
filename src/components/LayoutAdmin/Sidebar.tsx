@@ -61,7 +61,6 @@ const LinkNavbar = styled(Link)(() => ({
 
 function Sidebar() {
   const route = useLocation().pathname
-  console.log(route)
   const [alignment, setAlignment] = useState('/admin')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
