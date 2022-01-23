@@ -2,6 +2,7 @@
 import adminApi from 'apis/adminApi'
 import { locationApi } from 'apis/covid'
 import movingDeclarationApi from 'apis/movingDeclaration'
+import movingRegisterApi from 'apis/movingRegister'
 import userApi from 'apis/userApi'
 import { createContext, ReactNode, useState, useEffect } from 'react'
 
@@ -19,18 +20,20 @@ type Location = {
 }
 
 type userType = {
-  email: string
-  password: string
-  fullName: string
-  yearOfBirth: string
-  citizenIdentification: string
-  gender: string
-  province: string
-  district: string
-  ward: string
-  phone: string
-  createdDate: string
-  id: number
+  citizenIdentification?: string
+  createdDate?: string
+  district?: number
+  email?: string
+  fullName?: string
+  gender?: number
+  id?: number
+  password?: string
+  phone?: string
+  province?: number
+  provinceName?: string
+  specificAddress?: string
+  ward?: number
+  yearOfBirth?: number
 }
 
 type movingDeclaration = {
@@ -39,7 +42,30 @@ type movingDeclaration = {
   province: string
   district: string
   ward: string
-  id: 1
+  id: number
+}
+
+type movingRegister = {
+  fullName: string
+  yearOfBirth: number
+  gender: number
+  citizenIdentification: string
+  email: string
+  phone: string
+  provinceResidence: number
+  districtResidence: number
+  wardResidence: number
+  specificAddressResidence: string
+  userId: number
+  time: string
+  province: number
+  district: number
+  ward: number
+  specificAddress: string
+  status: boolean
+  confirm: boolean
+  id: number
+  createdAt: number
 }
 
 type InitialStateContextType = {
@@ -47,6 +73,7 @@ type InitialStateContextType = {
   users: userType[]
   admins: userType[]
   movingDeclaration: movingDeclaration[]
+  movingRegister: movingRegister[]
   miniSideNav: boolean
   setMiniSideNav: (miniSideNav: boolean) => void
 }
@@ -56,6 +83,7 @@ const initialStateContextValue: InitialStateContextType = {
   users: [],
   admins: [],
   movingDeclaration: [],
+  movingRegister: [],
   miniSideNav: false,
   setMiniSideNav: () => {},
 }
@@ -67,6 +95,7 @@ export default function GlobalProvider({ children }: Props) {
   const [users, setUsers] = useState<any>([])
   const [admins, setAdmins] = useState<any>([])
   const [movingDeclaration, setMovingDeclaration] = useState<any>([])
+  const [movingRegister, setMovingRegister] = useState<any>([])
   const [miniSideNav, setMiniSideNav] = useState(false)
 
   useEffect(() => {
@@ -101,6 +130,7 @@ export default function GlobalProvider({ children }: Props) {
       } catch (error) {
         console.log('Failed to fetch post list: ', error)
       }
+      console.log(1)
     }
     fetchAdmin()
   }, [])
@@ -117,9 +147,29 @@ export default function GlobalProvider({ children }: Props) {
     fetchMovingDeclaration()
   }, [])
 
+  useEffect(() => {
+    const fetchMovingRegister = async () => {
+      try {
+        const response = await movingRegisterApi.getAll()
+        setMovingRegister(response)
+      } catch (error) {
+        console.log('Failed to fetch post list: ', error)
+      }
+    }
+    fetchMovingRegister()
+  }, [])
+
   return (
     <GlobalContext.Provider
-      value={{ covidLocations, miniSideNav, setMiniSideNav, users, admins, movingDeclaration }}
+      value={{
+        covidLocations,
+        miniSideNav,
+        setMiniSideNav,
+        users,
+        admins,
+        movingDeclaration,
+        movingRegister,
+      }}
     >
       {children}
     </GlobalContext.Provider>

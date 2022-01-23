@@ -54,8 +54,8 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
           <TableHead>
             <TableRow>
               <TableCell sx={{ width: '30px' }}>STT</TableCell>
-              <TableCell align="left">Tài khoản</TableCell>
-              <TableCell sx={{ minWidth: '150px' }} align="left">
+              <TableCell align="left">Email</TableCell>
+              <TableCell sx={{ minWidth: '170px' }} align="left">
                 Tên người dùng
               </TableCell>
               <TableCell align="left">Email</TableCell>
@@ -117,8 +117,10 @@ const AccountManagement = (props: dataAdmin & dataUser) => {
                         </Button>
                       </Link>
                       <ConfirmAdmin
-                        title="Bạn có chắc muốn xóa không?"
-                        content={`Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ! Bạn có chắc chắn muốn xóa tài khoản "${row.username}" chứ!`}
+                        id={row.id}
+                        account="User"
+                        title={`Bạn có chắc muốn xóa "${row.email}" không?`}
+                        content={`Khi xác nhận thì toàn bộ thông tin tài khoản "${row.email}" bao gồm cả thông tin liên quan sẽ bị xóa!`}
                       />
                     </>
                   )}
