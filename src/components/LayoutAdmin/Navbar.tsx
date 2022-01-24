@@ -3,11 +3,12 @@ import TextField from '@mui/material/TextField'
 import Breadcrumbs from './Breadcrumbs'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SettingsIcon from '@mui/icons-material/Settings'
-import NotificationsIcon from '@mui/icons-material/Notifications'
 import MenuIcon from '@mui/icons-material/Menu'
 import MenuOpenIcon from '@mui/icons-material/MenuOpen'
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { GlobalContext } from 'contexts'
+import LogoutIcon from '@mui/icons-material/Logout'
+import { useNavigate } from 'react-router-dom'
 
 function Item(props: BoxProps) {
   const { sx, ...other } = props
@@ -24,9 +25,17 @@ function Item(props: BoxProps) {
 
 function Navbar() {
   const { miniSideNav, setMiniSideNav } = useContext(GlobalContext)
+  const { setLogin } = React.useContext(GlobalContext)
+  const navigate = useNavigate()
 
   const handleMenuButton = () => {
     setMiniSideNav(!miniSideNav)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('admin')
+    setLogin('')
+    navigate('/admin')
   }
 
   return (
@@ -54,8 +63,11 @@ function Navbar() {
           <Item sx={{ '& .MuiSvgIcon-root': { fontSize: '2.5rem' } }}>
             <SettingsIcon />
           </Item>
-          <Item sx={{ '& .MuiSvgIcon-root': { fontSize: '2.5rem' } }}>
-            <NotificationsIcon />
+          <Item
+            onClick={handleLogout}
+            sx={{ '& .MuiSvgIcon-root': { fontSize: '2.5rem' }, cursor: 'pointer' }}
+          >
+            <LogoutIcon />
           </Item>
         </Box>
       </Box>

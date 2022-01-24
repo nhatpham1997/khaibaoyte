@@ -5,6 +5,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import PersonIcon from '@mui/icons-material/Person'
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive'
 import CoronavirusIcon from '@mui/icons-material/Coronavirus'
+import { GlobalContext } from 'contexts'
 
 const boxContainer = {
   position: 'relative',
@@ -21,17 +22,18 @@ const boxContainer = {
 }
 
 const HomePage = () => {
+  const { users, admins, movingRegister } = React.useContext(GlobalContext)
   const data = [
     {
       title: 'Quản trị viên',
-      total: '6',
+      total: admins.length,
       path: '/admin/account-admin',
       icon: <AdminPanelSettingsIcon fontSize={'large'} />,
       color: '#242426',
     },
     {
       title: 'Người dùng',
-      total: '6',
+      total: users.length,
       path: '/admin/account-user',
       icon: <PersonIcon fontSize={'large'} />,
       color: '#419bf0',
@@ -39,14 +41,14 @@ const HomePage = () => {
     {
       title: 'Vùng dịch',
       total: '6',
-      path: '/admin',
+      path: '/admin/epidemic-area',
       icon: <CoronavirusIcon fontSize={'large'} />,
       color: '#de2668',
     },
     {
       title: 'Thông báo',
-      total: '6',
-      path: '/admin',
+      total: movingRegister.filter((item: any) => item.status === 0).length,
+      path: '/admin/application-for-moving',
       icon: <NotificationsActiveIcon fontSize={'large'} />,
       color: '#5ab25e',
     },
@@ -54,25 +56,19 @@ const HomePage = () => {
 
   const data1 = [
     {
-      src: 'https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw',
+      src: 'https://baothanhhoa.vn/media/img/420/news/2010/146d2110249t490l2-untitled-infogr-4491.png',
       title: 'Khai báo y tế',
-      channel: 'Don Diablo',
-      views: '396 k views',
-      createdAt: 'a week ago',
+      path: '/',
     },
     {
-      src: 'https://i.ytimg.com/vi/_Uu12zY01ts/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpX6Jan2rxrCAZxJYDXppTP4MoQA',
-      title: 'Queen - Greatest Hits',
-      channel: 'Queen Official',
-      views: '40 M views',
-      createdAt: '3 years ago',
+      src: 'https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2021/8/27/covid-19-cap-nhat-moi-nhat-1630022533654284996091-0-0-491-786-crop-1630022545490368129240.png',
+      title: 'Bản tin cập nhật thông tin covid-19',
+      path: 'https://covid19.gov.vn/',
     },
     {
-      src: 'https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw',
-      title: 'Calvin Harris, Sam Smith - Promises (Official Video)',
-      channel: 'Calvin Harris',
-      views: '130 M views',
-      createdAt: '10 months ago',
+      src: 'https://cdn.tgdd.vn//GameApp/-1//7-800x450-23.png',
+      title: 'Bản đồ dịch Việt Nam',
+      path: 'https://covidmaps.langson.gov.vn/langson?locale=vn',
     },
   ]
 
@@ -116,34 +112,50 @@ const HomePage = () => {
       <h3 style={{ margin: '20px 20px 0', fontSize: '1.8rem' }}>Xem thêm</h3>
       <Grid container spacing={3} px={1}>
         {data1.map((item, index) => (
-          <Grid item xs={12} md={4} lg={4} key={index} sx={{ width: '100%', my: 3 }}>
-            {item ? (
-              <img
-                style={{ width: '100%', maxHeight: '20rem', objectFit: 'cover' }}
-                alt={item.title}
-                src={item.src}
-              />
-            ) : (
-              <Skeleton variant="rectangular" width={210} height={118} />
-            )}
-            {item ? (
-              <Box sx={{ pr: 2, mt: 1, '& .MuiTypography-root': { fontSize: '1.4rem' } }}>
-                <Typography gutterBottom variant="body2">
-                  {item.title}
-                </Typography>
-                <Typography display="block" variant="caption" color="text.secondary">
+          <Grid
+            item
+            key={index}
+            xs={12}
+            md={4}
+            lg={4}
+            sx={{ width: '100%', height: '100%', my: 3 }}
+          >
+            <a href={item.path} target="_ blank" rel="noreferrer">
+              {item ? (
+                <img
+                  style={{ width: '100%', height: '20rem', objectFit: 'cover' }}
+                  alt={item.title}
+                  src={item.src}
+                />
+              ) : (
+                <Skeleton variant="rectangular" width={210} height={118} />
+              )}
+              {item ? (
+                <Box
+                  sx={{
+                    pr: 2,
+                    mt: 1,
+                    '& .MuiTypography-root': { fontSize: '1.4rem' },
+                    color: 'blue',
+                  }}
+                >
+                  <Typography gutterBottom variant="body2">
+                    {item.title}
+                  </Typography>
+                  {/* <Typography display="block" variant="caption" color="text.secondary">
                   {item.channel}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
+                </Typography> */}
+                  {/* <Typography variant="caption" color="text.secondary">
                   {`${item.views} • ${item.createdAt}`}
-                </Typography>
-              </Box>
-            ) : (
-              <Box sx={{ pt: 0.5 }}>
-                <Skeleton />
-                <Skeleton width="60%" />
-              </Box>
-            )}
+                </Typography> */}
+                </Box>
+              ) : (
+                <Box sx={{ pt: 0.5 }}>
+                  <Skeleton />
+                  <Skeleton width="60%" />
+                </Box>
+              )}
+            </a>
           </Grid>
         ))}
       </Grid>

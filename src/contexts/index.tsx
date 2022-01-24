@@ -69,24 +69,38 @@ type movingRegister = {
 
 type InitialStateContextType = {
   covidLocations: Location[]
+  isLogin: string
+  setLogin: (data: any) => void
   users: userType[]
+  dataUsers: (data: any) => void
   admins: userType[]
+  dataAdmins: (data: any) => void
   movingDeclaration: movingDeclaration[]
+  dataMovingDeclaration: (data: any) => void
   movingRegister: movingRegister[]
+  dataMovingRegister: (data: any) => void
   miniSideNav: boolean
   setMiniSideNav: (miniSideNav: boolean) => void
   editMovingRegister: (data: movingRegister[]) => void
+  dataCovidLocations: (data: any) => void
 }
 
 const initialStateContextValue: InitialStateContextType = {
   covidLocations: [],
+  isLogin: '',
+  setLogin: () => {},
   users: [],
+  dataUsers: () => {},
   admins: [],
+  dataAdmins: () => {},
   movingDeclaration: [],
+  dataMovingDeclaration: () => {},
   movingRegister: [],
+  dataMovingRegister: () => {},
   miniSideNav: false,
   setMiniSideNav: () => {},
   editMovingRegister: () => {},
+  dataCovidLocations: () => {},
 }
 
 export const GlobalContext = createContext<InitialStateContextType>(initialStateContextValue)
@@ -98,6 +112,11 @@ export default function GlobalProvider({ children }: Props) {
   const [movingDeclaration, setMovingDeclaration] = useState<any>([])
   const [movingRegister, setMovingRegister] = useState<any>([])
   const [miniSideNav, setMiniSideNav] = useState(false)
+  const [isLogin, setIsLogin] = useState('')
+
+  const setLogin = (data: string) => {
+    setIsLogin(data)
+  }
 
   const editMovingRegister = (data: movingRegister[]) => {
     console.log(data)
@@ -105,66 +124,25 @@ export default function GlobalProvider({ children }: Props) {
     setMovingRegister(data)
   }
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await locationApi.getAll()
-        setCovidLocations(response.data.locations)
-      } catch (error) {
-        console.log('Failed to fetch post list: ', error)
-      }
-    }
-    fetchLocations()
-  }, [])
+  const dataCovidLocations = (data: any) => {
+    setCovidLocations(data)
+  }
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await userApi.getAll()
-        setUsers(response)
-      } catch (error) {
-        console.log('Failed to fetch post list: ', error)
-      }
-    }
-    fetchUser()
-  }, [])
+  const dataUsers = (data: any) => {
+    setUsers(data)
+  }
 
-  useEffect(() => {
-    const fetchAdmin = async () => {
-      try {
-        const response = await adminApi.getAll()
-        setAdmins(response)
-      } catch (error) {
-        console.log('Failed to fetch post list: ', error)
-      }
-      console.log(1)
-    }
-    fetchAdmin()
-  }, [])
+  const dataAdmins = (data: any) => {
+    setAdmins(data)
+  }
 
-  useEffect(() => {
-    const fetchMovingDeclaration = async () => {
-      try {
-        const response = await movingDeclarationApi.getAll()
-        setMovingDeclaration(response)
-      } catch (error) {
-        console.log('Failed to fetch post list: ', error)
-      }
-    }
-    fetchMovingDeclaration()
-  }, [])
+  const dataMovingDeclaration = (data: any) => {
+    setMovingDeclaration(data)
+  }
 
-  useEffect(() => {
-    const fetchMovingRegister = async () => {
-      try {
-        const response = await movingRegisterApi.getAll()
-        setMovingRegister(response)
-      } catch (error) {
-        console.log('Failed to fetch post list: ', error)
-      }
-    }
-    fetchMovingRegister()
-  }, [])
+  const dataMovingRegister = (data: any) => {
+    setMovingRegister(data)
+  }
 
   return (
     <GlobalContext.Provider
@@ -172,11 +150,18 @@ export default function GlobalProvider({ children }: Props) {
         covidLocations,
         miniSideNav,
         setMiniSideNav,
+        isLogin,
+        setLogin,
         users,
+        dataUsers,
         admins,
+        dataAdmins,
         movingDeclaration,
+        dataMovingDeclaration,
         movingRegister,
+        dataMovingRegister,
         editMovingRegister,
+        dataCovidLocations,
       }}
     >
       {children}
