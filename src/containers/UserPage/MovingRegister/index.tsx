@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import DateRegister from 'components/DateRegister'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
+import Noti from 'components/Noti'
 
 function MovingRegister() {
   const userAPI = 'https://dbkhaibaoyte.herokuapp.com/user'
@@ -24,17 +25,28 @@ function MovingRegister() {
   const [ward, setWard] = useState('')
   const [wards, setWards] = useState<any[]>([])
 
-  // const [showNoti, setShowNoti] = useState(false)
-
-  const [error, setError] = useState({
-    name: false,
-    yearOfBirth: false,
-    sex: false,
-    email: false,
-    phone: false,
+  const [showNoti, setShowNoti] = useState(false)
+  const [payloadNoti, setPayloadNoti] = useState({
+    status: 'success',
+    text: '',
   })
 
-  let time = ''
+  const [error, setError] = useState({
+    name: { val: false, code: 0 },
+    yearOfBirth: { val: false, code: 0 },
+    sex: false,
+    email: { val: false, code: 0 },
+    phone: { val: false, code: 0 },
+    provinceResidence: false,
+    districtResidence: false,
+    wardResidence: false,
+    specificAddressResidence: false,
+    date: { val: false, code: 0 },
+    province: false,
+    district: false,
+    ward: false,
+    specificAddress: false,
+  })
 
   const sexes = [
     {
@@ -50,6 +62,8 @@ function MovingRegister() {
       label: 'Khác',
     },
   ]
+
+  let time = ''
 
   // Lấy ra id tài khoản lưu ở local storage
   const userId = localStorage.getItem('userId')
@@ -77,14 +91,11 @@ function MovingRegister() {
       .then((user) => {
         delete user.password
         delete user.createdDate
+        delete user.createdAt
         delete user.provinceName
-        delete user.districtName
-        delete user.wardName
         setCurrentUser(user)
       })
   }, [])
-
-  console.log(currentUser)
 
   const nameRef = useRef<HTMLDivElement>(null)
 
@@ -116,21 +127,36 @@ function MovingRegister() {
   // Hàm xử lý thay đổi tên
   function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.value) {
-      setError((prev) => ({ ...prev, name: true }))
+      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 1 } }))
+    } else if (
+      e.target.value.match(/^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g) ===
+      null
+    ) {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: false, code: 0 } }))
     }
     setCurrentUser((prev) => {
-      return { ...prev, fullName: e.target.value }
+      return { ...prev, citizenIdentification: e.target.value }
     })
   }
 
   // Hàm thay đổi năm sinh
   function handleChangeYOB(e: React.ChangeEvent<HTMLInputElement>) {
-    if (
-      !e.target.value ||
-      parseInt(e.target.value) < 1900 ||
-      parseInt(e.target.value) > new Date().getFullYear()
-    ) {
-      setError((prev) => ({ ...prev, yearOfBirth: true }))
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, yearOfBirth: { val: true, code: 1 } }))
+    } else if (parseInt(e.target.value) < 1900) {
+      setError((prev) => ({
+        ...prev,
+        yearOfBirth: { val: true, code: 2 },
+      }))
+    } else if (parseInt(e.target.value) > new Date().getFullYear()) {
+      setError((prev) => ({
+        ...prev,
+        yearOfBirth: { val: true, code: 3 },
+      }))
+    } else {
+      setError((prev) => ({ ...prev, yearOfBirth: { val: false, code: 0 } }))
     }
     setCurrentUser((prev) => {
       return { ...prev, yearOfBirth: parseInt(e.target.value) }
@@ -140,7 +166,11 @@ function MovingRegister() {
   // Hàm thay đổi email
   function handleChangeEmail(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.value) {
-      setError((prev) => ({ ...prev, email: true }))
+      setError((prev) => ({ ...prev, email: { val: true, code: 1 } }))
+    } else if (e.target.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) === null) {
+      setError((prev) => ({ ...prev, email: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, email: { val: false, code: 0 } }))
     }
     setCurrentUser((prev) => {
       return { ...prev, email: e.target.value }
@@ -149,33 +179,42 @@ function MovingRegister() {
   // Hàm thay đổi số điện thoại
   function handleChangePhone(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.value) {
-      setError((prev) => ({ ...prev, phone: true }))
+      setError((prev) => ({ ...prev, phone: { val: true, code: 1 } }))
+    } else if (e.target.value.match(/((09|03|07|08|05)+([0-9]{8})\b)/i) === null) {
+      setError((prev) => ({ ...prev, phone: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, phone: { val: false, code: 0 } }))
     }
     setCurrentUser((prev) => {
       return { ...prev, phone: e.target.value }
     })
   }
 
-  // Hàm thay đổi địa chỉ cụ thể
+  // Hàm thay đổi nơi ở hiện tại
   function handleChangeSpecificAddressResidence(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.value) {
-      setError((prev) => ({ ...prev, specificAddress: true }))
+      setError((prev) => ({ ...prev, specificAddressResidence: true }))
+    } else {
+      setError((prev) => ({ ...prev, specificAddressResidence: false }))
     }
     setCurrentUser((prev) => {
       return { ...prev, specificAddress: e.target.value }
     })
   }
-  // Hàm thay đổi địa chỉ cụ thể
+  // Hàm thay đổi nơi di chuyển đến
 
   function handleChangeSpecificAddress(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, specificAddress: true }))
+    } else {
+      setError((prev) => ({ ...prev, specificAddress: false }))
+    }
     setSpecificAddress(e.target.value)
   }
 
   // Hàm xử lý chọn giới tính
   function handleChangeSex(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!e.target.value) {
-      setError((prev) => ({ ...prev, gender: true }))
-    }
+    setError((prev) => ({ ...prev, sex: false }))
     setCurrentUser((prev) => {
       return { ...prev, gender: parseInt(e.target.value) }
     })
@@ -214,6 +253,7 @@ function MovingRegister() {
 
   // Hàm xử lý chọn tỉnh/thành phố di chuyển
   function handleChangeProvince(e: React.ChangeEvent<HTMLInputElement>) {
+    setError((prev) => ({ ...prev, province: false }))
     setDistrict('')
     setDistricts([])
     setWard('')
@@ -229,6 +269,7 @@ function MovingRegister() {
 
   // Hàm xử lý chọn quận/huyện di chuyển
   function handleChangeDistrict(e: React.ChangeEvent<HTMLInputElement>) {
+    setError((prev) => ({ ...prev, district: false }))
     setWard('')
     setWards([])
     const codeDistrict = e.target.value
@@ -242,101 +283,232 @@ function MovingRegister() {
 
   // Hàm xử lý chọn phường/xã di chuyển
   function handleChangeWard(e: React.ChangeEvent<HTMLInputElement>) {
+    setError((prev) => ({ ...prev, ward: false }))
     setWard(e.target.value)
   }
 
   if (dayMY) {
-    console.log(dayMY.getDate())
-    console.log(dayMY.getMonth() + 1)
-    console.log(dayMY.getFullYear())
     time = `${dayMY.getDate() < 10 ? '0' + dayMY.getDate() : dayMY.getDate()}/${
       dayMY.getMonth() + 1 < 10 ? '0' + (dayMY.getMonth() + 1) : dayMY.getMonth() + 1
     }/${dayMY.getFullYear()}`
   }
 
   function handleSubmitForm() {
-    // Validation dữ liệu
-
-    let provinceName = ''
-    provinces.forEach((element) => {
-      if (element.code === province) {
-        provinceName = element.name
-      }
-    })
-    let districtName = ''
-    districts.forEach((element) => {
-      if (element.code === district) {
-        districtName = element.name
-      }
-    })
-    let wardName = ''
-    wards.forEach((element) => {
-      if (element.code === ward) {
-        wardName = element.name
-      }
-    })
-    let provinceResidenceName = ''
-    provinceResidences.forEach((element) => {
-      if (element.code === currentUser.province) {
-        provinceResidenceName = element.name
-      }
-    })
-    let districtResidenceName = ''
-    districtResidences.forEach((element) => {
-      if (element.code === currentUser.district) {
-        districtResidenceName = element.name
-      }
-    })
-    let wardResidenceName = ''
-    wardResidences.forEach((element) => {
-      if (element.code === currentUser.ward) {
-        wardResidenceName = element.name
-      }
-    })
-    // if (error) {
-    //   alert('Lỗi')
-    // } else {
-    const data = {
-      ...currentUser,
-      provinceResidence: currentUser.province,
-      districtResidence: currentUser.district,
-      wardResidence: currentUser.ward,
-      specificAddressResidence: currentUser.specificAddress,
-      userId: currentUser.id,
-      time: time,
-
-      province: province,
-      district: district,
-      ward: ward,
-      specificAddress: specificAddress,
-      provinceName: provinceName,
-      districtName: districtName,
-      wardName: wardName,
-      provinceResidenceName: provinceResidenceName,
-      districtResidenceName: districtResidenceName,
-      wardResidenceName: wardResidenceName,
-      status: 0,
-    }
-    // Xóa trường id không cần thiết
-    delete data.id
-    console.log('submit', data)
-    // hiển thị thông báo
-    // setShowNoti(true)
-    console.log('error', error)
-    // Call api
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }
-    fetch(movingRegisterAPI, options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
+    if (!currentUser.fullName) {
+      setError((prev) => {
+        return { ...prev, name: { val: true, code: 1 } }
       })
-      .catch((err) => console.log('Lỗi' + err))
+    }
+    if (!currentUser.yearOfBirth) {
+      setError((prev) => {
+        return { ...prev, yearOfBirth: { val: true, code: 1 } }
+      })
+    }
+    if (!currentUser.gender) {
+      setError((prev) => {
+        return { ...prev, sex: true }
+      })
+    }
+
+    if (!currentUser.email) {
+      setError((prev) => {
+        return { ...prev, email: { val: true, code: 1 } }
+      })
+    }
+    if (!currentUser.phone) {
+      setError((prev) => {
+        return { ...prev, phone: { val: true, code: 1 } }
+      })
+    }
+    if (!currentUser.province) {
+      setError((prev) => {
+        return { ...prev, provinceResidence: true }
+      })
+    }
+    if (!currentUser.district) {
+      setError((prev) => {
+        return { ...prev, districtResidence: true }
+      })
+    }
+    if (!currentUser.ward) {
+      setError((prev) => {
+        return { ...prev, wardResidence: true }
+      })
+    }
+    if (!currentUser.specificAddress) {
+      setError((prev) => {
+        return { ...prev, specificAddressResidence: true }
+      })
+    }
+    if (!dayMY) {
+      setError((prev) => {
+        return { ...prev, date: { val: true, code: 1 } }
+      })
+    }
+
+    if (!province) {
+      setError((prev) => {
+        return { ...prev, province: true }
+      })
+    }
+    if (!district) {
+      setError((prev) => {
+        return { ...prev, district: true }
+      })
+    }
+    if (!ward) {
+      setError((prev) => {
+        return { ...prev, ward: true }
+      })
+    }
+    if (!specificAddress) {
+      setError((prev) => {
+        return { ...prev, specificAddress: true }
+      })
+    }
+
+    // Check trường hợp tất cả các field có lỗi hay không? nếu có, thì hiển thị thông báo lỗi. nếu không, thì hiển thị thông báo thêm mới tờ khai thành công
+
+    const conditions = []
+    conditions.push(error.name.val)
+    conditions.push(error.yearOfBirth.val)
+    conditions.push(error.sex)
+    conditions.push(error.email.val)
+    conditions.push(error.phone.val)
+    conditions.push(error.provinceResidence)
+    conditions.push(error.districtResidence)
+    conditions.push(error.wardResidence)
+    conditions.push(error.specificAddressResidence)
+    conditions.push(error.date.val)
+    conditions.push(error.province)
+    conditions.push(error.district)
+    conditions.push(error.ward)
+    conditions.push(error.specificAddress)
+
+    const check = conditions.some((item) => {
+      return item
+    })
+
+    // Hiên thị thông báo lỗi, thêm tờ khai thất bại
+    if (
+      check === true ||
+      !currentUser.fullName ||
+      !currentUser.yearOfBirth ||
+      !currentUser.gender ||
+      !currentUser.email ||
+      !currentUser.phone ||
+      !currentUser.province ||
+      !currentUser.district ||
+      !currentUser.ward ||
+      !currentUser.specificAddress ||
+      !dayMY ||
+      !province ||
+      !district ||
+      !ward ||
+      !specificAddress
+    ) {
+      setPayloadNoti({
+        status: 'error',
+        text: 'Vui lòng nhập đủ thông tin',
+      })
+      setShowNoti(true)
+    } else {
+      if (dayMY) {
+        time = `${dayMY.getDate() < 10 ? '0' + dayMY.getDate() : dayMY.getDate()}/${
+          dayMY.getMonth() + 1 < 10 ? '0' + (dayMY.getMonth() + 1) : dayMY.getMonth() + 1
+        }`
+      }
+
+      let provinceName = ''
+      provinces.forEach((element) => {
+        if (element.code === province) {
+          provinceName = element.name
+        }
+      })
+      let districtName = ''
+      districts.forEach((element) => {
+        if (element.code === district) {
+          districtName = element.name
+        }
+      })
+      let wardName = ''
+      wards.forEach((element) => {
+        if (element.code === ward) {
+          wardName = element.name
+        }
+      })
+      let provinceResidenceName = ''
+      provinceResidences.forEach((element) => {
+        if (element.code === currentUser.province) {
+          provinceResidenceName = element.name
+        }
+      })
+      let districtResidenceName = ''
+      districtResidences.forEach((element) => {
+        if (element.code === currentUser.district) {
+          districtResidenceName = element.name
+        }
+      })
+      let wardResidenceName = ''
+      wardResidences.forEach((element) => {
+        if (element.code === currentUser.ward) {
+          wardResidenceName = element.name
+        }
+      })
+      const data = {
+        ...currentUser,
+        provinceResidence: currentUser.province,
+        districtResidence: currentUser.district,
+        wardResidence: currentUser.ward,
+        specificAddressResidence: currentUser.specificAddress,
+        userId: currentUser.id,
+        time: time,
+
+        province: province,
+        district: district,
+        ward: ward,
+        specificAddress: specificAddress,
+        provinceName: provinceName,
+        districtName: districtName,
+        wardName: wardName,
+        provinceResidenceName: provinceResidenceName,
+        districtResidenceName: districtResidenceName,
+        wardResidenceName: wardResidenceName,
+        status: 0,
+      }
+      // Xóa trường id không cần thiết
+      delete data.id
+      console.log('submit', data)
+      // hiển thị thông báo
+      // setShowNoti(true)
+      console.log('error', error)
+      // Call api
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data),
+      }
+      fetch(movingRegisterAPI, options)
+        .then((res) => res.json())
+        .then((data) => {
+          setPayloadNoti({
+            status: 'success',
+            text: 'Khai báo di chuyển thành công',
+          })
+          setShowNoti(true)
+        })
+        .catch((err) => {
+          console.log('Lỗi' + err)
+          setPayloadNoti({
+            status: 'error',
+            text: 'Khai báo di chuyển thất bại. Hệ thống bị lỗi',
+          })
+          setShowNoti(true)
+        })
+    }
   }
 
   return (
@@ -361,22 +533,13 @@ function MovingRegister() {
         fullWidth
         value={currentUser.fullName || ''}
         onChange={handleChangeName}
-        error={
-          currentUser.fullName &&
-          /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g.test(
-            currentUser.fullName
-          )
-            ? false
-            : true
-        }
+        error={error.name.val}
         helperText={
-          !currentUser.fullName
-            ? 'Bạn chưa nhập họ tên'
-            : /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g.test(
-                currentUser.fullName
-              )
-            ? ''
-            : 'Họ tên không hợp lệ'
+          error.name.val === true && error.name.code === 1
+            ? 'Bạn chưa nhập tên'
+            : error.name.val === true && error.name.code === 2
+            ? 'Tên không hợp lệ'
+            : ''
         }
       />
       <div className="row">
@@ -391,20 +554,14 @@ function MovingRegister() {
           required
           value={currentUser.yearOfBirth || ''}
           onChange={handleChangeYOB}
-          error={
-            currentUser.yearOfBirth &&
-            currentUser.yearOfBirth <= new Date().getFullYear() &&
-            currentUser.yearOfBirth >= 1900
-              ? false
-              : true
-          }
+          error={error.yearOfBirth.val}
           helperText={
-            !currentUser.yearOfBirth
+            error.yearOfBirth.val === true && error.yearOfBirth.code === 1
               ? 'Bạn chưa nhập năm sinh'
-              : currentUser.yearOfBirth > new Date().getFullYear()
-              ? 'Năm sinh không thể lớn hơn năm hiện tại'
-              : currentUser.yearOfBirth < 1900
+              : error.yearOfBirth.val === true && error.yearOfBirth.code === 2
               ? 'Năm sinh không hợp lệ'
+              : error.yearOfBirth.val === true && error.yearOfBirth.code === 3
+              ? 'Năm sinh không thể lớn hơn năm hiện tại'
               : ''
           }
         />
@@ -419,8 +576,8 @@ function MovingRegister() {
           select
           value={currentUser.gender || ''}
           onChange={handleChangeSex}
-          error={currentUser.gender ? false : true}
-          helperText={currentUser.gender ? '' : 'Bạn chưa chọn giới tính'}
+          error={error.sex}
+          helperText={error.sex === false ? '' : 'Bạn chưa chọn giới tính'}
         >
           {sexes.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -440,18 +597,13 @@ function MovingRegister() {
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
           value={currentUser.email || ''}
-          onChange={handleChangeEmail}
-          error={
-            currentUser.email && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(currentUser.email)
-              ? false
-              : true
-          }
+          error={error.email.val}
           helperText={
-            !currentUser.email
+            error.email.val === true && error.email.code === 1
               ? 'Bạn chưa nhập email'
-              : /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(currentUser.email)
-              ? ''
-              : 'email không hợp lệ'
+              : error.email.val === true && error.email.code === 2
+              ? 'email không hợp lệ'
+              : ''
           }
         />
         <TextField
@@ -464,17 +616,13 @@ function MovingRegister() {
           required
           value={currentUser.phone || ''}
           onChange={handleChangePhone}
-          error={
-            currentUser.phone && /((09|03|07|08|05)+([0-9]{8})\b)/i.test(currentUser.phone)
-              ? false
-              : true
-          }
+          error={error.phone.val}
           helperText={
-            !currentUser.phone
+            error.phone.val === true && error.phone.code === 1
               ? 'Bạn chưa nhập số điện thoại'
-              : /((09|03|07|08|05)+([0-9]{8})\b)/i.test(currentUser.phone)
-              ? ''
-              : 'số điện thoại không hợp lệ'
+              : error.phone.val === true && error.phone.code === 2
+              ? 'Số điện thoại không hợp lệ'
+              : ''
           }
         />
       </div>
@@ -493,8 +641,8 @@ function MovingRegister() {
           select
           value={currentUser.province || ''}
           onChange={handleChangeProvinceResidence}
-          error={currentUser.province ? false : true}
-          helperText={currentUser.province ? '' : 'Bạn chưa chọn tỉnh/thành phố'}
+          error={error.provinceResidence}
+          helperText={error.provinceResidence === false ? '' : 'Bạn chưa chọn tỉnh/thành phố'}
         >
           {provinceResidences.map((provinceResidence) => (
             <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
@@ -513,8 +661,8 @@ function MovingRegister() {
           select
           value={currentUser.district || ''}
           onChange={handleChangeDistrictResidence}
-          error={currentUser.district ? false : true}
-          helperText={currentUser.district ? '' : 'Bạn chưa chọn quận/huyện'}
+          error={error.districtResidence}
+          helperText={error.districtResidence === false ? '' : 'Bạn chưa chọn quận/huyện'}
         >
           {districtResidences.map((districtResidence) => (
             <MenuItem key={districtResidence.code} value={districtResidence.code}>
@@ -533,8 +681,8 @@ function MovingRegister() {
           select
           value={currentUser.ward || ''}
           onChange={handleChangeWardResidence}
-          error={currentUser.ward ? false : true}
-          helperText={currentUser.ward ? '' : 'Bạn chưa chọn phường/xã'}
+          error={error.wardResidence}
+          helperText={error.wardResidence === false ? '' : 'Bạn chưa chọn phường/xã'}
         >
           {wardResidences.map((wardResidence) => (
             <MenuItem key={wardResidence.code} value={wardResidence.code}>
@@ -552,8 +700,8 @@ function MovingRegister() {
           required
           value={currentUser.specificAddress || ''}
           onChange={handleChangeSpecificAddressResidence}
-          error={currentUser.specificAddress ? false : true}
-          helperText={currentUser.specificAddress ? '' : 'Vui lòng nhập trường này'}
+          error={error.specificAddressResidence}
+          helperText={error.specificAddressResidence === false ? '' : 'Vui lòng nhập trường này'}
         />
       </div>
       <div className="row">
@@ -575,8 +723,8 @@ function MovingRegister() {
           select
           value={province}
           onChange={handleChangeProvince}
-          error={province ? false : true}
-          helperText={province ? '' : 'Bạn chưa chọn tỉnh/thành phố di chuyển'}
+          error={error.province}
+          helperText={error.province === false ? '' : 'Bạn chưa chọn tỉnh/thành phố di chuyển'}
         >
           {provinces.map((province) => (
             <MenuItem key={province.code} value={province.code}>
@@ -599,8 +747,8 @@ function MovingRegister() {
           select
           value={district}
           onChange={handleChangeDistrict}
-          error={district ? false : true}
-          helperText={district ? '' : 'Bạn chưa chọn quận/huyện di chuyển'}
+          error={error.district}
+          helperText={error.district === false ? '' : 'Bạn chưa chọn quận/huyện di chuyển'}
         >
           {districts.map((district) => (
             <MenuItem key={district.code} value={district.code}>
@@ -623,8 +771,8 @@ function MovingRegister() {
           select
           value={ward}
           onChange={handleChangeWard}
-          error={ward ? false : true}
-          helperText={ward ? '' : 'Bạn chưa chọn phường/xã di chuyển'}
+          error={error.ward}
+          helperText={error.ward === false ? '' : 'Bạn chưa chọn phường/xã di chuyển'}
         >
           {wards.map((ward) => (
             <MenuItem key={ward.code} value={ward.code}>
@@ -634,7 +782,8 @@ function MovingRegister() {
         </TextField>
       </div>
       <div className="row">
-        <DateRegister value={dayMY} setValue={setDayMY} />
+        <DateRegister error={error} setError={setError} value={dayMY} setValue={setDayMY} />
+
         <TextField
           id="detail-address"
           label="Số nhà, phố, tổ dân phố/thôn/đội"
@@ -645,8 +794,8 @@ function MovingRegister() {
           required
           value={specificAddress}
           onChange={handleChangeSpecificAddress}
-          error={specificAddress ? false : true}
-          helperText={specificAddress ? '' : 'Vui lòng điền trường này'}
+          error={error.specificAddress}
+          helperText={error.specificAddress === false ? '' : 'Vui lòng điền trường này'}
         />
       </div>
       <div style={{ textAlign: 'center' }}>
@@ -666,6 +815,7 @@ function MovingRegister() {
           ĐĂNG KÝ
         </Button>
       </div>
+      <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />
     </>
   )
 }
