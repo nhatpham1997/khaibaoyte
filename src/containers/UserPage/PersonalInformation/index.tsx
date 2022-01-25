@@ -1,67 +1,9 @@
+import EditProfile from 'components/EditProfile'
+
 function PersonalInformation() {
   return (
     <div>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
-      <p>Thay đổi thông tin cá nhân</p>
+      <EditProfile />
     </div>
   )
 }
