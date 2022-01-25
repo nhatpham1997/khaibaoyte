@@ -21,10 +21,10 @@ export default function LoginAdmin() {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     const response = admins.filter((item) => item.email === data.get('email'))
-    console.log(response)
+    console.log(response, response[0].id)
     if (response.length > 0 && response[0].password === data.get('password')) {
-      localStorage.setItem('admin', `${data.get('email')}`)
-      setLogin(data.get('email'))
+      localStorage.setItem('adminId', `${response[0].id}`)
+      setLogin(response[0].id)
     } else {
       alert('Tài khoản hoặc mật khẩu không chính xác! Vui lòng nhập lại!')
     }

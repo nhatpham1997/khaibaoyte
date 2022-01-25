@@ -1,27 +1,10 @@
 import Box from '@mui/material/Box'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 import { Typography } from '@mui/material'
 import { useLocation, useParams } from 'react-router-dom'
-import { addressApi } from 'apis/addressApi'
-import axios from 'axios'
-
-type data = {
-  data: {
-    id: number
-    username: string
-    full_name: string
-    year_of_birth: string
-    citizen_identificatio: string
-    sex: string
-    nationality: string
-    address: string
-    phone: string
-    email: string
-    createDate: string
-  }
-}
+import { GlobalContext } from 'contexts'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -43,60 +26,54 @@ const styleBox = {
 }
 
 const AccountInformation = () => {
-  const [data, setData] = useState<any>({})
-  const [address, setAddress] = useState<any>([])
-  const [loading, setLoading] = useState(true)
+  const { users, admins, address } = useContext(GlobalContext)
   const params = useParams()
   const match = useLocation()
+
+  let data: any
   let responseProvince: any
   let responseDistrict: any
   let responseWard: any
+
+  if (match.pathname.includes('account-admin')) {
+    data = admins.filter((item: any) => item.id.toString() === params.id)[0]
+  } else {
+    data = users.filter((item: any) => item.id.toString() === params.id)[0]
+  }
+
   if (address.length > 0) {
     responseProvince = address.filter((item: any) => data.province === item.code)[0] || {}
     responseDistrict =
       responseProvince.districts?.filter((item: any) => data.district === item.code)[0] || {}
     responseWard = responseDistrict.wards?.filter((item: any) => data.ward === item.code)[0] || {}
   }
-
-  const fetchDataAddress = async () => {
-    try {
-      const dataAddress = await addressApi.getAll()
-      setAddress(dataAddress.data)
-      setLoading(false)
-    } catch (error) {
-      console.log('Failed to fetch post list: ', error)
-    }
-  }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (match.pathname.includes('account-admin')) {
-        try {
-          const response = await axios.get(
-            `https://dbkhaibaoyte.herokuapp.com/admin?id=${params.id}`
-          )
-          setData(response.data[0])
-          fetchDataAddress()
-        } catch (error) {
-          console.log('Failed to fetch post list: ', error)
-        }
-      } else {
-        try {
-          const response = await axios.get(
-            `https://dbkhaibaoyte.herokuapp.com/user?id=${params.id}`
-          )
-          setData(response.data[0])
-          fetchDataAddress()
-        } catch (error) {
-          console.log('Failed to fetch post list: ', error)
-        }
-      }
-    }
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (match.pathname.includes('account-admin')) {
+  //       try {
+  //         const response = await axios.get(
+  //           `https://dbkhaibaoyte.herokuapp.com/admin?id=${params.id}`
+  //         )
+  //         setData(response.data[0])
+  //       } catch (error) {
+  //         console.log('Failed to fetch post list: ', error)
+  //       }
+  //     } else {
+  //       try {
+  //         const response = await axios.get(
+  //           `https://dbkhaibaoyte.herokuapp.com/user?id=${params.id}`
+  //         )
+  //         setData(response.data[0])
+  //       } catch (error) {
+  //         console.log('Failed to fetch post list: ', error)
+  //       }
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
   return (
     <div>
-      {!loading && (
+      {address.length > 0 && (
         <Item
           sx={{
             display: 'flex',

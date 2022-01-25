@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import { addressApi } from 'apis/addressApi'
-import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { ListItem, ListItemText, Typography, Box, Button } from '@mui/material'
+import { GlobalContext } from 'contexts'
+import axios from 'axios'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -13,44 +13,29 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 const Confirmation = () => {
-  const [address, setAddress] = useState<any>({})
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState<any>([])
+  const { movingRegister, address, editMovingRegister } = useContext(GlobalContext)
   const params = useParams()
 
-  const handelClick = () => {
-    setLoading(true)
-  }
+  const data = movingRegister.filter((item: any) => item.userId.toString() === params.id)
 
-  const fetchDataAddress = async () => {
-    try {
-      const dataAddress = await addressApi.getAll()
-      setAddress(dataAddress.data)
-      console.log(dataAddress)
-      setLoading(false)
-    } catch (error) {
-      console.log('Failed to fetch post list: ', error)
+  const handleconfirm = async (id: number, status: number) => {
+    const response = await axios.patch(`https://dbkhaibaoyte.herokuapp.com/moving_register/${id}`, {
+      status: status,
+    })
+    if (response.status === 200) {
+      const index = movingRegister.findIndex((item) => item.id === id)
+      const newMovingRegister = { ...movingRegister[index], status: status }
+      const newData = [...movingRegister]
+      newData[index] = newMovingRegister
+      editMovingRegister(newData)
+    } else {
+      alert('Vui lòng thử lại')
     }
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://dbkhaibaoyte.herokuapp.com/moving_register?userId=${params.id}`
-        )
-        setData(response.data)
-        fetchDataAddress()
-      } catch (error) {
-        console.log('Failed to fetch post list: ', error)
-      }
-    }
-    fetchData()
-  }, [])
 
   return (
     <>
-      {!loading && (
+      {address.length > 0 && (
         <Item sx={{ fontSize: '1.6rem', maxHeight: '47rem', overflowY: 'scroll' }}>
           {data?.map((item: any, index: number) => {
             if (item.status !== 0) {
@@ -144,6 +129,7 @@ const Confirmation = () => {
                   }}
                 >
                   <Button
+                    onClick={() => handleconfirm(item.id, 1)}
                     sx={{ marginRight: '20px' }}
                     variant="contained"
                     color="primary"
@@ -151,7 +137,12 @@ const Confirmation = () => {
                   >
                     Phê duyệt
                   </Button>
-                  <Button onClick={handelClick} variant="contained" color="error" size="small">
+                  <Button
+                    onClick={() => handleconfirm(item.id, 2)}
+                    variant="contained"
+                    color="error"
+                    size="small"
+                  >
                     Từ chối
                   </Button>
                 </Box>

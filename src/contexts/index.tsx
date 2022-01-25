@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import adminApi from '../apis/adminApi'
-import { locationApi } from '../apis/covid'
-import movingDeclarationApi from '../apis/movingDeclaration'
-import movingRegisterApi from '../apis/movingRegister'
-import userApi from '../apis/userApi'
-import { createContext, ReactNode, useState, useEffect, useContext } from 'react'
+import { createContext, ReactNode, useState, useContext } from 'react'
 
 type Props = {
   children: ReactNode
@@ -83,6 +78,8 @@ type InitialStateContextType = {
   setMiniSideNav: (miniSideNav: boolean) => void
   editMovingRegister: (data: movingRegister[]) => void
   dataCovidLocations: (data: any) => void
+  address: any[]
+  dataAddress: (data: any) => void
 }
 
 const initialStateContextValue: InitialStateContextType = {
@@ -101,6 +98,8 @@ const initialStateContextValue: InitialStateContextType = {
   setMiniSideNav: () => {},
   editMovingRegister: () => {},
   dataCovidLocations: () => {},
+  address: [],
+  dataAddress: () => {},
 }
 
 export const GlobalContext = createContext<InitialStateContextType>(initialStateContextValue)
@@ -108,6 +107,7 @@ export const GlobalContext = createContext<InitialStateContextType>(initialState
 export default function GlobalProvider({ children }: Props) {
   const [covidLocations, setCovidLocations] = useState<Location[]>([])
   const [users, setUsers] = useState<any>([])
+  const [address, setAddress] = useState<any>([])
   const [admins, setAdmins] = useState<any>([])
   const [movingDeclaration, setMovingDeclaration] = useState<any>([])
   const [movingRegister, setMovingRegister] = useState<any>([])
@@ -144,6 +144,10 @@ export default function GlobalProvider({ children }: Props) {
     setMovingRegister(data)
   }
 
+  const dataAddress = (data: any) => {
+    setAddress(data)
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -162,6 +166,8 @@ export default function GlobalProvider({ children }: Props) {
         dataMovingRegister,
         editMovingRegister,
         dataCovidLocations,
+        address,
+        dataAddress,
       }}
     >
       {children}

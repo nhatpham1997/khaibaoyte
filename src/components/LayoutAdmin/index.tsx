@@ -11,6 +11,7 @@ import userApi from 'apis/userApi'
 import adminApi from 'apis/adminApi'
 import movingDeclarationApi from 'apis/movingDeclaration'
 import movingRegisterApi from 'apis/movingRegister'
+import { addressApi } from 'apis/addressApi'
 
 const SidebarAnimation = styled(Box)(() => ({
   animatedItem: {
@@ -48,15 +49,15 @@ function LayoutAdmin() {
     dataAdmins,
     dataMovingDeclaration,
     dataMovingRegister,
+    dataAddress,
   } = useContext(GlobalContext)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const name = localStorage.getItem('admin')
-    if (name) {
-      setLogin(name)
+    const id = localStorage.getItem('adminId')
+    if (id) {
+      setLogin(id)
     }
-    console.log(name)
     setLoading(false)
   }, [])
 
@@ -92,7 +93,6 @@ function LayoutAdmin() {
       } catch (error) {
         console.log('Failed to fetch post list: ', error)
       }
-      console.log(1)
     }
     fetchAdmin()
   }, [])
@@ -119,6 +119,18 @@ function LayoutAdmin() {
       }
     }
     fetchMovingRegister()
+  }, [])
+
+  useEffect(() => {
+    const fetchDataAddress = async () => {
+      try {
+        const response = await addressApi.getAll()
+        dataAddress(response.data)
+      } catch (error) {
+        console.log('Failed to fetch post list: ', error)
+      }
+    }
+    fetchDataAddress()
   }, [])
 
   return (

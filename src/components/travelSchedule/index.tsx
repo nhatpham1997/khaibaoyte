@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Button from '@mui/material/Button'
 import Dialog, { DialogProps } from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -6,30 +5,27 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { ListItem, ListItemText, Typography, Box } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
-import { addressApi } from 'apis/addressApi'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { GlobalContext } from 'contexts'
 
 type typeProps = {
   name: string
 }
 
 export default function TravelSchedule(props: typeProps) {
+  const { movingRegister, movingDeclaration, address } = useContext(GlobalContext)
   const params = useParams()
-  const [data, setData] = React.useState<any>([])
-  const [open, setOpen] = React.useState(false)
-  const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper')
-  const [address, setAddress] = React.useState<any>([])
-  const [loading, setLoading] = React.useState(true)
+  const [open, setOpen] = useState(false)
+  const [scroll, setScroll] = useState<DialogProps['scroll']>('paper')
 
-  const fetchDataAddress = async () => {
-    try {
-      const dataAddress = await addressApi.getAll()
-      setAddress(dataAddress.data)
-      console.log(dataAddress)
-      setLoading(false)
-    } catch (error) {
-      console.log('Failed to fetch post list: ', error)
-    }
+  let data
+
+  if (props.name === 'Lịch sử di chuyển') {
+    data = movingDeclaration.filter((item) => item.userId.toString() === params.id)
+    data.reverse()
+  } else {
+    data = movingRegister.filter((item) => item.userId.toString() === params.id)
+    data.reverse()
   }
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
@@ -41,8 +37,8 @@ export default function TravelSchedule(props: typeProps) {
     setOpen(false)
   }
 
-  const descriptionElementRef = React.useRef<HTMLElement>(null)
-  React.useEffect(() => {
+  const descriptionElementRef = useRef<HTMLElement>(null)
+  useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef
       if (descriptionElement !== null) {
@@ -50,28 +46,6 @@ export default function TravelSchedule(props: typeProps) {
       }
     }
   }, [open])
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (props.name === 'Lịch sử di chuyển') {
-          const response = await axios.get(
-            `https://dbkhaibaoyte.herokuapp.com/moving_declaration?userId=${params.id}`
-          )
-          setData(response.data)
-        } else {
-          const response = await axios.get(
-            `https://dbkhaibaoyte.herokuapp.com/moving_register?userId=${params.id}`
-          )
-          setData(response.data)
-        }
-        fetchDataAddress()
-      } catch (error) {
-        console.log('Failed to fetch post list: ', error)
-      }
-    }
-    fetchData()
-  }, [])
 
   return (
     <>
@@ -84,7 +58,7 @@ export default function TravelSchedule(props: typeProps) {
       >
         {props.name}
       </Button>
-      {!loading && (
+      {address.length > 0 && (
         <Dialog
           open={open}
           onClose={handleClose}
