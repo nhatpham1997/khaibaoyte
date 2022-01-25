@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -11,11 +11,27 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const theme = createTheme()
 
 export default function LoginForm() {
+  const [validEmail, setValidEmail] = useState(false)
+  const [messEmail, setMessEmail] = useState('')
+  const [validPass, setValidPass] = useState(false)
+  const [messPass, setMessPass] = useState('')
+  const [dataUser, setDataUser] = useState<any>([])
+  const history = useNavigate()
+  console.log(dataUser)
+
+  useEffect(() => {
+    fetch('https://dbkhaibaoyte.herokuapp.com/user')
+      .then((response) => response.json())
+      .then((dataUsers) => {
+        setDataUser(dataUsers)
+      })
+  }, [])
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -28,6 +44,26 @@ export default function LoginForm() {
       email: data.get('email'),
       password: data.get('password'),
     })
+
+    const response = dataUser.filter((item: any) => item.email === data.get('email'))
+    console.log(response)
+    if (response.length > 0) {
+      setValidEmail(false)
+      setMessEmail('')
+      if (response[0].password === data.get('password')) {
+        localStorage.setItem('userId', response[0].id)
+        history('/user')
+      } else {
+        setValidPass(true)
+        setMessPass('Passs error!')
+      }
+    } else {
+      setValidEmail(true)
+      setMessEmail('Email error!')
+      setValidPass(true)
+      setMessPass('Passs error!')
+      return
+    }
   }
 
   return (
@@ -66,6 +102,7 @@ export default function LoginForm() {
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
+                error={validEmail}
                 margin="normal"
                 required
                 fullWidth
@@ -74,8 +111,11 @@ export default function LoginForm() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                helperText={messEmail}
               />
               <TextField
+                helperText={messPass}
+                error={validPass}
                 margin="normal"
                 required
                 fullWidth
@@ -85,17 +125,11 @@ export default function LoginForm() {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link to="/forgotpassword">{'Forgot password'}</Link>
-                </Grid>
                 <Grid item>
                   <Link to="/register">{" Don't have an account? Sign Up "}</Link>
                 </Grid>
