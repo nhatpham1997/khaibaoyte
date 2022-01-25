@@ -35,7 +35,8 @@ export default function DateRegister({ value, setValue, error, setError }: props
             {...params}
             sx={{
               minWidth: 'calc(calc(100%/2) - 1rem)',
-              fontSize: '1.6rem',
+              marginBottom: '1rem',
+              marginTop: '1rem',
             }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
