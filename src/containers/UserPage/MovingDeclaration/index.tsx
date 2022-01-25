@@ -19,7 +19,6 @@ function MovingDeclaration() {
 
   const [dayMY, setDayMY] = useState<any>(null)
   const [hourMS, setHourMS] = useState<any>(null)
-  const [specificAddress, setSpecificAddress] = useState('')
 
   const [province, setProvince] = useState('')
   const [provinces, setProvinces] = useState<any[]>([])
@@ -27,6 +26,7 @@ function MovingDeclaration() {
   const [districts, setDistricts] = useState<any[]>([])
   const [ward, setWard] = useState('')
   const [wards, setWards] = useState<any[]>([])
+  const [specificAddress, setSpecificAddress] = useState('')
 
   const [showNoti, setShowNoti] = useState(false)
 
@@ -92,6 +92,7 @@ function MovingDeclaration() {
 
   const [currentUser, setCurrentUser] = useState<IUser>({})
 
+  // Hàm gọi API lấy ra thông tin tài khoản đang đăng nhập
   useEffect(() => {
     fetch(`${userAPI}/${userId}`)
       .then((res) => res.json())
@@ -111,6 +112,7 @@ function MovingDeclaration() {
       })
   }, [])
 
+  // Hàm gọi API lấy ra danh sách tỉnh
   useEffect(() => {
     fetch('https://provinces.open-api.vn/api/?depth=3')
       .then((res) => res.json())
@@ -120,6 +122,7 @@ function MovingDeclaration() {
       })
   }, [])
 
+  // Hàm lấy ra danh sách quận cư trú
   useEffect(() => {
     provinceResidences.forEach((item) => {
       if (item.code === currentUser.province) {
@@ -128,6 +131,7 @@ function MovingDeclaration() {
     })
   })
 
+  // Hàm lấy ra danh sách xã cư trú
   useEffect(() => {
     districtResidences.forEach((item) => {
       if (item.code === currentUser.district) {
@@ -441,20 +445,26 @@ function MovingDeclaration() {
     }
     // thêm tờ khai thành công
     else {
+      // Lưu biến time có định dạng MM/dd/yyyy hh:mm (a|p)m
       if (dayMY && hourMS) {
-        time = `${dayMY.getDate() < 10 ? '0' + dayMY.getDate() : dayMY.getDate()}/${
+        time = `${
           dayMY.getMonth() + 1 < 10 ? '0' + (dayMY.getMonth() + 1) : dayMY.getMonth() + 1
+        }/${
+          dayMY.getDate() < 10 ? '0' + dayMY.getDate() : dayMY.getDate()
         }/${dayMY.getFullYear()} ${
           hourMS.getHours() < 10 ? '0' + hourMS.getHours() : hourMS.getHours()
         }:${hourMS.getMinutes() < 10 ? '0' + hourMS.getMinutes() : hourMS.getMinutes()}`
       }
 
+      // Biến provinceName lưu cho admin sử dụng
       let provinceName = ''
       provinces.forEach((element) => {
         if (element.code === province) {
           provinceName = element.name
         }
       })
+
+      // data post
       const data = {
         ...currentUser,
         provinceResidence: currentUser.province,
@@ -471,7 +481,6 @@ function MovingDeclaration() {
       }
       // Xóa trường id không cần thiết
       delete data.id
-      console.log('submit', data)
       // Call api
       const options = {
         method: 'POST',

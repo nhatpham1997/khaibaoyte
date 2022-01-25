@@ -16,11 +16,17 @@ function MovingDeclarationItem({ item, name }: props) {
 
   const indexFisrtSeparate = item.time.indexOf('/')
 
-  const day = item.time.slice(0, indexFisrtSeparate)
+  const indexLastSeparate = item.time.lastIndexOf('/')
 
   const indexSpacing = item.time.indexOf(' ')
 
-  const monthYear = item.time.slice(indexFisrtSeparate + 1, indexSpacing)
+  const day = item.time.slice(indexFisrtSeparate + 1, indexLastSeparate)
+
+  const month = item.time.slice(0, indexFisrtSeparate)
+
+  const year = item.time.slice(indexLastSeparate + 1, indexSpacing)
+
+  const monthYear = `${month}/${year}`
 
   const hourMS = item.time.slice(indexSpacing + 1)
 
@@ -43,6 +49,7 @@ function MovingDeclarationItem({ item, name }: props) {
         </div>
       </div>
       <ModalDetailMovingDeclaration
+        item={item}
         isShow={showModalDetail}
         setShowModalDetail={setShowModalDetail}
       />

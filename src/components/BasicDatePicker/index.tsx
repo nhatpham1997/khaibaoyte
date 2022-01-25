@@ -17,7 +17,7 @@ export default function BasicDatePicker({ value, setValue, error, setError }: pr
       <DatePicker
         disableMaskedInput
         disableFuture
-        label="Ngày/Tháng/Năm"
+        label="Tháng/Ngày/Năm"
         value={value}
         onChange={(newValue) => {
           console.log(newValue)

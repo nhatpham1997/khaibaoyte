@@ -30,6 +30,17 @@ function ListDeclaration() {
     })
   }, [listAllDeclarations])
 
+  // Sắp xếp danh sách tờ khai theo thứ tự thời gian giảm dần
+  if (listDeclarations) {
+    listDeclarations.sort((firstEl, secondEl) => {
+      if (new Date(secondEl.time).getTime() < new Date(firstEl.time).getTime()) {
+        return -1
+      } else {
+        return 0
+      }
+    })
+  }
+
   return (
     <>
       <LabelHeading text="Danh sách tờ khai" />
