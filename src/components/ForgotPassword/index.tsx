@@ -18,7 +18,6 @@ import axios from 'axios'
 const theme = createTheme()
 
 export default function ForgotPassword() {
-  return <div></div>
   const [dataUser, setDataUser] = useState<any>([])
   const [id, setId] = useState<any>()
   const [validPassCurrent, setValidPassCurrent] = useState(false)
