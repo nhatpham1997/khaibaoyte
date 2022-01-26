@@ -5,34 +5,34 @@ import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import { GlobalContext } from 'contexts'
 
 const theme = createTheme()
 
-export default function LoginPage() {
+export default function LoginAdmin() {
+  const { setLogin, admins } = React.useContext(GlobalContext)
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
+    const response = admins.filter((item) => item.email === data.get('email'))
+    console.log(response, response[0].id)
+    if (response.length > 0 && response[0].password === data.get('password')) {
+      localStorage.setItem('adminId', `${response[0].id}`)
+      setLogin(response[0].id)
+    } else {
+      alert('Tài khoản hoặc mật khẩu không chính xác! Vui lòng nhập lại!')
+    }
     // eslint-disable-next-line no-console
+    // checkLogin({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // })
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -70,11 +70,21 @@ export default function LoginPage() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
+            <Typography component="h1" variant="h5" sx={{ fontSize: '2rem' }}>
+              Đăng nhập
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{
+                mt: 1,
+                '& input': { fontSize: '1.6rem' },
+                '& .MuiOutlinedInput-input': { fontSize: '1.6rem' },
+              }}
+            >
               <TextField
+                sx={{ fontSize: '2rem' }}
                 margin="normal"
                 required
                 fullWidth
@@ -85,6 +95,7 @@ export default function LoginPage() {
                 autoFocus
               />
               <TextField
+                sx={{ fontSize: '2rem' }}
                 margin="normal"
                 required
                 fullWidth
@@ -98,22 +109,14 @@ export default function LoginPage() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Sign In
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
+              >
+                Đăng nhập
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

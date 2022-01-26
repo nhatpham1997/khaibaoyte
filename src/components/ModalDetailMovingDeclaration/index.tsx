@@ -2,8 +2,6 @@ import LabelHeading from 'components/LabelHeading'
 import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import { useEffect, useState } from 'react'
-import BasicDatePicker from 'components/BasicDatePicker'
-import BasicTimePicker from 'components/BasicTimePicker'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import './ModalDetailMovingDeclaration.css'
@@ -11,23 +9,16 @@ import './ModalDetailMovingDeclaration.css'
 interface props {
   isShow: boolean
   setShowModalDetail: any
+  item: any
 }
 
-function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
-  const [sex, setSex] = useState('')
-
-  const [provinceResidence, setProvinceResidence] = useState('')
+function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: props) {
   const [provinceResidences, setProvinceResidences] = useState<any[]>([])
-  const [districtResidence, setDistrictResidence] = useState('')
   const [districtResidences, setDistrictResidences] = useState<any[]>([])
-  const [wardResidence, setWardResidence] = useState('')
   const [wardResidences, setWardResidences] = useState<any[]>([])
 
-  const [province, setProvince] = useState('')
   const [provinces, setProvinces] = useState<any[]>([])
-  const [district, setDistrict] = useState('')
   const [districts, setDistricts] = useState<any[]>([])
-  const [ward, setWard] = useState('')
   const [wards, setWards] = useState<any[]>([])
 
   const sexs = [
@@ -40,12 +31,13 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
       label: 'Nữ',
     },
     {
-      value: 0,
+      value: 3,
       label: 'Khác',
     },
   ]
 
-  useEffect(() => {
+  // Hàm lấy từ API danh sách tỉnh
+  const getAPI = useEffect(() => {
     fetch('https://provinces.open-api.vn/api/?depth=3')
       .then((res) => res.json())
       .then((data) => {
@@ -54,76 +46,34 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
       })
   }, [])
 
-  // Hàm xử lý chọn giới tính
-  function handleChangeSex(e: React.ChangeEvent<HTMLInputElement>) {
-    setSex(e.target.value)
-  }
+  // Hàm lấy ra danh sách quận
+  const getDistricts = useEffect(() => {
+    provinceResidences.forEach(
+      (element) => {
+        if (element.code === item.provinceResidence) {
+          setDistrictResidences(element.districts)
+        }
+        if (element.code === item.province) {
+          setDistricts(element.districts)
+        }
+      },
+      [provinces, provinceResidences]
+    )
+  })
 
-  // Hàm xử lý chọn tỉnh/thành phố cư trú
-  function handleChangeProvinceResidence(e: React.ChangeEvent<HTMLInputElement>) {
-    setDistrictResidence('')
-    setDistrictResidences([])
-    setWardResidence('')
-    setWardResidences([])
-    const codeProvinceResidence = e.target.value
-    provinceResidences.forEach((provinceResidence) => {
-      if (provinceResidence.code === codeProvinceResidence) {
-        setDistrictResidences(provinceResidence.districts)
+  // Hàm lấy ra danh sách xã
+  const getWards = useEffect(() => {
+    districtResidences.forEach((element) => {
+      if (element.code === item.districtResidence) {
+        setWardResidences(element.wards)
       }
     })
-    setProvinceResidence(codeProvinceResidence)
-  }
-
-  // Hàm xử lý chọn quận/huyện cư trú
-  function handleChangeDistrictResidence(e: React.ChangeEvent<HTMLInputElement>) {
-    setWardResidence('')
-    setWardResidences([])
-    const codeDistrictResidence = e.target.value
-    districtResidences.forEach((districtResidence) => {
-      if (districtResidence.code === codeDistrictResidence) {
-        setWardResidences(districtResidence.wards)
+    districts.forEach((element) => {
+      if (element.code === item.district) {
+        setWards(element.wards)
       }
     })
-    setDistrictResidence(codeDistrictResidence)
-  }
-
-  // Hàm xử lý chọn phường/xã cư trú
-  function handleChangeWardResidence(e: React.ChangeEvent<HTMLInputElement>) {
-    setWardResidence(e.target.value)
-  }
-
-  // Hàm xử lý chọn tỉnh/thành phố di chuyển
-  function handleChangeProvince(e: React.ChangeEvent<HTMLInputElement>) {
-    setDistrict('')
-    setDistricts([])
-    setWard('')
-    setWards([])
-    const codeProvince = e.target.value
-    provinces.forEach((province) => {
-      if (province.code === codeProvince) {
-        setDistricts(province.districts)
-      }
-    })
-    setProvince(codeProvince)
-  }
-
-  // Hàm xử lý chọn quận/huyện di chuyển
-  function handleChangeDistrict(e: React.ChangeEvent<HTMLInputElement>) {
-    setWard('')
-    setWards([])
-    const codeDistrict = e.target.value
-    districts.forEach((district) => {
-      if (district.code === codeDistrict) {
-        setWards(district.wards)
-      }
-    })
-    setDistrict(codeDistrict)
-  }
-
-  // Hàm xử lý chọn phường/xã di chuyển
-  function handleChangeWard(e: React.ChangeEvent<HTMLInputElement>) {
-    setWard(e.target.value)
-  }
+  })
 
   function handleCloseModal() {
     setShowModalDetail(false)
@@ -143,10 +93,11 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
           label="Họ và tên"
           variant="outlined"
           sx={{ marginBottom: '1rem', marginTop: '1rem', fontSize: '3rem' }}
-          InputProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
           fullWidth
+          value={item.fullName || ''}
         />
         <div className="row">
           <TextField
@@ -158,9 +109,10 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/2) - 1rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
+            value={item.yearOfBirth || 0}
           />
           <TextField
             id="sex"
@@ -171,12 +123,11 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/2) - 1rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
             select
-            value={sex}
-            onChange={handleChangeSex}
+            value={item.gender || 0}
           >
             {sexs.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -191,10 +142,11 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
           variant="outlined"
           sx={{ marginBottom: '1rem', marginTop: '1rem' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
           fullWidth
+          value={item.citizenIdentification || ''}
         />
         <div className="row">
           <TextField
@@ -206,9 +158,10 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/2) - 1rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
+            value={item.email || ''}
           />
           <TextField
             id="phone"
@@ -219,9 +172,10 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/2) - 1rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
+            value={item.phone || ''}
           />
         </div>
         <div className="row">
@@ -237,12 +191,11 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/4) - 1.5rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
             select
-            value={provinceResidence}
-            onChange={handleChangeProvinceResidence}
+            value={item.provinceResidence || 0}
           >
             {provinceResidences.map((provinceResidence) => (
               <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
@@ -259,12 +212,11 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/4) - 1.5rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
             select
-            value={districtResidence}
-            onChange={handleChangeDistrictResidence}
+            value={item.districtResidence || 0}
           >
             {districtResidences.map((districtResidence) => (
               <MenuItem key={districtResidence.code} value={districtResidence.code}>
@@ -281,12 +233,11 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/4) - 1.5rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
             select
-            value={wardResidence}
-            onChange={handleChangeWardResidence}
+            value={item.wardResidence || 0}
           >
             {wardResidences.map((wardResidence) => (
               <MenuItem key={wardResidence.code} value={wardResidence.code}>
@@ -303,47 +254,30 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               minWidth: 'calc(calc(100%/4) - 1.5rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
+            value={item.specificAddressResidence || ''}
           />
         </div>
         <div className="row">
           <LabelHeading text="Địa điểm di chuyển" />
         </div>
         <div className="row">
-          <BasicDatePicker />
-          <BasicTimePicker />
           <TextField
-            id="detail-address"
-            label="Số nhà, phố, tổ dân phố/thôn/đội"
-            sx={{
-              marginBottom: '1rem',
-              marginTop: '1rem',
-              minWidth: 'calc(calc(100%/3) - 1.33rem)',
-            }}
-            size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
-            InputLabelProps={{ style: { fontSize: '1.2rem' } }}
-            required
-          />
-        </div>
-        <div className="row">
-          <TextField
-            id="province-residence"
+            id="province"
             label="Tỉnh/Thành phố"
             sx={{
               marginBottom: '1rem',
               marginTop: '1rem',
-              minWidth: 'calc(calc(100%/3) - 1.333rem)',
+              minWidth: 'calc(calc(100%/4) - 1.5rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
             select
-            value={province}
-            onChange={handleChangeProvince}
+            value={item.province || 0}
           >
             {provinces.map((province) => (
               <MenuItem key={province.code} value={province.code}>
@@ -352,20 +286,19 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
             ))}
           </TextField>
           <TextField
-            id="district-residence"
+            id="district"
             label="Quận/Huyện"
             sx={{
               marginBottom: '1rem',
               marginTop: '1rem',
-              minWidth: 'calc(calc(100%/3) - 1.333rem)',
+              minWidth: 'calc(calc(100%/4) - 1.5rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
             select
-            value={district}
-            onChange={handleChangeDistrict}
+            value={item.district || 0}
           >
             {districts.map((district) => (
               <MenuItem key={district.code} value={district.code}>
@@ -374,20 +307,19 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
             ))}
           </TextField>
           <TextField
-            id="ward-residence"
+            id="ward"
             label="Phường/Xã"
             sx={{
               marginBottom: '1rem',
               marginTop: '1rem',
-              minWidth: 'calc(calc(100%/3) - 1.333rem)',
+              minWidth: 'calc(calc(100%/4) - 1.5rem)',
             }}
             size="medium"
-            InputProps={{ style: { fontSize: '1.2rem' } }}
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
             InputLabelProps={{ style: { fontSize: '1.2rem' } }}
             required
             select
-            value={ward}
-            onChange={handleChangeWard}
+            value={item.ward || 0}
           >
             {wards.map((ward) => (
               <MenuItem key={ward.code} value={ward.code}>
@@ -395,6 +327,20 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail }: props) {
               </MenuItem>
             ))}
           </TextField>
+          <TextField
+            id="detail-address"
+            label="Số nhà, phố, tổ dân phố/thôn/đội"
+            sx={{
+              marginBottom: '1rem',
+              marginTop: '1rem',
+              minWidth: 'calc(calc(100%/4) - 1.5rem)',
+            }}
+            size="medium"
+            InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
+            InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+            required
+            value={item.specificAddress || ''}
+          />
         </div>
       </div>
     </div>

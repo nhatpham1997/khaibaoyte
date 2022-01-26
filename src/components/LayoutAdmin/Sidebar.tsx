@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
@@ -8,7 +8,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
   '& .MuiToggleButtonGroup-grouped': {
@@ -40,6 +40,9 @@ const StyledToggleButton = styled(ToggleButton)(() => ({
     '&:hover': { backgroundColor: '#2196f3' },
   },
   '&:hover': { backgroundColor: 'gray' },
+  '& .MuiToggleButton-root': {
+    fontSize: '2rem',
+  },
 }))
 
 const LinkNavbar = styled(Link)(() => ({
@@ -57,13 +60,18 @@ const LinkNavbar = styled(Link)(() => ({
 }))
 
 function Sidebar() {
-  const [alignment, setAlignment] = useState('1')
+  const route = useLocation().pathname
+  const [alignment, setAlignment] = useState('/admin')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment)
     }
   }
+
+  useEffect(() => {
+    setAlignment(route)
+  }, [])
 
   return (
     <Box
@@ -83,7 +91,7 @@ function Sidebar() {
       }}
       color="white"
     >
-      <Box sx={{ pt: 2 }}>
+      <Box sx={{ pt: 2, '& .MuiTypography-root': { fontSize: '2rem', fontWeight: 600 } }}>
         <Typography>Menu Dashboard</Typography>
       </Box>
       <Divider
@@ -102,36 +110,40 @@ function Sidebar() {
         orientation="vertical"
         sx={{
           justifyContent: 'flex-start',
+          '& .MuiButtonBase-root a p': { fontSize: '1.6rem' },
+          '& .MuiButtonBase-root a svg': {
+            fontSize: '4rem',
+          },
         }}
         color="primary"
       >
-        <StyledToggleButton value="1">
-          <LinkNavbar to="/admin/">
-            <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
+        <StyledToggleButton value="/admin">
+          <LinkNavbar to="/admin">
+            <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Trang chủ</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-        <StyledToggleButton value="2">
+        <StyledToggleButton value="/admin/account-admin">
           <LinkNavbar to="/admin/account-admin">
-            <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
+            <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Quản lý Admin</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-        <StyledToggleButton value="3">
+        <StyledToggleButton value="/admin/account-user">
           <LinkNavbar to="/admin/account-user">
-            <SupervisorAccountIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
+            <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Quản lý User</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-        <StyledToggleButton value="4">
+        <StyledToggleButton value="/admin/application-for-moving">
           <LinkNavbar to="/admin/application-for-moving">
-            <AirplanemodeActiveIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
+            <AirplanemodeActiveIcon sx={{ pr: 2 }} />
             <Typography>Quản lý di chuyển</Typography>
           </LinkNavbar>
         </StyledToggleButton>
-        <StyledToggleButton value="5">
+        <StyledToggleButton value="/admin/epidemic-area">
           <LinkNavbar to="/admin/epidemic-area">
-            <ListAltIcon sx={{ pr: 2, fontSize: '2.5rem' }} />
+            <ListAltIcon sx={{ pr: 2 }} />
             <Typography>Danh sách vùng dịch</Typography>
           </LinkNavbar>
         </StyledToggleButton>

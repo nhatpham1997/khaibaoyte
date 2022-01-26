@@ -3,17 +3,32 @@ import './MovingDeclarationItem.css'
 import { useState } from 'react'
 
 interface props {
-  day: string
-  monthYear: string
-  hourMS: string
+  item?: any
+  name?: string
 }
 
-function MovingDeclarationItem({ day, monthYear, hourMS }: props) {
+function MovingDeclarationItem({ item, name }: props) {
   const [showModalDetail, setShowModalDetail] = useState(false)
 
   function handleClick() {
     setShowModalDetail(true)
   }
+
+  const indexFisrtSeparate = item.time.indexOf('/')
+
+  const indexLastSeparate = item.time.lastIndexOf('/')
+
+  const indexSpacing = item.time.indexOf(' ')
+
+  const day = item.time.slice(indexFisrtSeparate + 1, indexLastSeparate)
+
+  const month = item.time.slice(0, indexFisrtSeparate)
+
+  const year = item.time.slice(indexLastSeparate + 1, indexSpacing)
+
+  const monthYear = `${month}/${year}`
+
+  const hourMS = item.time.slice(indexSpacing + 1)
 
   return (
     <>
@@ -25,7 +40,7 @@ function MovingDeclarationItem({ day, monthYear, hourMS }: props) {
         <div className="declaration-right">
           <div className="declaration-name">
             <i className="declaration-name-icon fas fa-user"></i>
-            <p className="declaration-name-text">Đinh Ngọc Định</p>
+            <p className="declaration-name-text">{name}</p>
           </div>
           <div className="declaration-hour">
             <i className="declaration-hour-icon fas fa-clock"></i>
@@ -34,6 +49,7 @@ function MovingDeclarationItem({ day, monthYear, hourMS }: props) {
         </div>
       </div>
       <ModalDetailMovingDeclaration
+        item={item}
         isShow={showModalDetail}
         setShowModalDetail={setShowModalDetail}
       />

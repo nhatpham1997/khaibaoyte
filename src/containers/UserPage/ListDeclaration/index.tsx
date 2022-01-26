@@ -1,16 +1,53 @@
 import LabelHeading from 'components/LabelHeading'
 import MovingDeclarationItem from 'components/MovingDeclarationItem'
+import { useEffect, useState } from 'react'
 
 function ListDeclaration() {
+  // Lấy ra id tài khoản lưu ở local storage
+  const userId = localStorage.getItem('userId')
+
+  const [listDeclarations, setListDeclarations] = useState<any[]>([])
+
+  const [listAllDeclarations, setListAllDeclarations] = useState<any[]>([])
+
+  const movingDeclarationAPI = 'https://dbkhaibaoyte.herokuapp.com/moving_declaration'
+
+  // Hàm gọi API lấy ra tất cả tờ khai di chuyển
+  const getAllDeclaration = useEffect(() => {
+    fetch(movingDeclarationAPI)
+      .then((res) => res.json())
+      .then((data) => {
+        setListAllDeclarations(data)
+      })
+  }, [])
+
+  // Hàm lấy ra tờ khai của user đang đăng nhập
+  const getDeclaration = useEffect(() => {
+    listAllDeclarations.forEach((declaration) => {
+      if (declaration.userId == userId) {
+        setListDeclarations((prev) => [...prev, declaration])
+      }
+    })
+  }, [listAllDeclarations])
+
+  // Sắp xếp danh sách tờ khai theo thứ tự thời gian giảm dần
+  if (listDeclarations) {
+    listDeclarations.sort((firstEl, secondEl) => {
+      if (new Date(secondEl.time).getTime() < new Date(firstEl.time).getTime()) {
+        return -1
+      } else {
+        return 0
+      }
+    })
+  }
+
   return (
     <>
       <LabelHeading text="Danh sách tờ khai" />
       <div className="moving-declaration-list">
-        <MovingDeclarationItem day="29" monthYear="10/2021" hourMS="08:42:22" />
-        <MovingDeclarationItem day="02" monthYear="12/2021" hourMS="08:52:10" />
-        <MovingDeclarationItem day="10" monthYear="01/2022" hourMS="21:30:22" />
-        <MovingDeclarationItem day="12" monthYear="01/2021" hourMS="12:42:22" />
-        <MovingDeclarationItem day="16" monthYear="01/2021" hourMS="19:00:22" />
+        {listDeclarations.map((item, index) => {
+          return <MovingDeclarationItem key={index} item={item} name={item.fullName} />
+        })}
       </div>
     </>
   )

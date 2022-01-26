@@ -1,62 +1,12 @@
-import * as React from 'react'
-import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import { useParams } from 'react-router-dom'
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import AccountInformation from 'components/accountInformation'
-import Button from '@mui/material/Button'
 import TravelSchedule from 'components/travelSchedule'
-
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-}))
-
-type createData = {
-  id: number
-  username: string
-  full_name: string
-  year_of_birth: string
-  citizen_identificatio: string //căn cước
-  sex: string
-  nationality: string //quốc tịch
-  address: string
-  phone: string
-  email: string
-  createDate: string
-}[]
-
-const rows: createData = [
-  {
-    id: 1,
-    username: 'NguyenDuy',
-    full_name: 'Nguyen Van Duy',
-    year_of_birth: '15/06/1999',
-    citizen_identificatio: '1234567890', //căn cước
-    sex: 'Nam',
-    nationality: 'Việt Nam', //quốc tịch
-    address: 'Liên Hà - Đan Phượng',
-    phone: '0123456789',
-    email: 'duy124678@gmail.com',
-    createDate: '01/01/2022',
-  },
-  {
-    id: 2,
-    username: 'NguyenDuy',
-    full_name: 'Nguyen Van Duy',
-    year_of_birth: '15/06/1999',
-    citizen_identificatio: '1234567890', //căn cước
-    sex: 'Nam',
-    nationality: 'Việt Nam', //quốc tịch
-    address: 'Liên Hà - Đan Phượng',
-    phone: '0123456789',
-    email: 'duy124678@gmail.com',
-    createDate: '01/01/2022',
-  },
-]
+import Confirmation from 'components/confirmation'
+import { Fragment, useContext } from 'react'
+import { GlobalContext } from 'contexts'
 
 const headerStyle = {
   display: 'flex',
@@ -64,65 +14,76 @@ const headerStyle = {
   backgroundColor: '#ccc',
   borderRadius: '10px',
   margin: '0 20px',
+  boxShadow: 3,
 }
 
 export default function UserDetail() {
+  const { users } = useContext(GlobalContext)
   const params = useParams()
-  const data = rows.filter((data) => data.id.toString() === params.id)[0]
+
+  const user = users.filter((item: any) => item.id.toString() === params.id)[0]
+
   return (
     <>
-      <Box sx={headerStyle}>
+      {users.length > 0 && (
         <Box>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary={data.full_name}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: 'inline' }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    Tài khoản
-                  </Typography>
-                  {' — Quản trị viên'}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginRight: '20px',
-          }}
-        >
-          <TravelSchedule name="Lịch sử di chuyển" />
-          <TravelSchedule name="Yêu cầu đã xác nhận" />
-        </Box>
-      </Box>
-      <Box sx={{ flexGrow: 1, margin: '0 20px' }}>
-        <Grid container spacing={2}>
-          <Grid item xs={7}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <h3>Thông tin chi tiết</h3>
+          <Box sx={headerStyle}>
+            <Box>
+              <ListItem
+                alignItems="flex-start"
+                sx={{ '& .MuiListItemText-primary': { fontSize: '1.6rem' } }}
+              >
+                <ListItemAvatar>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={user.fullName}
+                  secondary={
+                    <Fragment>
+                      <Typography
+                        sx={{ display: 'inline', fontSize: '1.3rem' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        Tài khoản — Người dùng
+                      </Typography>
+                    </Fragment>
+                  }
+                />
+              </ListItem>
             </Box>
-            <AccountInformation data={data} />
-          </Grid>
-          <Grid item xs={5}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <h3>Yêu cầu xác nhận</h3>
+            <Box
+              sx={{
+                display: { md: 'flex', xs: 'none' },
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '20px',
+                '& .MuiButton-root': { fontSize: '1.3rem' },
+              }}
+            >
+              <TravelSchedule name="Lịch sử di chuyển" />
+              <TravelSchedule name="Yêu cầu đã xác nhận" />
             </Box>
-            <Item>Không có yêu cầu nào!</Item>
-          </Grid>
-        </Grid>
-      </Box>
+          </Box>
+          <Box sx={{ flexGrow: 1, margin: '0 20px' }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={7}>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Thông tin chi tiết</h3>
+                </Box>
+                <AccountInformation />
+              </Grid>
+              <Grid item xs={0} md={5}>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Yêu cầu xác nhận</h3>
+                </Box>
+                <Confirmation />
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      )}
     </>
   )
 }
