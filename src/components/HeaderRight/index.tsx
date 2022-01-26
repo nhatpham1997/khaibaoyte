@@ -30,7 +30,9 @@ function HeaderRight() {
   }, [])
 
   function handleClick() {
-    localStorage.clear()
+    localStorage.removeItem('title')
+    localStorage.removeItem('userId')
+    localStorage.removeItem('tabIndex')
     navigate('/')
   }
 
