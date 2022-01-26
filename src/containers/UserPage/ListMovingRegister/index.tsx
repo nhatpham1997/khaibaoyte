@@ -53,15 +53,33 @@ function ListMovingRegister() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell align="center">Họ Tên</StyledTableCell>
-                <StyledTableCell align="center">Giới tính</StyledTableCell>
-                <StyledTableCell align="center">Năm sinh</StyledTableCell>
-                <StyledTableCell align="center">Email</StyledTableCell>
-                <StyledTableCell align="center">Số điện thoại</StyledTableCell>
-                <StyledTableCell align="center">Nơi ở hiện tại</StyledTableCell>
-                <StyledTableCell align="center">Di chuyển đến</StyledTableCell>
-                <StyledTableCell align="center">Ngày di chuyển</StyledTableCell>
-                <StyledTableCell align="center">Trạng thái</StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Họ Tên
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Giới tính
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Năm sinh
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Email
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Số điện thoại
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Nơi ở hiện tại
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Di chuyển đến
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Ngày di chuyển
+                </StyledTableCell>
+                <StyledTableCell className="tbody" align="center">
+                  Trạng thái
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -71,25 +89,33 @@ function ListMovingRegister() {
                     key={item.id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell className="name" align="center">
+                    <TableCell className="name tbody" align="center">
                       {item.fullName}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell className="tbody" align="center">
                       {item.gender === 1 ? 'Nam' : item.status === 2 ? 'Nữ' : 'Khác'}
                     </TableCell>
-                    <TableCell align="center">{item.yearOfBirth}</TableCell>
-                    <TableCell align="center">{item.email}</TableCell>
-                    <TableCell align="center">{item.phone}</TableCell>
-                    <TableCell align="center">
+                    <TableCell className="tbody" align="center">
+                      {item.yearOfBirth}
+                    </TableCell>
+                    <TableCell className="tbody" align="center">
+                      {item.email}
+                    </TableCell>
+                    <TableCell className="tbody" align="center">
+                      {item.phone}
+                    </TableCell>
+                    <TableCell className="tbody" align="center">
                       {item.specificAddressResidence}-{item.wardResidenceName}-
                       {item.districtResidenceName}-{item.provinceResidenceName}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell className="tbody" align="center">
                       {item.specificAddress}-{item.wardName}-{item.districtName}-{item.provinceName}
                     </TableCell>
-                    <TableCell align="center">{item.time}</TableCell>
+                    <TableCell className="tbody" align="center">
+                      {item.time}
+                    </TableCell>
                     <TableCell
-                      className="status"
+                      className="status tbody"
                       style={{
                         color: `${
                           item.status === 0 ? 'orange' : item.status === 1 ? 'green' : 'red'

@@ -26,7 +26,7 @@ export default function RegisterForm() {
   const [data, setData] = useState({
     email: 'phuhoang1111111@gmail.com',
     password: '',
-    fullname: '',
+    fullName: '',
     yearOfBirth: '',
     citizenIdentification: '',
     gender: Number,
