@@ -71,7 +71,7 @@ export default function LoginAdmin() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5" sx={{ fontSize: '2rem' }}>
-              Đăng nhập
+              Đăng nhập Admin
             </Typography>
             <Box
               component="form"
@@ -84,18 +84,20 @@ export default function LoginAdmin() {
               }}
             >
               <TextField
-                sx={{ fontSize: '2rem' }}
+                inputProps={{ style: { fontSize: '1.4rem' } }} // font size of input text
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                 margin="normal"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 autoFocus
               />
               <TextField
-                sx={{ fontSize: '2rem' }}
+                inputProps={{ style: { fontSize: '1.4rem' } }} // font size of input text
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                 margin="normal"
                 required
                 fullWidth

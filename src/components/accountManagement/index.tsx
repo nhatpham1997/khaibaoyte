@@ -44,7 +44,7 @@ const AccountManagement = (props: dataAdmin) => {
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} color="primary" aria-label="a dense table">
               <TableHead>
-                <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem' } }}>
+                <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem !important' } }}>
                   <TableCell sx={{ width: '30px' }}>STT</TableCell>
                   <TableCell align="left">Email</TableCell>
                   <TableCell sx={{ minWidth: '170px' }} align="left">
@@ -66,7 +66,10 @@ const AccountManagement = (props: dataAdmin) => {
                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
                         transition: '0.2s ease-in-out',
                       },
-                      '& .MuiTableCell-root': { fontSize: '1.6rem', borderBottom: 'none' },
+                      '& .MuiTableCell-root': {
+                        fontSize: '1.6rem !important',
+                        borderBottom: 'none',
+                      },
                     }}
                   >
                     <TableCell component="th" scope="row" align="center">
