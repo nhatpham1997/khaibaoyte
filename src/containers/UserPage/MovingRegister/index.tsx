@@ -63,7 +63,7 @@ function MovingRegister() {
     },
   ]
 
-  let time = ''
+  let date = ''
 
   // Lấy ra id tài khoản lưu ở local storage
   const userId = localStorage.getItem('userId')
@@ -287,12 +287,6 @@ function MovingRegister() {
     setWard(e.target.value)
   }
 
-  if (dayMY) {
-    time = `${dayMY.getDate() < 10 ? '0' + dayMY.getDate() : dayMY.getDate()}/${
-      dayMY.getMonth() + 1 < 10 ? '0' + (dayMY.getMonth() + 1) : dayMY.getMonth() + 1
-    }/${dayMY.getFullYear()}`
-  }
-
   function handleSubmitForm() {
     if (!currentUser.fullName) {
       setError((prev) => {
@@ -414,9 +408,9 @@ function MovingRegister() {
       setShowNoti(true)
     } else {
       if (dayMY) {
-        time = `${dayMY.getDate() < 10 ? '0' + dayMY.getDate() : dayMY.getDate()}/${
+        date = `${dayMY.getDate() < 10 ? '0' + dayMY.getDate() : dayMY.getDate()}/${
           dayMY.getMonth() + 1 < 10 ? '0' + (dayMY.getMonth() + 1) : dayMY.getMonth() + 1
-        }`
+        }/${dayMY.getFullYear()}`
       }
 
       let provinceName = ''
@@ -462,8 +456,7 @@ function MovingRegister() {
         wardResidence: currentUser.ward,
         specificAddressResidence: currentUser.specificAddress,
         userId: currentUser.id,
-        time: time,
-
+        time: date,
         province: province,
         district: district,
         ward: ward,
@@ -477,10 +470,9 @@ function MovingRegister() {
         status: 0,
       }
       // Xóa trường id không cần thiết
+
       delete data.id
       console.log('submit', data)
-      // hiển thị thông báo
-      // setShowNoti(true)
       console.log('error', error)
       // Call api
       const options = {
@@ -508,6 +500,11 @@ function MovingRegister() {
           })
           setShowNoti(true)
         })
+      setProvince('')
+      setDistrict('')
+      setWard('')
+      setSpecificAddress('')
+      setDayMY('')
     }
   }
 
@@ -596,6 +593,7 @@ function MovingRegister() {
           InputProps={{ style: { fontSize: '1.2rem' } }}
           InputLabelProps={{ style: { fontSize: '1.2rem' } }}
           required
+          onChange={handleChangeEmail}
           value={currentUser.email || ''}
           error={error.email.val}
           helperText={

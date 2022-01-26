@@ -15,6 +15,7 @@ export default function DateRegister({ value, setValue, error, setError }: props
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
+        disableMaskedInput
         label="Ngày di chuyển"
         value={value}
         onChange={(newValue) => {
