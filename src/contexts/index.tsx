@@ -32,15 +32,6 @@ type userType = {
 }
 
 type movingDeclaration = {
-  userId: string
-  time: string
-  province: string
-  district: string
-  ward: string
-  id: number
-}
-
-type movingRegister = {
   fullName: string
   yearOfBirth: number
   gender: number
@@ -54,12 +45,39 @@ type movingRegister = {
   userId: number
   time: string
   province: number
+  provinceName: string
   district: number
   ward: number
   specificAddress: string
-  status: number
   id: number
+}
+
+type movingRegister = {
+  email: string
+  fullName: string
+  yearOfBirth: number
+  citizenIdentification: string
+  gender: number
+  province: number
+  district: number
+  ward: number
+  specificAddress: string
+  phone: string
+  provinceResidence: number
+  districtResidence: number
+  wardResidence: number
+  specificAddressResidence: string
+  userId: number
+  time: string
+  provinceName: string
+  districtName: string
+  wardName: string
+  provinceResidenceName: string
+  districtResidenceName: string
+  wardResidenceName: string
+  status: number
   createdAt: number
+  id: number
 }
 
 type InitialStateContextType = {

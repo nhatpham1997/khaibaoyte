@@ -16,27 +16,40 @@ import { GlobalContext } from 'contexts'
 const theme = createTheme()
 
 export default function LoginAdmin() {
+  const [validEmail, setValidEmail] = React.useState(false)
+  const [messEmail, setMessEmail] = React.useState('')
+  const [validPass, setValidPass] = React.useState(false)
+  const [messPass, setMessPass] = React.useState('')
   const { setLogin, admins } = React.useContext(GlobalContext)
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     const response = admins.filter((item) => item.email === data.get('email'))
-    console.log(response, response[0].id)
-    if (response.length > 0 && response[0].password === data.get('password')) {
-      localStorage.setItem('adminId', `${response[0].id}`)
-      setLogin(response[0].id)
+
+    if (response.length > 0) {
+      setValidEmail(false)
+      setMessEmail('')
+      if (response[0].password === data.get('password')) {
+        localStorage.setItem('adminId', `${response[0].id}`)
+        setLogin(response[0].id)
+      } else {
+        setValidPass(true)
+        setMessPass('Passs error!')
+      }
     } else {
-      alert('Tài khoản hoặc mật khẩu không chính xác! Vui lòng nhập lại!')
+      setValidEmail(true)
+      setMessEmail('Email error!')
+      setValidPass(true)
+      setMessPass('Passs error!')
+      return
     }
-    // eslint-disable-next-line no-console
-    // checkLogin({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // })
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+    // if (response.length > 0 && response[0].password === data.get('password')) {
+    //   localStorage.setItem('adminId', `${response[0].id}`)
+    //   setLogin(response[0].id)
+    // } else {
+    //   alert('Tài khoản hoặc mật khẩu không chính xác! Vui lòng nhập lại!')
+    // }
   }
 
   return (
@@ -71,7 +84,7 @@ export default function LoginAdmin() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5" sx={{ fontSize: '2rem' }}>
-              Đăng nhập
+              Đăng nhập Admin
             </Typography>
             <Box
               component="form"
@@ -84,18 +97,24 @@ export default function LoginAdmin() {
               }}
             >
               <TextField
-                sx={{ fontSize: '2rem' }}
+                inputProps={{ style: { fontSize: '1.4rem' } }} // font size of input text
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
+                error={validEmail}
                 margin="normal"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 autoFocus
+                helperText={messEmail}
               />
               <TextField
-                sx={{ fontSize: '2rem' }}
+                inputProps={{ style: { fontSize: '1.4rem' } }} // font size of input text
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
+                helperText={messPass}
+                error={validPass}
                 margin="normal"
                 required
                 fullWidth

@@ -2,10 +2,14 @@ import HeaderLeft from 'components/HeaderLeft'
 import HeaderRight from 'components/HeaderRight'
 import './Header.css'
 
-function Header() {
+interface props {
+  titleHeader: string
+}
+
+function Header({ titleHeader }: props) {
   return (
     <div className="header">
-      <HeaderLeft />
+      <HeaderLeft titleHeader={titleHeader} />
       <HeaderRight />
     </div>
   )

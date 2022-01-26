@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -15,6 +15,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import { useTheme } from '@mui/material/styles'
 import { GlobalContext } from '../../../contexts'
+import { addressApi } from 'apis/addressApi'
 
 interface TablePaginationActionsProps {
   count: number
@@ -52,10 +53,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 function EpidemicArea() {
-  const { covidLocations } = useContext(GlobalContext)
+  const { covidLocations, movingDeclaration } = useContext(GlobalContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(7)
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - covidLocations.length) : 0
+  const [dataAddress, setDataAddress] = useState<any[]>([])
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - movingDeclaration.length) : 0
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage)
   }
@@ -67,46 +69,68 @@ function EpidemicArea() {
     setPage(0)
   }
 
+  const getAddress = async () => {
+    const data = await addressApi.getAll()
+    setDataAddress(data.data)
+  }
+
+  useEffect(() => {
+    getAddress()
+  }, [])
+
+  const getAddressName = (province: number, district: number, ward: number) => {
+    const provinceIndex = dataAddress?.findIndex((item: any) => item.code === province)
+    const districtIndex = dataAddress[provinceIndex]?.districts?.findIndex(
+      (item: any) => item.code === district
+    )
+    const wardIndex = dataAddress[provinceIndex]?.districts[districtIndex]?.wards?.findIndex(
+      (item: any) => item.code === ward
+    )
+    return `${dataAddress[provinceIndex]?.districts[districtIndex]?.wards[wardIndex]?.name} - ${dataAddress[provinceIndex]?.districts[districtIndex]?.name} - ${dataAddress[provinceIndex]?.name}`
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650, minHeight: '88vh' }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell align="left" sx={{ minWidth: '150px' }}>
-              Khu vực
+              Tên nhân viên
             </TableCell>
-            <TableCell align="right">Tổng số ca nhiễm</TableCell>
-            <TableCell align="right">Tổng số ca nhiễm hôm nay</TableCell>
-            <TableCell align="right">Tổng số ca tủ vong</TableCell>
+            <TableCell align="right">Địa chỉ khai báo</TableCell>
+            <TableCell align="right">Ngày khai báo</TableCell>
+            <TableCell align="right">Số điện thoại</TableCell>
             <TableCell align="right">Tra cứu</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? covidLocations.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : covidLocations
+            ? movingDeclaration.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : movingDeclaration
           ).map((item) => (
-            <TableRow key={item.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell
                 component="th"
                 scope="row"
-                sx={{
-                  color: `${
-                    item.casesToday > 100
-                      ? 'red'
-                      : item.casesToday > 50
-                      ? 'orange'
-                      : item.casesToday > 20
-                      ? 'yellow'
-                      : 'green'
-                  }`,
-                }}
+                // sx={{
+                //   color: `${
+                //     item.casesToday > 100
+                //       ? 'red'
+                //       : item.casesToday > 50
+                //       ? 'orange'
+                //       : item.casesToday > 20
+                //       ? 'yellow'
+                //       : 'green'
+                //   }`,
+                // }}
               >
-                {item.name}
+                {item.fullName}
               </TableCell>
-              <TableCell align="right">{item.cases}</TableCell>
-              <TableCell align="right">{item.casesToday}</TableCell>
-              <TableCell align="right">{item.death}</TableCell>
+              <TableCell align="right">
+                {getAddressName(item.province, item.district, item.ward)}
+              </TableCell>
+              <TableCell align="right">{item.time}</TableCell>
+              <TableCell align="right">{item.phone}</TableCell>
               <TableCell align="right">
                 <Button variant="contained">Xem chi tiết</Button>
               </TableCell>
@@ -124,7 +148,7 @@ function EpidemicArea() {
               align="right"
               rowsPerPageOptions={[7, 14, 21, { label: 'All', value: -1 }]}
               colSpan={3}
-              count={covidLocations.length}
+              count={movingDeclaration.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
