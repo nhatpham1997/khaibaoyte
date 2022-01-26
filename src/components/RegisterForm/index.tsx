@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { MenuItem } from '@mui/material'
 import Radio from '@mui/material/Radio'
@@ -21,10 +21,11 @@ import RadioGroup from '@mui/material/RadioGroup'
 const theme = createTheme()
 
 export default function RegisterForm() {
+  const navigate = useNavigate()
   const today = new Date()
   const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
   const [data, setData] = useState({
-    email: 'phuhoang1111111@gmail.com',
+    email: '',
     password: '',
     fullName: '',
     yearOfBirth: '',
@@ -95,7 +96,7 @@ export default function RegisterForm() {
 
   const handleSubmit = () => {
     axios.post('https://dbkhaibaoyte.herokuapp.com/user/', data).then((res) => {
-      console.log('res', res)
+      navigate('/')
     })
   }
 
@@ -111,13 +112,11 @@ export default function RegisterForm() {
             md={7}
             sx={{
               backgroundImage:
-                'url(https://upload.wikimedia.org/wikipedia/commons/b/ba/Logo-Rikkei.png)',
+                'url(https://dtcfurniture.vn/uploads/projects/banner-web-show.jpg?fbclid=IwAR3uyd-iw66sJwELVYE9lSiX0sCphZRYmqwGqxc9SXA1guNRtPKc-mjasmI)',
               backgroundRepeat: 'no-repeat',
               backgroundColor: (t) =>
                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
               backgroundSize: 'cover',
-              width: '500px',
-              height: '500px',
               backgroundPosition: 'center',
             }}
           />
@@ -182,7 +181,7 @@ export default function RegisterForm() {
                   // value={fullname}
                   onChange={(e) =>
                     setData((old) => {
-                      return { ...old, fullname: e.target.value }
+                      return { ...old, fullName: e.target.value }
                     })
                   }
                 />
