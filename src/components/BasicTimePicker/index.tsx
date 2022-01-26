@@ -31,6 +31,7 @@ export default function BasicTimePicker({ value, setValue, error, setError }: pr
         InputProps={{ style: { fontSize: '1.2rem' } }}
         renderInput={(params) => (
           <TextField
+            className="time"
             {...params}
             sx={{
               minWidth: 'calc(calc(100%/3) - 1.33rem)',

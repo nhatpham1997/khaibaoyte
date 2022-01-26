@@ -4,13 +4,14 @@ import './nav.css'
 
 interface props {
   setTitleHeader: any
+  showNav: any
 }
 
-function Nav({ setTitleHeader }: props) {
+function Nav({ setTitleHeader, showNav }: props) {
   const [tab, setTab] = useState(localStorage.getItem('tabIndex') || '1')
 
   return (
-    <div className="nav">
+    <div className={`nav ${showNav && 'is-show'}`}>
       <div className="nav-header">
         <img
           alt="Rikkeisoft ベトナムオフショア開発"
