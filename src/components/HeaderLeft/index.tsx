@@ -27,7 +27,11 @@ function handleClick(event: React.MouseEvent<Element, MouseEvent>) {
   console.info('You clicked a breadcrumb.')
 }
 
-export default function HeaderLeft() {
+interface props {
+  titleHeader: string
+}
+
+export default function HeaderLeft({ titleHeader }: props) {
   return (
     <div className="header-left" role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb">
@@ -38,7 +42,7 @@ export default function HeaderLeft() {
           label="Trang chủ"
           icon={<HomeIcon fontSize="small" />}
         />
-        <StyledBreadcrumb sx={{ fontSize: 12 }} component="a" href="#" label="Khai báo di chuyển" />
+        <StyledBreadcrumb sx={{ fontSize: 12 }} component="a" href="#" label={titleHeader} />
       </Breadcrumbs>
     </div>
   )

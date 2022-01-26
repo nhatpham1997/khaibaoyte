@@ -36,7 +36,7 @@ function App() {
             <Route path="personal-information" element={<PersonalInformation />}></Route>
             <Route path="change-password" element={<ChangePassword />}></Route>
           </Route>
-          <Route path="/admin/login" element={<LoginAdmin />} />
+
           <Route path="/admin/*" element={<LayoutAdmin />}>
             <Route path="" element={<HomePage />} />
             <Route path="account-admin/*" element={<AccountAdmin />} />

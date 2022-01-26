@@ -11,17 +11,15 @@ interface props {
   setError?: any
 }
 
-export default function BasicDatePicker({ value, setValue, error, setError }: props) {
+export default function DateRegister({ value, setValue, error, setError }: props) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
         disableMaskedInput
-        disableFuture
-        label="Tháng/Ngày/Năm"
+        label="Ngày di chuyển"
         value={value}
         onChange={(newValue) => {
-          console.log(newValue)
-          if (newValue.getTime() > new Date().getTime()) {
+          if (newValue.getTime() < new Date().getTime()) {
             setError((prev: any) => ({ ...prev, date: { val: true, code: 3 } }))
           } else if (newValue == 'Invalid Date') {
             setError((prev: any) => ({ ...prev, date: { val: true, code: 2 } }))
@@ -37,7 +35,7 @@ export default function BasicDatePicker({ value, setValue, error, setError }: pr
           <TextField
             {...params}
             sx={{
-              minWidth: 'calc(calc(100%/3) - 1.33rem)',
+              minWidth: 'calc(calc(100%/2) - 1rem)',
               marginBottom: '1rem',
               marginTop: '1rem',
             }}
@@ -51,7 +49,7 @@ export default function BasicDatePicker({ value, setValue, error, setError }: pr
                 : error?.date.val === true && error?.date.code === 2
                 ? 'Không đúng định dạng MM/dd/yyyy'
                 : error?.date.val === true && error?.date.code === 3
-                ? 'Không được nhập ngày tương lai'
+                ? 'Không được đăng ký ngày đã qua'
                 : ''
             }
             autoComplete="off"
