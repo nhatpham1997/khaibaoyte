@@ -63,10 +63,10 @@ function ApplicationForMoving() {
                 {row.fullName}
               </TableCell>
               <TableCell align="right" sx={{ color: `${row.status}` }}>
-                {getAddressName(row.wardResidence)}
+                {row.wardName} - {row.districtName} - {row.provinceName}
               </TableCell>
               <TableCell align="right" sx={{ color: `${row.status}` }}>
-                {getAddressName(row.ward)}
+                {row.wardResidenceName} - {row.districtResidenceName} - {row.provinceResidenceName}
               </TableCell>
               <TableCell align="right">{row.email}</TableCell>
               <TableCell align="right">{row.phone}</TableCell>
