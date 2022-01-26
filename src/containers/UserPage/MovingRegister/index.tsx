@@ -501,10 +501,12 @@ function MovingRegister() {
           setShowNoti(true)
         })
       setProvince('')
+      setDistricts([])
       setDistrict('')
+      setWards([])
       setWard('')
       setSpecificAddress('')
-      setDayMY('')
+      setDayMY(null)
     }
   }
 
