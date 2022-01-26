@@ -15,38 +15,34 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import MenuItem from '@mui/material/MenuItem'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
 
 const theme = createTheme()
 
 export default function EditProfile() {
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-  //   const data = new FormData(event.currentTarget)
-  //   // eslint-disable-next-line no-console
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   })
-  // }
+  const today = new Date()
+  const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
+
   const [provinceResidences, setProvinceResidences] = useState<any[]>([])
   const [provinces, setProvinces] = useState<any[]>([])
   const [districtResidences, setDistrictResidences] = useState<any[]>([])
   const [wardResidences, setWardResidences] = useState<any[]>([])
 
-  const [user, setUser] = useState<any>()
+  const [dataUser, setDataUser] = useState<any>({})
+
   const [data, setData] = useState({
     fullName: '',
     yearOfBirth: '',
     citizenIdentification: '',
-    gender: '',
+    gender: Number,
     province: '',
-    provinceName: '',
     district: '',
     ward: '',
     specificAddress: '',
     phone: '',
-    createdDate: '',
   })
+  const id = localStorage.getItem('userId')
 
   useEffect(() => {
     fetch('https://provinces.open-api.vn/api/?depth=3')
@@ -57,16 +53,28 @@ export default function EditProfile() {
       })
   }, [])
 
+  useEffect(() => {
+    fetch(`https://dbkhaibaoyte.herokuapp.com/user?id=${id}`)
+      .then((res) => res.json())
+      .then((dataUsers) => {
+        console.log(dataUsers[0])
+        setDataUser(dataUsers[0])
+      })
+  }, [])
+
   const handleSubmit = () => {
-    axios.put('https://dbkhaibaoyte.herokuapp.com/user/1/', data).then((res) => {
-      console.log('res', res)
-    })
+    axios
+      .put(`https://dbkhaibaoyte.herokuapp.com/user/${id}/`, { ...dataUser, ...data })
+      .then((res) => {
+        console.log('res', res)
+      })
   }
   // Hàm xử lý chọn tỉnh/thành phố cư trú
   function handleChangeProvinceResidence(e: React.ChangeEvent<HTMLInputElement>) {
     const codeProvinceResidence = e.target.value
     provinceResidences.forEach((provinceResidence) => {
       if (provinceResidence.code === codeProvinceResidence) {
+        console.log({ provincesName: provinceResidence.name })
         setDistrictResidences(provinceResidence.districts)
       }
     })
@@ -113,7 +121,7 @@ export default function EditProfile() {
           }}
         >
           <Typography component="h1" variant="h5">
-            EditProfile
+            Thay Đổi Thông Tin Cá Nhân
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -121,7 +129,7 @@ export default function EditProfile() {
               required
               fullWidth
               id="fullname"
-              label="Full Name"
+              label="Họ và tên"
               name="fullname"
               autoComplete="fullname"
               autoFocus
@@ -136,7 +144,7 @@ export default function EditProfile() {
               required
               fullWidth
               id="yearofbirth"
-              label="Year Of Birth"
+              label="Năm Sinh"
               name="yearofbirth"
               autoComplete="yearofbirth"
               autoFocus
@@ -151,7 +159,7 @@ export default function EditProfile() {
               required
               fullWidth
               id="citizen_identification"
-              label="Citizen_Identification"
+              label="Số hộ chiếu/CMND/CCCD"
               name="citizen_identification"
               autoComplete="citizen_identification"
               autoFocus
@@ -161,21 +169,23 @@ export default function EditProfile() {
                 })
               }
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
               id="gender"
-              label="Gender"
-              name="gender"
-              autoComplete="gender"
-              autoFocus
+              name="Giới Tính"
               onChange={(e) =>
-                setData((old) => {
-                  return { ...old, gender: e.target.value }
+                setData((old: any) => {
+                  return { ...old, gender: Number(e.target.value) }
                 })
               }
-            />
+            >
+              <FormControlLabel value="1" control={<Radio />} label="Nam" />
+              <FormControlLabel value="2" control={<Radio />} label="Nữ" />
+              <FormControlLabel value="3" control={<Radio />} label="Khác" />
+            </RadioGroup>
+
             <div className="row">
               <TextField
                 id="province-residence"
@@ -248,14 +258,14 @@ export default function EditProfile() {
               margin="normal"
               required
               fullWidth
-              id="ward"
-              label="Ward"
-              name="ward"
-              autoComplete="ward"
+              id="specificAddress"
+              label="Số nhà, phố, tổ dân phố/thôn/đội"
+              name="specificAddress"
+              autoComplete="specificAddress"
               autoFocus
               onChange={(e) =>
                 setData((old) => {
-                  return { ...old, ward: e.target.value }
+                  return { ...old, specificAddress: e.target.value }
                 })
               }
             />
@@ -264,7 +274,7 @@ export default function EditProfile() {
               required
               fullWidth
               id="phone"
-              label="Phone_Number"
+              label="Số Điện Thoại"
               name="phone"
               autoComplete="phone"
               autoFocus

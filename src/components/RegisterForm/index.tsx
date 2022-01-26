@@ -12,34 +12,32 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { MenuItem } from '@mui/material'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
 
 const theme = createTheme()
 
 export default function RegisterForm() {
-  // const [email, setEmail] = useState()
-  // const [password, setPassword] = useState()
-  // const [fullname, setFullname] = useState()
-  // const [yearofbirth, setYearofbirth] = useState()
-  // const [citizen_identification, setCitizen_identification] = useState()
-  // const [gender, setGender] = useState()
-  // const [province, setProvince] = useState()
-  // const [district, setDistrict] = useState()
-  // const [ward, setWard] = useState()
-  // const [phone, setPhone] = useState()
-
+  const navigate = useNavigate()
+  const today = new Date()
+  const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
   const [data, setData] = useState({
     email: '',
     password: '',
-    fullname: '',
-    yearofbirth: '',
-    citizen_identification: '',
-    gender: '',
+    fullName: '',
+    yearOfBirth: '',
+    citizenIdentification: '',
+    gender: Number,
     province: '',
+    provinceName: '',
     district: '',
+    ward: '',
+    specificAddress: '',
     phone: '',
+    createdDate: date,
   })
 
   const [provinceResidences, setProvinceResidences] = useState<any[]>([])
@@ -61,6 +59,7 @@ export default function RegisterForm() {
     provinceResidences.forEach((provinceResidence) => {
       if (provinceResidence.code === codeProvinceResidence) {
         setDistrictResidences(provinceResidence.districts)
+        setData({ ...data, provinceName: provinceResidence.name })
       }
     })
     setData((old) => {
@@ -97,7 +96,7 @@ export default function RegisterForm() {
 
   const handleSubmit = () => {
     axios.post('https://dbkhaibaoyte.herokuapp.com/user/', data).then((res) => {
-      console.log('res', res)
+      navigate('/')
     })
   }
 
@@ -113,13 +112,11 @@ export default function RegisterForm() {
             md={7}
             sx={{
               backgroundImage:
-                'url(https://upload.wikimedia.org/wikipedia/commons/b/ba/Logo-Rikkei.png)',
+                'url(https://dtcfurniture.vn/uploads/projects/banner-web-show.jpg?fbclid=IwAR3uyd-iw66sJwELVYE9lSiX0sCphZRYmqwGqxc9SXA1guNRtPKc-mjasmI)',
               backgroundRepeat: 'no-repeat',
               backgroundColor: (t) =>
                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
               backgroundSize: 'cover',
-              width: '500px',
-              height: '500px',
               backgroundPosition: 'center',
             }}
           />
@@ -177,14 +174,14 @@ export default function RegisterForm() {
                   required
                   fullWidth
                   id="fullname"
-                  label="fullname"
+                  label="Họ và tên"
                   name="fullname"
                   autoComplete="fullname"
                   autoFocus
                   // value={fullname}
                   onChange={(e) =>
                     setData((old) => {
-                      return { ...old, fullname: e.target.value }
+                      return { ...old, fullName: e.target.value }
                     })
                   }
                 />
@@ -192,15 +189,14 @@ export default function RegisterForm() {
                   margin="normal"
                   required
                   fullWidth
-                  id="yearofbirth"
-                  label="Year Of Birth"
+                  id="yearOfBirth"
+                  label="Năm sinh"
                   name="yearofbirth"
                   autoComplete="yearofbirth"
-                  autoFocus
-                  // value={yearofbirth}
+                  autoFocufa-stack
                   onChange={(e) =>
                     setData((old) => {
-                      return { ...old, yearofbirth: e.target.value }
+                      return { ...old, yearOfBirth: e.target.value }
                     })
                   }
                 />
@@ -208,34 +204,33 @@ export default function RegisterForm() {
                   margin="normal"
                   required
                   fullWidth
-                  id="citizen_identification"
-                  label="Citizen_Identification"
+                  id="citizenIdentification"
+                  label="CMND/CCCD"
                   name="citizen_identification"
                   autoComplete="citizen_identification"
                   autoFocus
-                  // value={citizen_identification}
                   onChange={(e) =>
                     setData((old) => {
-                      return { ...old, citizen_identification: e.target.value }
+                      return { ...old, citizenIdentification: e.target.value }
                     })
                   }
                 />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
                   id="gender"
-                  label="Gender"
-                  name="gender"
-                  autoComplete="gender"
-                  autoFocus
-                  // value={gender}
+                  name="Giới Tính"
                   onChange={(e) =>
-                    setData((old) => {
-                      return { ...old, gender: e.target.value }
+                    setData((old: any) => {
+                      return { ...old, gender: Number(e.target.value) }
                     })
                   }
-                />
+                >
+                  <FormControlLabel value="1" control={<Radio />} label="Nam" />
+                  <FormControlLabel value="2" control={<Radio />} label="Nữ" />
+                  <FormControlLabel value="3" control={<Radio />} label="Khác" />
+                </RadioGroup>
+
                 <div className="row">
                   <TextField
                     id="province-residence"
@@ -304,13 +299,28 @@ export default function RegisterForm() {
                     ))}
                   </TextField>
                 </div>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="specificAddress"
+                  label="Số nhà, phố, tổ dân phố/thôn/đội"
+                  name="specificAddress"
+                  autoComplete="specificAddress"
+                  autoFocus
+                  onChange={(e) =>
+                    setData((old) => {
+                      return { ...old, specificAddress: e.target.value }
+                    })
+                  }
+                />
 
                 <TextField
                   margin="normal"
                   required
                   fullWidth
                   id="phone"
-                  label="Phone_Number"
+                  label="Số Điện Thoại"
                   name="phone"
                   autoComplete="phone"
                   autoFocus
