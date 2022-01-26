@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import FileOpenIcon from '@mui/icons-material/FileOpen'
 import { GlobalContext } from 'contexts'
 import { Box } from '@mui/material'
+import SearchAccount from 'components/searchAccount'
 
 type dataAdmin = {
   data: {
@@ -35,12 +36,25 @@ type dataAdmin = {
 
 const AccountManagement = (props: dataAdmin) => {
   const { isLogin } = useContext(GlobalContext)
-  console.log(isLogin)
+  const [data, setData] = useState([...props.data])
+  console.log(data, props.data)
+
+  useEffect(() => {
+    setData(props.data)
+  }, [props.data])
+
+  const handleSearch = (e: any) => {
+    console.log(e)
+    setData(e)
+  }
   return (
     <>
       {isLogin !== '' && (
-        <Box>
-          <h3 style={{ margin: '16px', fontSize: '1.6rem' }}>Danh sách {props.name}</h3>
+        <Box mx={1}>
+          <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <h3 style={{ margin: '16px', fontSize: '1.6rem' }}>Danh sách {props.name}</h3>
+            <SearchAccount search={handleSearch} data={props.data} />
+          </Box>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} color="primary" aria-label="a dense table">
               <TableHead>
@@ -56,7 +70,7 @@ const AccountManagement = (props: dataAdmin) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.data.map((row, index) => (
+                {data.map((row, index) => (
                   <TableRow
                     key={row.id}
                     sx={{

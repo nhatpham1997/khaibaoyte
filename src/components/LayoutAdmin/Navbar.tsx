@@ -45,9 +45,6 @@ function Navbar() {
           <Breadcrumbs />
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-          <Item>
-            <TextField label="Search here" size="small" />
-          </Item>
           <Item sx={{ '& .MuiSvgIcon-root': { fontSize: '2.5rem' } }}>
             <AccountCircleIcon />
           </Item>
