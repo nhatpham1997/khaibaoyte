@@ -30,13 +30,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 function ListMovingRegister() {
+  const userId = localStorage.getItem('userId')
+
   const [register, setRegister] = useState<any[]>([])
+  const [listAllRegisters, setListAllRegisters] = useState<any[]>([])
 
   const getListRegister = async () => {
     try {
       const data = await axios.get('https://dbkhaibaoyte.herokuapp.com/moving_register')
       console.log(data.data)
-      setRegister(data.data)
+      setListAllRegisters(data.data)
     } catch (e) {
       console.log(e)
     }
@@ -45,6 +48,16 @@ function ListMovingRegister() {
   useEffect(() => {
     getListRegister()
   }, [])
+
+  // Hàm lấy ra tờ khai của user đang đăng nhập
+  const getRegister = useEffect(() => {
+    listAllRegisters.forEach((register) => {
+      if (register.userId == userId) {
+        setRegister((prev) => [...prev, register])
+      }
+    })
+  }, [listAllRegisters])
+
   return (
     <div>
       <LabelHeading text="Danh sách đăng ký di chuyển" />
@@ -83,7 +96,7 @@ function ListMovingRegister() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {register.map((item) => {
+              {register.map((item, index) => {
                 return (
                   <StyledTableRow
                     key={item.id}
