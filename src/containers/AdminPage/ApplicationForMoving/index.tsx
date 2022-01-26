@@ -70,7 +70,7 @@ function ApplicationForMoving() {
               </TableCell>
               <TableCell align="right">{row.email}</TableCell>
               <TableCell align="right">{row.phone}</TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ minWidth: '200px' }}>
                 {row.status === 1 ? (
                   <Typography sx={{ color: 'green', fontSize: '1.6rem' }}>
                     <CheckIcon />
@@ -87,7 +87,7 @@ function ApplicationForMoving() {
                 <Button
                   variant="contained"
                   color="success"
-                  sx={{ mr: 2, display: `${row.status !== 0 ? 'none' : 'unset'}` }}
+                  sx={{ mr: 1, display: `${row.status !== 0 ? 'none' : 'unset'}` }}
                   onClick={() => handleApprove(row.id, 1)}
                 >
                   Phê duyệt
