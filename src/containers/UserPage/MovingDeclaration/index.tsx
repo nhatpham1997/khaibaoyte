@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material'
 import LabelHeading from 'components/LabelHeading'
 import MenuItem from '@mui/material/MenuItem'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import BasicDatePicker from 'components/BasicDatePicker'
 import BasicTimePicker from 'components/BasicTimePicker'
 import Button from '@mui/material/Button'
@@ -498,6 +498,15 @@ function MovingDeclaration() {
             text: 'Khai báo di chuyển thành công',
           })
           setShowNoti(true)
+          // Sau khi khai báo di chuyển thành công thì xóa hết thông tin khai báo di chuyển
+          setSpecificAddress('')
+          setProvince('')
+          setDistrict('')
+          setDistricts([])
+          setWard('')
+          setWards([])
+          setDayMY(null)
+          setHourMS(null)
         })
         .catch((err) => {
           console.log('Lỗi' + err)
