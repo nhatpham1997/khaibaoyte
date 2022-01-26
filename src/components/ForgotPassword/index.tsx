@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -18,6 +18,7 @@ import axios from 'axios'
 const theme = createTheme()
 
 export default function ForgotPassword() {
+  return <div></div>
   const [dataUser, setDataUser] = useState<any>([])
   const [id, setId] = useState<any>()
   const [validPassCurrent, setValidPassCurrent] = useState(false)
