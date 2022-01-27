@@ -50,7 +50,7 @@ const AccountInformation = () => {
   }
 
   return (
-    <Box sx={{ '& .css-1c3xpmj-MuiPaper-root': { borderRadius: 'none !important' } }}>
+    <Box>
       {address.length > 0 && (
         <Item
           sx={{
@@ -59,6 +59,7 @@ const AccountInformation = () => {
             textAlign: 'start',
             boxShadow: 3,
             fontSize: '1.4rem',
+            borderRadius: 0,
           }}
         >
           <Box sx={styleBox}>
