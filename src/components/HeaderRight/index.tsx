@@ -4,10 +4,17 @@ import { Box } from '@mui/system'
 import Chip from '@mui/material/Chip'
 import LogoutIcon from '@mui/icons-material/Logout'
 import Button from '@mui/material/Button'
+import DehazeIcon from '@mui/icons-material/Dehaze'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import IconButton from '@mui/material/IconButton'
 
-function HeaderRight() {
+interface props {
+  setShowNav: any
+  showNav: any
+}
+
+function HeaderRight({ setShowNav, showNav }: props) {
   const userId = localStorage.getItem('userId')
   const userAPI = 'https://dbkhaibaoyte.herokuapp.com/user/'
   const navigate = useNavigate()
@@ -30,13 +37,20 @@ function HeaderRight() {
   }, [])
 
   function handleClick() {
-    localStorage.clear()
+    localStorage.removeItem('title')
+    localStorage.removeItem('userId')
+    localStorage.removeItem('tabIndex')
     navigate('/')
+  }
+
+  function handleClickToggleMenu() {
+    setShowNav(!showNav)
   }
 
   return (
     <Box className="header-right">
       <AccountCircleIcon
+        className="avatar-header"
         sx={{
           fontSize: 20,
           color: '#7b809a',
@@ -60,6 +74,13 @@ function HeaderRight() {
       >
         Đăng xuất
       </Button>
+      <IconButton
+        onClick={handleClickToggleMenu}
+        className="toggle-menu"
+        sx={{ fontSize: '2.4rem', marginLeft: '2rem' }}
+      >
+        <DehazeIcon sx={{ fontSize: '2.4rem' }} />
+      </IconButton>
     </Box>
   )
 }

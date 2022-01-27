@@ -546,7 +546,7 @@ function MovingDeclaration() {
       <div className="row">
         <TextField
           autoComplete="off"
-          id="year-of-birth"
+          className="year-of-birth"
           label="Năm sinh"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
@@ -567,7 +567,7 @@ function MovingDeclaration() {
           }
         />
         <TextField
-          id="sex"
+          className="sex"
           label="Giới tính"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
@@ -612,7 +612,7 @@ function MovingDeclaration() {
       <div className="row">
         <TextField
           autoComplete="nope"
-          id="email"
+          className="email"
           label="Email"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
@@ -632,7 +632,7 @@ function MovingDeclaration() {
         />
         <TextField
           autoComplete="off"
-          id="phone"
+          className="phone"
           label="Số điện thoại"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
@@ -656,7 +656,7 @@ function MovingDeclaration() {
       </div>
       <div className="row">
         <TextField
-          id="province-residence"
+          className="province-residence"
           label="Tỉnh/Thành phố"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
@@ -676,7 +676,7 @@ function MovingDeclaration() {
           ))}
         </TextField>
         <TextField
-          id="district-residence"
+          className="district-residence"
           label="Quận/Huyện"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
@@ -696,7 +696,7 @@ function MovingDeclaration() {
           ))}
         </TextField>
         <TextField
-          id="ward-residence"
+          className="ward-residence"
           label="Phường/Xã"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
@@ -717,7 +717,7 @@ function MovingDeclaration() {
         </TextField>
         <TextField
           autoComplete="off"
-          id="detail-address-residence"
+          className="detail-address-residence"
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
@@ -740,7 +740,7 @@ function MovingDeclaration() {
         <BasicTimePicker error={error} setError={setError} value={hourMS} setValue={setHourMS} />
         <TextField
           autoComplete="off"
-          id="detail-address"
+          className="detail-address"
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/3) - 1.33rem)' }}
           size="medium"
@@ -757,7 +757,7 @@ function MovingDeclaration() {
       </div>
       <div className="row">
         <TextField
-          id="province-residence"
+          className="province"
           label="Tỉnh/Thành phố"
           sx={{
             marginBottom: '1rem',
@@ -781,7 +781,7 @@ function MovingDeclaration() {
           ))}
         </TextField>
         <TextField
-          id="district-residence"
+          className="district"
           label="Quận/Huyện"
           sx={{
             marginBottom: '1rem',
@@ -805,7 +805,7 @@ function MovingDeclaration() {
           ))}
         </TextField>
         <TextField
-          id="ward-residence"
+          className="ward"
           label="Phường/Xã"
           sx={{
             marginBottom: '1rem',
