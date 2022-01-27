@@ -48,7 +48,6 @@ export default function ForgotPassword() {
   const handleChangePassword = async (response: any, passwordNew: any) => {
     const result = axios.put(`https://dbkhaibaoyte.herokuapp.com/user/${id}`, {
       ...response,
-      fullName: '',
       password: passwordNew,
     })
     console.log(result)

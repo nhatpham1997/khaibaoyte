@@ -1,0 +1,21 @@
+/* responsive */
+@media screen and (max-width: 830px) {
+  .row {
+    flex-direction: column;
+  }
+  .year-of-birth,
+  .sex,
+  .email,
+  .phone,
+  .province-residence,
+  .district-residence,
+  .ward-residence,
+  .detail-address-residence,
+  .province,
+  .district,
+  .ward,
+  .detail-address,
+  .date {
+    width: 100%;
+  }
+}
