@@ -59,11 +59,11 @@ function HeaderRight({ setShowNav, showNav }: props) {
           cursor: 'pointer',
         }}
       />
-      <Chip sx={{ fontSize: '1.3rem' }} label={currentUser?.fullName} />
+      <Chip sx={{ fontSize: '1.4rem' }} label={currentUser?.fullName} />
       <Button
         onClick={handleClick}
         sx={{
-          fontSize: '1.1rem',
+          fontSize: '1.3rem',
           textAlign: 'center',
           borderRadius: '2rem',
           marginLeft: '1rem',

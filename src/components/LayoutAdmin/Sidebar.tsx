@@ -65,7 +65,7 @@ function Sidebar() {
     <>
       {SIDEBAR_ITEMS.map((item, index) => (
         <Link key={index} to={item.href || '#'}>
-          <ListItem button>
+          <ListItem button sx={{ py: 2 }}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText
               sx={{ margin: 0, color: 'black', '& .MuiTypography-root': { fontSize: '16px' } }}

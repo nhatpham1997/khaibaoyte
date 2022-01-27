@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
+import { Today } from '@mui/icons-material'
 
 interface props {
   value?: any
@@ -19,7 +20,7 @@ export default function DateRegister({ value, setValue, error, setError }: props
         label="Ngày di chuyển"
         value={value}
         onChange={(newValue) => {
-          if (newValue.getTime() < new Date().getTime()) {
+          if (newValue.getDate() < new Date().getDate()) {
             setError((prev: any) => ({ ...prev, date: { val: true, code: 3 } }))
           } else if (newValue == 'Invalid Date') {
             setError((prev: any) => ({ ...prev, date: { val: true, code: 2 } }))
@@ -30,9 +31,10 @@ export default function DateRegister({ value, setValue, error, setError }: props
           }
           setValue(newValue)
         }}
-        InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
+        InputProps={{ style: { fontSize: '1.2rem' } }}
         renderInput={(params) => (
           <TextField
+            className="date"
             {...params}
             sx={{
               minWidth: 'calc(calc(100%/2) - 1rem)',

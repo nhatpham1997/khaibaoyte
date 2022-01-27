@@ -12,6 +12,7 @@ function Nav({ setTitleHeader, showNav }: props) {
 
   return (
     <div className={`nav ${showNav && 'is-show'}`}>
+      <div className="nav-modal"></div>
       <div className="nav-header">
         <img
           alt="Rikkeisoft ベトナムオフショア開発"

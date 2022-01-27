@@ -28,6 +28,8 @@
   align-items: center;
   text-transform: uppercase;
   font-weight: 500;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
 }
 .declaration-name-icon {
   color: #989aa5;
@@ -37,15 +39,10 @@
 .declaration-hour {
   display: flex;
   align-items: center;
+  font-size: 1.4rem;
 }
 .declaration-hour-icon {
   color: #989aa5;
   width: 1.5rem;
   margin-right: 1rem;
-}
-
-@media screen and (max-width: 412px) {
-  .declaration-name-text {
-    font-size: 1.3rem;
-  }
 }

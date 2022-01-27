@@ -28,7 +28,7 @@ export default function BasicTimePicker({ value, setValue, error, setError }: pr
           }
           setValue(newValue)
         }}
-        InputProps={{ style: { fontSize: '1.2rem' } }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
         renderInput={(params) => (
           <TextField
             className="time"
@@ -38,7 +38,7 @@ export default function BasicTimePicker({ value, setValue, error, setError }: pr
               marginBottom: '1rem',
               marginTop: '1rem',
             }}
-            InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             required
             type="time"
             error={error?.time.val}

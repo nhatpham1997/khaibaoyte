@@ -61,90 +61,81 @@ function ListMovingRegister() {
   return (
     <div>
       <LabelHeading text="Danh sách đăng ký di chuyển" />
-      <div className="row">
-        <TableContainer className="tableContainer" component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell className="tbody" align="center">
-                  Họ Tên
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Giới tính
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Năm sinh
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Email
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Số điện thoại
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Nơi ở hiện tại
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Di chuyển đến
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Ngày di chuyển
-                </StyledTableCell>
-                <StyledTableCell className="tbody" align="center">
-                  Trạng thái
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {register.map((item, index) => {
-                return (
-                  <StyledTableRow
-                    key={item.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell className="name tbody" align="center">
-                      {item.fullName}
-                    </TableCell>
-                    <TableCell className="tbody" align="center">
-                      {item.gender === 1 ? 'Nam' : item.status === 2 ? 'Nữ' : 'Khác'}
-                    </TableCell>
-                    <TableCell className="tbody" align="center">
-                      {item.yearOfBirth}
-                    </TableCell>
-                    <TableCell className="tbody" align="center">
-                      {item.email}
-                    </TableCell>
-                    <TableCell className="tbody" align="center">
-                      {item.phone}
-                    </TableCell>
-                    <TableCell className="tbody" align="center">
-                      {item.specificAddressResidence}-{item.wardResidenceName}-
-                      {item.districtResidenceName}-{item.provinceResidenceName}
-                    </TableCell>
-                    <TableCell className="tbody" align="center">
-                      {item.specificAddress}-{item.wardName}-{item.districtName}-{item.provinceName}
-                    </TableCell>
-                    <TableCell className="tbody" align="center">
-                      {item.time}
-                    </TableCell>
-                    <TableCell
-                      className="status tbody"
-                      style={{
-                        color: `${
-                          item.status === 0 ? 'orange' : item.status === 1 ? 'green' : 'red'
-                        }`,
-                      }}
-                      align="center"
+      {register.length > 0 ? (
+        <div className="row">
+          <TableContainer className="tableContainer" component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell className="tbody" align="center">
+                    Họ Tên
+                  </StyledTableCell>
+                  <StyledTableCell className="tbody" align="center">
+                    Số điện thoại
+                  </StyledTableCell>
+                  <StyledTableCell className="tbody" align="center">
+                    Nơi ở hiện tại
+                  </StyledTableCell>
+                  <StyledTableCell className="tbody" align="center">
+                    Di chuyển đến
+                  </StyledTableCell>
+                  <StyledTableCell className="tbody" align="center">
+                    Ngày di chuyển
+                  </StyledTableCell>
+                  <StyledTableCell className="tbody" align="center">
+                    Trạng thái
+                  </StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {register.map((item, index) => {
+                  return (
+                    <StyledTableRow
+                      key={index}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      {item.status === 0 ? 'Đang chờ' : item.status === 1 ? 'Đã duyệt' : 'Từ chối'}
-                    </TableCell>
-                  </StyledTableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+                      <TableCell className="name tbody" align="center">
+                        {item.fullName}
+                      </TableCell>
+                      <TableCell className="tbody" align="center">
+                        {item.phone}
+                      </TableCell>
+                      <TableCell className="tbody" align="center">
+                        {item.specificAddressResidence}-{item.wardResidenceName}-
+                        {item.districtResidenceName}-{item.provinceResidenceName}
+                      </TableCell>
+                      <TableCell className="tbody" align="center">
+                        {item.specificAddress}-{item.wardName}-{item.districtName}-
+                        {item.provinceName}
+                      </TableCell>
+                      <TableCell className="tbody" align="center">
+                        {item.time}
+                      </TableCell>
+                      <TableCell
+                        className="status tbody"
+                        style={{
+                          color: `${
+                            item.status === 0 ? 'orange' : item.status === 1 ? 'green' : 'red'
+                          }`,
+                        }}
+                        align="center"
+                      >
+                        {item.status === 0
+                          ? 'Đang chờ'
+                          : item.status === 1
+                          ? 'Đã duyệt'
+                          : 'Từ chối'}
+                      </TableCell>
+                    </StyledTableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      ) : (
+        <h4 className="center">Bạn chưa đăng ký di chuyển</h4>
+      )}
     </div>
   )
 }

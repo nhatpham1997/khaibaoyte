@@ -7,13 +7,13 @@
   display: none !important;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1200px) {
   .toggle-menu {
     display: flex !important;
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 670px) {
   .header-right {
     display: flex;
     width: 100%;
@@ -21,7 +21,7 @@
   }
 }
 
-@media screen and (max-width: 412px) {
+@media screen and (max-width: 395px) {
   .avatar-header {
     display: none !important;
   }

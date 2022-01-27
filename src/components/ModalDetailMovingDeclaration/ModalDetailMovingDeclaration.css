@@ -61,6 +61,21 @@
   .detail-address-modal {
     width: 100%;
   }
+  .modal-detail-moving-declaration-content::-webkit-scrollbar {
+    width: 2px;
+    border-radius: 1rem;
+  }
+
+  .modal-detail-moving-declaration-content::-webkit-scrollbar-track {
+    border-radius: 1rem;
+    /* background-color: #c5cccc; */
+  }
+
+  .modal-detail-moving-declaration-content::-webkit-scrollbar-thumb {
+    background-color: #7b809a;
+    outline: 1px solid slategrey;
+    border-radius: 1rem;
+  }
 }
 
 @media screen and (max-width: 555px) {
