@@ -1,9 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive'
-import { Link, useLocation } from 'react-router-dom'
-import { GlobalContext } from 'contexts'
+import { Link } from 'react-router-dom'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
@@ -32,7 +30,7 @@ const SIDEBAR_ITEMS: Array<SidebarItem> = [
   {
     label: 'Quản lý User',
     href: '/admin/account-user',
-    icon: <ListAltIcon />,
+    icon: <ListAltIcon fontSize="large" />,
   },
   {
     label: 'Quản lý di chuyển',
@@ -47,28 +45,14 @@ const SIDEBAR_ITEMS: Array<SidebarItem> = [
 ]
 
 function Sidebar() {
-  const route = useLocation().pathname
-  const [alignment, setAlignment] = useState('/admin')
-  const { isLogin } = useContext(GlobalContext)
-
-  const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment)
-    }
-  }
-
-  useEffect(() => {
-    setAlignment(route)
-  }, [])
-
   return (
     <>
       {SIDEBAR_ITEMS.map((item, index) => (
         <Link key={index} to={item.href || '#'}>
-          <ListItem button sx={{ py: 2 }}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItem button sx={{ py: 3 }}>
+            <ListItemIcon sx={{ width: '30px' }}>{item.icon}</ListItemIcon>
             <ListItemText
-              sx={{ margin: 0, color: 'black', '& .MuiTypography-root': { fontSize: '16px' } }}
+              sx={{ margin: 0, color: 'black', '& .MuiTypography-root': { fontSize: '1.6rem' } }}
               primary={item.label}
             />
           </ListItem>

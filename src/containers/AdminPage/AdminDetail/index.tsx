@@ -17,7 +17,6 @@ const headerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   boxShadow: 3,
-  margin: '0 1rem',
 }
 
 export default function AdminDetail() {
@@ -58,17 +57,21 @@ export default function AdminDetail() {
               </ListItem>
             </Box>
           </Box>
-          <Box sx={{ flexGrow: 1, margin: '0 1rem' }}>
+          <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={7}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Thông tin chi tiết</h3>
+                  <span style={{ margin: '20px 0', fontSize: '1.6rem', fontWeight: 'bold' }}>
+                    Thông tin chi tiết
+                  </span>
                 </Box>
                 <AccountInformation />
               </Grid>
               <Grid item xs={0} md={5} sx={{ boxShadow: 'none' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3 style={{ margin: '20px 0', fontSize: '1.4rem' }}>Quản trị viên</h3>
+                  <span style={{ margin: '20px 0', fontSize: '1.6rem', fontWeight: 'bold' }}>
+                    Quản trị viên
+                  </span>
                 </Box>
                 <Item
                   sx={{

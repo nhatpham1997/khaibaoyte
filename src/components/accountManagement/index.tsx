@@ -50,9 +50,9 @@ const AccountManagement = (props: dataAdmin) => {
   return (
     <>
       {isLogin !== '' && (
-        <Box mx={1}>
+        <Box>
           <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <h3 style={{ fontSize: '1.6rem' }}>Danh sách {props.name}</h3>
+            <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Danh sách {props.name}</span>
             <SearchAccount search={handleSearch} data={props.data} />
           </Box>
           <TableContainer component={Paper} sx={{ borderRadius: 0 }}>
@@ -76,7 +76,7 @@ const AccountManagement = (props: dataAdmin) => {
                     sx={{
                       height: '100%',
                       '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
                         transition: '0.2s ease-in-out',
                       },
                       '& .MuiTableCell-root': {
