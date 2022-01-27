@@ -255,7 +255,7 @@ function LayoutAdmin() {
           <Sidebar />
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, padding: '1.2rem' }}>
         <DrawerHeader />
         <Typography paragraph>
           <Outlet />
