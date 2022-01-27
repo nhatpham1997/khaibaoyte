@@ -6,14 +6,14 @@
   align-items: center;
   transition: all 0.25s linear;
   cursor: pointer;
-  color: #485976;
+  color: white;
 }
 .nav-item.selected {
-  background: linear-gradient(195deg, #42424a, #191919);
+  background-color: #1976d2;
   color: #ffffff;
 }
-.nav-item:hover {
-  background-color: #edeff2;
+.nav-item:hover:not(.nav-item.selected) {
+  background-color: #494e53;
 }
 .nav-item-icon {
   margin-right: 2.2rem;

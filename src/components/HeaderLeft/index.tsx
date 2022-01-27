@@ -37,13 +37,13 @@ export default function HeaderLeft({ titleHeader }: props) {
     <div className="header-left" role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb">
         <StyledBreadcrumb
-          sx={{ fontSize: '1.2rem' }}
+          sx={{ fontSize: '1.4rem' }}
           component="a"
           href="#"
           label="Trang chủ"
           icon={<HomeIcon fontSize="small" />}
         />
-        <StyledBreadcrumb sx={{ fontSize: 12 }} component="a" href="#" label={titleHeader} />
+        <StyledBreadcrumb sx={{ fontSize: '1.4rem' }} component="a" href="#" label={titleHeader} />
       </Breadcrumbs>
     </div>
   )

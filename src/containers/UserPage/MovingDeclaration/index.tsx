@@ -532,10 +532,9 @@ function MovingDeclaration() {
         sx={{
           marginBottom: '1rem',
           marginTop: '1rem',
-          fontSize: '3rem',
         }}
-        InputProps={{ style: { fontSize: '1.2rem' } }}
-        InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         required
         fullWidth
         value={currentUser.fullName || ''}
@@ -550,8 +549,8 @@ function MovingDeclaration() {
           label="Năm sinh"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.yearOfBirth || ''}
           onChange={handleChangeYOB}
@@ -571,8 +570,8 @@ function MovingDeclaration() {
           label="Giới tính"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.gender || ''}
@@ -581,7 +580,7 @@ function MovingDeclaration() {
           helperText={error.sex === false ? '' : 'Bạn chưa chọn giới tính'}
         >
           {sexs.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem sx={{ fontSize: '1.4rem' }} key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
@@ -594,8 +593,8 @@ function MovingDeclaration() {
         variant="outlined"
         sx={{ marginBottom: '1rem', marginTop: '1rem' }}
         size="medium"
-        InputProps={{ style: { fontSize: '1.2rem' } }}
-        InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         required
         fullWidth
         value={currentUser.citizenIdentification || ''}
@@ -616,8 +615,8 @@ function MovingDeclaration() {
           label="Email"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.email || ''}
           onChange={handleChangeEmail}
@@ -636,8 +635,8 @@ function MovingDeclaration() {
           label="Số điện thoại"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.phone || ''}
           onChange={handleChangePhone}
@@ -660,8 +659,8 @@ function MovingDeclaration() {
           label="Tỉnh/Thành phố"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.province || ''}
@@ -670,7 +669,11 @@ function MovingDeclaration() {
           helperText={error.provinceResidence === false ? '' : 'Bạn chưa chọn tỉnh cư trú'}
         >
           {provinceResidences.map((provinceResidence) => (
-            <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={provinceResidence.code}
+              value={provinceResidence.code}
+            >
               {provinceResidence.name}
             </MenuItem>
           ))}
@@ -680,8 +683,8 @@ function MovingDeclaration() {
           label="Quận/Huyện"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.district || ''}
@@ -690,7 +693,11 @@ function MovingDeclaration() {
           helperText={error.districtResidence === false ? '' : 'Bạn chưa chọn huyện cư trú'}
         >
           {districtResidences.map((districtResidence) => (
-            <MenuItem key={districtResidence.code} value={districtResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={districtResidence.code}
+              value={districtResidence.code}
+            >
               {districtResidence.name}
             </MenuItem>
           ))}
@@ -700,8 +707,8 @@ function MovingDeclaration() {
           label="Phường/Xã"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.ward || ''}
@@ -710,7 +717,11 @@ function MovingDeclaration() {
           helperText={error.wardResidence === false ? '' : 'Bạn chưa chọn xã cư trú'}
         >
           {wardResidences.map((wardResidence) => (
-            <MenuItem key={wardResidence.code} value={wardResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={wardResidence.code}
+              value={wardResidence.code}
+            >
               {wardResidence.name}
             </MenuItem>
           ))}
@@ -721,8 +732,8 @@ function MovingDeclaration() {
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.specificAddress || ''}
           onChange={handleChangeSpecificAddressResidence}
@@ -744,8 +755,8 @@ function MovingDeclaration() {
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/3) - 1.33rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={specificAddress}
           onChange={handleChangeSpecificAddress}
@@ -765,8 +776,8 @@ function MovingDeclaration() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={province}
@@ -775,7 +786,7 @@ function MovingDeclaration() {
           helperText={error.province === false ? '' : 'Bạn chưa chọn tỉnh di chuyển'}
         >
           {provinces.map((province) => (
-            <MenuItem key={province.code} value={province.code}>
+            <MenuItem sx={{ fontSize: '1.4rem' }} key={province.code} value={province.code}>
               {province.name}
             </MenuItem>
           ))}
@@ -789,8 +800,8 @@ function MovingDeclaration() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={district}
@@ -799,7 +810,7 @@ function MovingDeclaration() {
           helperText={error.district === false ? '' : 'Bạn chưa chọn quận di chuyển'}
         >
           {districts.map((district) => (
-            <MenuItem key={district.code} value={district.code}>
+            <MenuItem sx={{ fontSize: '1.4rem' }} key={district.code} value={district.code}>
               {district.name}
             </MenuItem>
           ))}
@@ -813,8 +824,8 @@ function MovingDeclaration() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={ward}
@@ -823,7 +834,7 @@ function MovingDeclaration() {
           helperText={error.ward === false ? '' : 'Bạn chưa chọn xã di chuyển'}
         >
           {wards.map((ward) => (
-            <MenuItem key={ward.code} value={ward.code}>
+            <MenuItem sx={{ fontSize: '1.4rem' }} key={ward.code} value={ward.code}>
               {ward.name}
             </MenuItem>
           ))}
