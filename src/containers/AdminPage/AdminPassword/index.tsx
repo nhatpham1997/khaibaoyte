@@ -17,7 +17,7 @@ import axios from 'axios'
 
 const theme = createTheme()
 
-export default function ForgotPassword() {
+export default function AdminPassword() {
   const [dataUser, setDataUser] = useState<any>([])
   const [id, setId] = useState<any>()
   const [validPassCurrent, setValidPassCurrent] = useState(false)
@@ -40,13 +40,13 @@ export default function ForgotPassword() {
       const dataUsers = await axios.get('https://dbkhaibaoyte.herokuapp.com/user')
       setDataUser(dataUsers.data)
 
-      setId(localStorage.getItem('userId'))
+      setId(localStorage.getItem('adminId'))
     }
     fetchData()
   }, [])
 
   const handleChangePassword = async (response: any, passwordNew: any) => {
-    const result = axios.put(`https://dbkhaibaoyte.herokuapp.com/user/${id}`, {
+    const result = axios.put(`https://dbkhaibaoyte.herokuapp.com/admin/${id}`, {
       ...response,
       password: passwordNew,
     })
@@ -110,11 +110,20 @@ export default function ForgotPassword() {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5">
-          Forgot PassWord
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <h3 style={{ fontSize: '1.6rem' }}>Đổi Mật khẩu Admin</h3>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{
+            mt: 1,
+            '& input': { fontSize: '1.6rem' },
+            '& .MuiOutlinedInput-input': { fontSize: '1.6rem' },
+          }}
+        >
           <TextField
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassCurrent}
             error={validPassCurrent}
             margin="normal"
@@ -128,6 +137,8 @@ export default function ForgotPassword() {
             type="password"
           />
           <TextField
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassNew}
             error={validPassNew}
             margin="normal"
@@ -140,6 +151,8 @@ export default function ForgotPassword() {
             autoComplete="password_new"
           />
           <TextField
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassConfirm}
             error={validPassConfirm}
             margin="normal"
@@ -152,7 +165,12 @@ export default function ForgotPassword() {
             autoComplete="password_confirm"
           />
 
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
+          >
             Save
           </Button>
         </Box>

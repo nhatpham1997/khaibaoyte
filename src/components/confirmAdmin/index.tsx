@@ -122,9 +122,12 @@ export default function ConfirmAdmin(props: message) {
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
           >
-            <DialogTitle sx={{ fontSize: '1.6rem' }}>{props.title}</DialogTitle>
+            <DialogTitle sx={{ fontSize: '1.6rem', fontWeight: 'bold' }}>{props.title}</DialogTitle>
             <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description" sx={{ fontSize: '1.6rem' }}>
+              <DialogContentText
+                id="alert-dialog-slide-description"
+                sx={{ fontSize: '1.4rem', fontWeight: '600' }}
+              >
                 {props.content}
               </DialogContentText>
             </DialogContent>

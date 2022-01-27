@@ -16,6 +16,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import { useTheme } from '@mui/material/styles'
 import { GlobalContext } from '../../../contexts'
 import { addressApi } from 'apis/addressApi'
+import { covidApi } from 'apis/covid'
 
 interface TablePaginationActionsProps {
   count: number
@@ -53,10 +54,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 function EpidemicArea() {
-  const { covidLocations, movingDeclaration } = useContext(GlobalContext)
+  const { movingDeclaration } = useContext(GlobalContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(7)
   const [dataAddress, setDataAddress] = useState<any[]>([])
+  const [locationCovid, setLocationCovid] = useState<any[]>([])
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - movingDeclaration.length) : 0
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage)
@@ -89,6 +91,39 @@ function EpidemicArea() {
     return `${dataAddress[provinceIndex]?.districts[districtIndex]?.wards[wardIndex]?.name} - ${dataAddress[provinceIndex]?.districts[districtIndex]?.name} - ${dataAddress[provinceIndex]?.name}`
   }
 
+  const getLevel = async (ward: number) => {
+    try {
+      const uri = {
+        filters: [
+          {
+            and: [
+              {
+                member: 'dtm_covid_nguy_co.ma_quan_huyen',
+                operator: 'equals',
+                values: [`${ward}`],
+              },
+              { member: 'dtm_covid_nguy_co.cap', operator: 'equals', values: ['Cấp xã'] },
+            ],
+          },
+        ],
+        dimensions: [
+          'dtm_covid_nguy_co.nguy_co',
+          'dtm_covid_nguy_co.cap',
+          'dtm_covid_nguy_co.ngay_cap_nhap',
+        ],
+      }
+      const encode = encodeURI(JSON.stringify(uri))
+      const data = await covidApi.getAll(encode)
+      const newData = [
+        ...locationCovid,
+        { ward: ward, level: data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co'] },
+      ]
+      setLocationCovid(newData)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650, minHeight: '88vh' }} aria-label="simple table">
@@ -107,35 +142,36 @@ function EpidemicArea() {
           {(rowsPerPage > 0
             ? movingDeclaration.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : movingDeclaration
-          ).map((item) => (
-            <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell
-                component="th"
-                scope="row"
-                // sx={{
-                //   color: `${
-                //     item.casesToday > 100
-                //       ? 'red'
-                //       : item.casesToday > 50
-                //       ? 'orange'
-                //       : item.casesToday > 20
-                //       ? 'yellow'
-                //       : 'green'
-                //   }`,
-                // }}
-              >
-                {item.fullName}
-              </TableCell>
-              <TableCell align="right">
-                {getAddressName(item.province, item.district, item.ward)}
-              </TableCell>
-              <TableCell align="right">{item.time}</TableCell>
-              <TableCell align="right">{item.phone}</TableCell>
-              <TableCell align="right">
-                <Button variant="contained">Xem chi tiết</Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          ).map((item) => {
+            getLevel(item.ward)
+            return (
+              <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  // sx={{
+                  //   color: `${
+                  //     item.casesToday > 100
+                  //       ? 'red'
+                  //       : item.casesToday > 50
+                  //       ? 'orange'
+                  //       : item.casesToday > 20
+                  //       ? 'yellow'
+                  //       : 'green'
+                  //   }`,
+                  // }}
+                >
+                  {item.fullName}
+                </TableCell>
+                <TableCell align="right">
+                  {getAddressName(item.province, item.district, item.ward)}
+                </TableCell>
+                <TableCell align="right">{item.time}</TableCell>
+                <TableCell align="right">{item.phone}</TableCell>
+                <TableCell align="right">{locationCovid[0].level}</TableCell>
+              </TableRow>
+            )
+          })}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />

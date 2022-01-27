@@ -52,13 +52,13 @@ const AccountManagement = (props: dataAdmin) => {
       {isLogin !== '' && (
         <Box mx={1}>
           <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <h3 style={{ margin: '16px', fontSize: '1.6rem' }}>Danh sách {props.name}</h3>
+            <h3 style={{ fontSize: '1.6rem' }}>Danh sách {props.name}</h3>
             <SearchAccount search={handleSearch} data={props.data} />
           </Box>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ borderRadius: 0 }}>
             <Table sx={{ minWidth: 650 }} color="primary" aria-label="a dense table">
               <TableHead>
-                <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem !important' } }}>
+                <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.4rem !important' } }}>
                   <TableCell sx={{ width: '30px' }}>STT</TableCell>
                   <TableCell align="left">Email</TableCell>
                   <TableCell sx={{ minWidth: '170px' }} align="left">
@@ -75,14 +75,12 @@ const AccountManagement = (props: dataAdmin) => {
                     key={row.id}
                     sx={{
                       height: '100%',
-                      '&:nth-of-type(odd)': { backgroundColor: '#ccc' },
                       '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
                         transition: '0.2s ease-in-out',
                       },
                       '& .MuiTableCell-root': {
-                        fontSize: '1.6rem !important',
-                        borderBottom: 'none',
+                        fontSize: '1.4rem !important',
                       },
                     }}
                   >
@@ -99,9 +97,8 @@ const AccountManagement = (props: dataAdmin) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-evenly',
-                        padding: '8px',
                         '& button': {
-                          fontSize: '1.6rem',
+                          fontSize: '1.4rem',
                         },
                       }}
                     >
@@ -139,7 +136,6 @@ const AccountManagement = (props: dataAdmin) => {
                               color="primary"
                               size="small"
                               startIcon={<FileOpenIcon />}
-                              sx={{ fontSize: '1.2rem' }}
                             >
                               Xem
                             </Button>
