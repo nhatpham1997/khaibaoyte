@@ -64,14 +64,15 @@ const SearchAccount = (props: searchType) => {
       onSubmit={handleSubmit}
       component="form"
       sx={{
-        '& > :not(style)': { m: 0, width: '50ch' },
+        '& > :not(style)': { m: 0, p: 0, width: '50ch' },
       }}
       noValidate
       autoComplete="off"
     >
       <TextField
-        InputProps={{ style: { fontSize: '1.4rem' } }}
-        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
+        sx={{ '& .MuiOutlinedInput-input': { padding: '1rem' } }}
+        InputProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.2rem', lineHeight: '1rem' } }}
         onChange={handleSearchValue}
         id="outlined-basic"
         label="Tìm kiếm theo tên người dùng"
