@@ -9,10 +9,16 @@ export interface ILocation {
   recovered: number
   casesToday: number
 }
-export const locationApi = {
-  getAll: () => {
+export const covidApi = {
+  getAll: (encode: string) => {
     return axios.get(
-      'https://api.apify.com/v2/key-value-stores/EaCBL1JNntjR3EakU/records/LATEST?disableRedirect=true'
+      `https://cuapi.datagalaxy.one/cubejs-api/v1/load?query=${encode}&queryType=multi`,
+      {
+        headers: {
+          authorization:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDMyMDcxMzJ9.yJYIGTOqMDOkrqt6jcYpYuRUJ9LwNOMJBxBT6Ie0bBo',
+        },
+      }
     )
   },
 }

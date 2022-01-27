@@ -73,9 +73,9 @@ const HomePage = () => {
   ]
 
   return (
-    <>
-      <h3 style={{ margin: '0 20px', fontSize: '1.8rem' }}>Thống kê</h3>
-      <Grid container spacing={3} px={1} mt={3}>
+    <Box mx={1}>
+      <h3 style={{ fontSize: '1.6rem' }}>Thống kê</h3>
+      <Grid container spacing={3} mt={3}>
         {data.map((item, i) => (
           <Grid key={i} item xs={12} md={6} lg={3}>
             <Link to={item.path} style={{ textDecoration: 'none' }}>
@@ -109,8 +109,8 @@ const HomePage = () => {
         ))}
       </Grid>
 
-      <h3 style={{ margin: '20px 20px 0', fontSize: '1.8rem' }}>Xem thêm</h3>
-      <Grid container spacing={3} px={1}>
+      <h3 style={{ fontSize: '1.6rem', marginTop: '2rem' }}>Xem thêm</h3>
+      <Grid container spacing={3}>
         {data1.map((item, index) => (
           <Grid
             item
@@ -159,7 +159,7 @@ const HomePage = () => {
           </Grid>
         ))}
       </Grid>
-    </>
+    </Box>
   )
 }
 

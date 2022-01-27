@@ -20,7 +20,7 @@ function ApplicationForMoving() {
 
   const handleApprove = (id: number, status: number) => {
     const itemIndex = movingRegister.findIndex((item) => item.id === id)
-    const newMovingRegister = { ...movingRegister[itemIndex], status: 1 }
+    const newMovingRegister = { ...movingRegister[itemIndex], status: status }
     movingRegisterApi.edit(id, newMovingRegister)
     const newData = [...movingRegister]
     newData[itemIndex].status = status
