@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
@@ -9,6 +9,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive'
 import { Link, useLocation } from 'react-router-dom'
+import { GlobalContext } from 'contexts'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
   '& .MuiToggleButtonGroup-grouped': {
@@ -62,6 +63,7 @@ const LinkNavbar = styled(Link)(() => ({
 function Sidebar() {
   const route = useLocation().pathname
   const [alignment, setAlignment] = useState('/admin')
+  const { isLogin } = useContext(GlobalContext)
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
@@ -123,28 +125,54 @@ function Sidebar() {
             <Typography>Trang chủ</Typography>
           </LinkNavbar>
         </StyledToggleButton>
+
         <StyledToggleButton value="/admin/account-admin">
           <LinkNavbar to="/admin/account-admin">
             <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Quản lý Admin</Typography>
           </LinkNavbar>
         </StyledToggleButton>
+
         <StyledToggleButton value="/admin/account-user">
           <LinkNavbar to="/admin/account-user">
             <SupervisorAccountIcon sx={{ pr: 2 }} />
             <Typography>Quản lý User</Typography>
           </LinkNavbar>
         </StyledToggleButton>
+
         <StyledToggleButton value="/admin/application-for-moving">
           <LinkNavbar to="/admin/application-for-moving">
             <AirplanemodeActiveIcon sx={{ pr: 2 }} />
             <Typography>Quản lý di chuyển</Typography>
           </LinkNavbar>
         </StyledToggleButton>
+
         <StyledToggleButton value="/admin/epidemic-area">
           <LinkNavbar to="/admin/epidemic-area">
             <ListAltIcon sx={{ pr: 2 }} />
             <Typography>Danh sách vùng dịch</Typography>
+          </LinkNavbar>
+        </StyledToggleButton>
+
+        {isLogin.toString() === '1' && (
+          <StyledToggleButton value="/admin/register-admin">
+            <LinkNavbar to="/admin/register-admin">
+              <ListAltIcon sx={{ pr: 2 }} />
+              <Typography>Thêm Quản trị viên</Typography>
+            </LinkNavbar>
+          </StyledToggleButton>
+        )}
+        <StyledToggleButton value="/admin/admin-password">
+          <LinkNavbar to="/admin/admin-password">
+            <ListAltIcon sx={{ pr: 2 }} />
+            <Typography>Đổi mật khẩu</Typography>
+          </LinkNavbar>
+        </StyledToggleButton>
+
+        <StyledToggleButton value="/admin/personal-information">
+          <LinkNavbar to="/admin/personal-information">
+            <ListAltIcon sx={{ pr: 2 }} />
+            <Typography>Đổi thông tin</Typography>
           </LinkNavbar>
         </StyledToggleButton>
       </StyledToggleButtonGroup>

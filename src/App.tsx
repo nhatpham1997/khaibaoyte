@@ -5,6 +5,7 @@ import LayoutAdmin from './components/LayoutAdmin'
 import AccountAdmin from './containers/AdminPage/AccountAdmin'
 import AdminDetail from 'containers/AdminPage/AdminDetail'
 import AccountUser from 'containers/AdminPage/AccountUser'
+import RegisterAdmin from 'containers/AdminPage/RegisterAdmin'
 import UserDetail from 'containers/AdminPage/UserDetail'
 import EpidemicArea from 'containers/AdminPage/EpidemicArea'
 import ApplicationForMoving from 'containers/AdminPage/ApplicationForMoving'
@@ -19,6 +20,8 @@ import LoginPage from 'containers/UserPage/LoginForm'
 import RegisterForm from 'components/RegisterForm'
 import ForgotPassword from 'components/ForgotPassword'
 import LoginAdmin from 'containers/AdminPage/LoginAdmin'
+import AdminPassword from 'containers/AdminPage/AdminPassword'
+import AdminPersonalInformation from 'containers/AdminPage/PersonalInformation'
 
 function App() {
   return (
@@ -42,8 +45,10 @@ function App() {
             <Route path="account-admin/*" element={<AccountAdmin />} />
             <Route path="account-admin/:id" element={<AdminDetail />} />
             <Route path="account-user" element={<AccountUser />} />
+            <Route path="register-admin" element={<RegisterAdmin />} />
+            <Route path="admin-password" element={<AdminPassword />} />
+            <Route path="personal-information" element={<AdminPersonalInformation />} />
             <Route path="account-user/:id" element={<UserDetail />} />
-            <Route path="account-user/:id" element={'đây là trang chi tiết'} />
             <Route path="application-for-moving" element={<ApplicationForMoving />} />
             <Route path="epidemic-area" element={<EpidemicArea />} />
           </Route>
