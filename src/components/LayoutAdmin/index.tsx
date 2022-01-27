@@ -241,7 +241,7 @@ function LayoutAdmin() {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader sx={{ fontSize: '18px' }}>
-          Khai báo y tế nhân viên
+          <img src="/Logo2.png" alt="logo" style={{ width: '100px', margin: '0 auto' }} />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? (
               <ChevronRightIcon fontSize="large" />

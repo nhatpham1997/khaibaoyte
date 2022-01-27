@@ -118,7 +118,7 @@ function EpidemicArea() {
         ...locationCovid,
         { ward: ward, level: data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co'] },
       ]
-      setLocationCovid(newData)
+      return data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co']
     } catch (err) {
       console.log(err)
     }
@@ -142,8 +142,9 @@ function EpidemicArea() {
           {(rowsPerPage > 0
             ? movingDeclaration.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : movingDeclaration
-          ).map((item) => {
-            getLevel(item.ward)
+          ).map(async (item) => {
+            const data = await getLevel(item.ward)
+            console.log(data)
             return (
               <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell
@@ -168,7 +169,7 @@ function EpidemicArea() {
                 </TableCell>
                 <TableCell align="right">{item.time}</TableCell>
                 <TableCell align="right">{item.phone}</TableCell>
-                <TableCell align="right">{locationCovid[0].level}</TableCell>
+                <TableCell align="right"></TableCell>
               </TableRow>
             )
           })}
