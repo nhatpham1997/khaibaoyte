@@ -23,38 +23,12 @@ const theme = createTheme()
 export default function EditProfile() {
   const today = new Date()
   const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-  //   const data = new FormData(event.currentTarget)
-  //   // eslint-disable-next-line no-console
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   })
-  // }
+
   const [provinceResidences, setProvinceResidences] = useState<any[]>([])
   const [provinces, setProvinces] = useState<any[]>([])
   const [districtResidences, setDistrictResidences] = useState<any[]>([])
   const [wardResidences, setWardResidences] = useState<any[]>([])
 
-  // const [error, setError] = useState({
-  //   name: { val: false, code: 0 },
-  //   yearOfBirth: { val: false, code: 0 },
-  //   sex: false,
-  //   email: { val: false, code: 0 },
-  //   phone: { val: false, code: 0 },
-  //   provinceResidence: false,
-  //   districtResidence: false,
-  //   wardResidence: false,
-  //   specificAddressResidence: false,
-  //   date: { val: false, code: 0 },
-  //   province: false,
-  //   district: false,
-  //   ward: false,
-  //   specificAddress: false,
-  // })
-
-  const [user, setUser] = useState<any>()
   const [dataUser, setDataUser] = useState<any>({})
 
   const [data, setData] = useState({
@@ -85,29 +59,6 @@ export default function EditProfile() {
       .then((dataUsers) => {
         console.log(dataUsers[0])
         setDataUser(dataUsers[0])
-      })
-
-    axios
-      .post(`https://dbkhaibaoyte.herokuapp.com/user`, {
-        email: 'phuhoang1111111@gmail.com',
-        password: '123456',
-        fullname: 'Phú1111',
-        yearofbirth: '123222',
-        citizenIdentification: '111111111111111',
-        gender: 1,
-        province: 26,
-        provinceName: 'Hà Nội 1111',
-        district: 243,
-        ward: 8710,
-        specificAddress: '11122',
-        phone: '111111111111111131',
-        createdDate: date,
-        createdAt: 1643182987203,
-        fullName: 'ssssssssassss',
-        yearOfBirth: '11211',
-      })
-      .then((res) => {
-        console.log('res', res)
       })
   }, [])
 

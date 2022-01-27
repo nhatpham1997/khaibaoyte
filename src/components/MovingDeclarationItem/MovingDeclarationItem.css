@@ -43,3 +43,9 @@
   width: 1.5rem;
   margin-right: 1rem;
 }
+
+@media screen and (max-width: 412px) {
+  .declaration-name-text {
+    font-size: 1.3rem;
+  }
+}

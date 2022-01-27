@@ -62,3 +62,10 @@ input {
   align-items: flex-start;
   justify-content: space-between;
 }
+
+/* responsive */
+@media screen and (max-width: 1023px) {
+  .wrap {
+    margin-left: 2rem;
+  }
+}

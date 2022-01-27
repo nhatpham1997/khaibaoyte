@@ -30,7 +30,16 @@ type message = {
 
 export default function ConfirmAdmin(props: message) {
   const [open, setOpen] = useState(false)
-  const { users, dataUsers, admins, dataAdmins } = useContext(GlobalContext)
+  const {
+    users,
+    dataUsers,
+    admins,
+    dataAdmins,
+    movingRegister,
+    dataMovingRegister,
+    movingDeclaration,
+    dataMovingDeclaration,
+  } = useContext(GlobalContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -43,9 +52,38 @@ export default function ConfirmAdmin(props: message) {
   const handleDelete = async (id?: number) => {
     if (props.account === 'User') {
       const response = await axios.delete(`https://dbkhaibaoyte.herokuapp.com/user/${id}`)
-      console.log(response)
+
       if (response.status === 200) {
         const newData = users.filter((item) => item.id !== id)
+        // lọc danh sách đăng kí
+        const dataRegister = movingRegister.filter((item: any) => item.userId == id)
+        const newDataRegister = movingRegister.filter((item: any) => item.userId !== id)
+        // lọc danh sách khai báo
+        const dataDeclaration = movingDeclaration.filter((item: any) => item.userId == id)
+        const newDataDeclaration = movingDeclaration.filter((item: any) => item.userId !== id)
+
+        if (dataRegister) {
+          dataRegister.forEach(async (item: any) => {
+            const result = await axios.delete(
+              `https://dbkhaibaoyte.herokuapp.com/moving_register/${item.id}`
+            )
+            if (result.status === 200) {
+              dataMovingRegister([...newDataRegister])
+            }
+          })
+        }
+
+        if (dataDeclaration) {
+          dataRegister.forEach(async (item: any) => {
+            const result = await axios.delete(
+              `https://dbkhaibaoyte.herokuapp.com/moving_declaration/${item.id}`
+            )
+            if (result.status === 200) {
+              dataMovingDeclaration([...newDataDeclaration])
+            }
+          })
+        }
+
         dataUsers([...newData])
         setOpen(false)
       } else {

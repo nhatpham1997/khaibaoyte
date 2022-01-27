@@ -4,13 +4,15 @@ import './Header.css'
 
 interface props {
   titleHeader: string
+  setShowNav: any
+  showNav: any
 }
 
-function Header({ titleHeader }: props) {
+function Header({ titleHeader, setShowNav, showNav }: props) {
   return (
     <div className="header">
       <HeaderLeft titleHeader={titleHeader} />
-      <HeaderRight />
+      <HeaderRight showNav={showNav} setShowNav={setShowNav} />
     </div>
   )
 }

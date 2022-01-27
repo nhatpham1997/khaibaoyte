@@ -35,6 +35,7 @@ export default function BasicDatePicker({ value, setValue, error, setError }: pr
         InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
         renderInput={(params) => (
           <TextField
+            className="date"
             {...params}
             sx={{
               minWidth: 'calc(calc(100%/3) - 1.33rem)',
