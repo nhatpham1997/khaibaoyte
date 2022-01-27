@@ -1,9 +1,5 @@
-.MuiFormHelperText-root {
-  font-size: 1.1rem !important;
-}
-
 /* responsive */
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 830px) {
   .row {
     flex-direction: column;
   }
@@ -19,8 +15,7 @@
   .district,
   .ward,
   .detail-address,
-  .date,
-  .time {
+  .date {
     width: 100%;
   }
 }

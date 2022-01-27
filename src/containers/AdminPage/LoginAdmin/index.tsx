@@ -35,13 +35,13 @@ export default function LoginAdmin() {
         setLogin(response[0].id)
       } else {
         setValidPass(true)
-        setMessPass('Passs error!')
+        setMessPass('Mật khẩu không chính xác, vui lòng nhập lại!')
       }
     } else {
       setValidEmail(true)
-      setMessEmail('Email error!')
+      setMessEmail('Email không chính xác, Vui lòng nhập lại!')
       setValidPass(true)
-      setMessPass('Passs error!')
+      setMessPass('Mật khẩu không chính xác, vui lòng nhập lại!')
       return
     }
     // if (response.length > 0 && response[0].password === data.get('password')) {
@@ -54,23 +54,24 @@ export default function LoginAdmin() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main">
         <CssBaseline />
+
         <Grid
           item
-          xs={false}
-          sm={4}
-          md={7}
+          xs={12}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            margin: '7rem auto',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          sm={8}
+          md={4}
+          component={Paper}
+          elevation={6}
+          square
+        >
           <Box
             sx={{
               my: 8,
@@ -92,13 +93,13 @@ export default function LoginAdmin() {
               onSubmit={handleSubmit}
               sx={{
                 mt: 1,
-                '& input': { fontSize: '1.6rem' },
-                '& .MuiOutlinedInput-input': { fontSize: '1.6rem' },
+                '& input': { fontSize: '1.4rem', padding: '1.4rem' },
+                '& .MuiOutlinedInput-input': { fontSize: '1.4rem' },
               }}
             >
               <TextField
-                inputProps={{ style: { fontSize: '1.4rem' } }} // font size of input text
-                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
+                inputProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }} // font size of input text
+                InputLabelProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }}
                 error={validEmail}
                 margin="normal"
                 required
@@ -111,8 +112,8 @@ export default function LoginAdmin() {
                 helperText={messEmail}
               />
               <TextField
-                inputProps={{ style: { fontSize: '1.4rem' } }} // font size of input text
-                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
+                inputProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }} // font size of input text
+                InputLabelProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }}
                 helperText={messPass}
                 error={validPass}
                 margin="normal"
@@ -125,14 +126,15 @@ export default function LoginAdmin() {
                 autoComplete="current-password"
               />
               <FormControlLabel
+                sx={{ '& .MuiTypography-root': { fontSize: '1.3rem' } }}
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="Nhớ mật khẩu"
               />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
+                sx={{ mt: 3, mb: 2, fontSize: '1.4rem' }}
               >
                 Đăng nhập
               </Button>

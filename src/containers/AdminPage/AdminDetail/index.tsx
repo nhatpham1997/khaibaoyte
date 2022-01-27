@@ -16,10 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const headerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
-  backgroundColor: '#ccc',
   boxShadow: 3,
-  borderRadius: '10px',
-  margin: '0 20px',
 }
 
 export default function AdminDetail() {
@@ -60,19 +57,31 @@ export default function AdminDetail() {
               </ListItem>
             </Box>
           </Box>
-          <Box sx={{ flexGrow: 1, margin: '0 20px' }}>
+          <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={7}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Thông tin chi tiết</h3>
+                  <span style={{ margin: '20px 0', fontSize: '1.6rem', fontWeight: 'bold' }}>
+                    Thông tin chi tiết
+                  </span>
                 </Box>
                 <AccountInformation />
               </Grid>
-              <Grid item xs={0} md={5}>
+              <Grid item xs={0} md={5} sx={{ boxShadow: 'none' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Quản trị viên</h3>
+                  <span style={{ margin: '20px 0', fontSize: '1.6rem', fontWeight: 'bold' }}>
+                    Quản trị viên
+                  </span>
                 </Box>
-                <Item sx={{ fontSize: '1.6rem', maxHeight: '47rem', overflowY: 'scroll' }}>
+                <Item
+                  sx={{
+                    maxHeight: '47rem',
+                    width: '100%',
+                    boxShadow: 'none',
+                    padding: 0,
+                    overflowY: 'auto',
+                  }}
+                >
                   {arrAdmins.map((item: any, index: number) => (
                     <Link
                       key={index}
@@ -84,19 +93,17 @@ export default function AdminDetail() {
                           display: 'flex',
                           flexDirection: 'column',
                           color: '#000',
-                          border: `2px solid #1976d2`,
                           minWidth: { lg: '400px' },
-                          borderRadius: '15px',
                           margin: '0 0 20px 0',
                           alignItems: 'flex-start',
                           boxShadow: 3,
                           '&:last-child': { marginBottom: '0' },
-                          '&:hover': { backgroundColor: 'rgb(25,118,210,0.3)' },
+                          '&:hover': { backgroundColor: 'rgb(25,118,210,0.1)' },
                         }}
                       >
                         <ListItem
                           alignItems="flex-start"
-                          sx={{ '& .MuiListItemText-primary': { fontSize: '1.6rem' } }}
+                          sx={{ '& .MuiListItemText-primary': { fontSize: '1.4rem' } }}
                         >
                           <ListItemAvatar>
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

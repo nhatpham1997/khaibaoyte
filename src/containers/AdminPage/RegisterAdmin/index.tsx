@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react'
-import Avatar from '@mui/material/Avatar'
+import { useContext, useEffect, useState } from 'react'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { MenuItem } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
+import { GlobalContext } from 'contexts'
 
 const theme = createTheme()
 
-export default function RegisterForm() {
+export default function RegisterAdmin() {
+  const { isLogin } = useContext(GlobalContext)
   const navigate = useNavigate()
   const today = new Date()
   const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
@@ -44,6 +41,10 @@ export default function RegisterForm() {
   const [provinces, setProvinces] = useState<any[]>([])
   const [districtResidences, setDistrictResidences] = useState<any[]>([])
   const [wardResidences, setWardResidences] = useState<any[]>([])
+
+  if (isLogin.toString() !== '1') {
+    navigate('/admin')
+  }
 
   useEffect(() => {
     fetch('https://provinces.open-api.vn/api/?depth=3')
@@ -95,7 +96,7 @@ export default function RegisterForm() {
   }
 
   const handleSubmit = () => {
-    axios.post('https://dbkhaibaoyte.herokuapp.com/user/', data).then((res) => {
+    axios.post('https://dbkhaibaoyte.herokuapp.com/admin/', data).then((res) => {
       navigate('/')
     })
   }
@@ -103,41 +104,32 @@ export default function RegisterForm() {
   return (
     <Box>
       <ThemeProvider theme={theme}>
-        <Grid container component="main" sx={{ height: '100vh' }}>
+        <Grid container component="main" sx={{ height: '100vh', margin: '0 1rem' }}>
           <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundImage:
-                'url(https://dtcfurniture.vn/uploads/projects/banner-web-show.jpg?fbclid=IwAR3uyd-iw66sJwELVYE9lSiX0sCphZRYmqwGqxc9SXA1guNRtPKc-mjasmI)',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: (t) =>
-                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
             <Box
               sx={{
-                my: 8,
+                my: 2,
                 mx: 4,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Register
-              </Typography>
-              <Box component="form" noValidate sx={{ mt: 1 }}>
+              <h3 style={{ fontSize: '1.6rem' }}>Thêm tài khoản Admin</h3>
+
+              <Box
+                component="form"
+                noValidate
+                sx={{
+                  mt: 1,
+                  '& input': { fontSize: '1.6rem' },
+                  '& .MuiOutlinedInput-input': { fontSize: '1.6rem' },
+                }}
+              >
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -154,6 +146,8 @@ export default function RegisterForm() {
                   }
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -170,6 +164,8 @@ export default function RegisterForm() {
                   }
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -186,6 +182,8 @@ export default function RegisterForm() {
                   }
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -201,6 +199,8 @@ export default function RegisterForm() {
                   }
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -216,6 +216,7 @@ export default function RegisterForm() {
                   }
                 />
                 <RadioGroup
+                  sx={{ '& .MuiTypography-root': { fontSize: '1.4rem' } }}
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   id="gender"
@@ -241,15 +242,19 @@ export default function RegisterForm() {
                       minWidth: 'calc(calc(100%/4) - 1.5rem)',
                     }}
                     size="medium"
-                    InputProps={{ style: { fontSize: '1.2rem' } }}
-                    InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+                    InputProps={{ style: { fontSize: '1.4rem' } }}
+                    InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                     required
                     select
                     value={data.province}
                     onChange={handleChangeProvinceResidence}
                   >
                     {provinceResidences.map((provinceResidence) => (
-                      <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
+                      <MenuItem
+                        sx={{ fontSize: '1.4rem' }}
+                        key={provinceResidence.code}
+                        value={provinceResidence.code}
+                      >
                         {provinceResidence.name}
                       </MenuItem>
                     ))}
@@ -263,15 +268,19 @@ export default function RegisterForm() {
                       minWidth: 'calc(calc(100%/4) - 1.5rem)',
                     }}
                     size="medium"
-                    InputProps={{ style: { fontSize: '1.2rem' } }}
-                    InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+                    InputProps={{ style: { fontSize: '1.4rem' } }}
+                    InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                     required
                     select
                     value={data.district}
                     onChange={handleChangeDistrictResidence}
                   >
                     {districtResidences.map((districtResidence) => (
-                      <MenuItem key={districtResidence.code} value={districtResidence.code}>
+                      <MenuItem
+                        sx={{ fontSize: '1.4rem' }}
+                        key={districtResidence.code}
+                        value={districtResidence.code}
+                      >
                         {districtResidence.name}
                       </MenuItem>
                     ))}
@@ -285,21 +294,27 @@ export default function RegisterForm() {
                       minWidth: 'calc(calc(100%/4) - 1.5rem)',
                     }}
                     size="medium"
-                    InputProps={{ style: { fontSize: '1.2rem' } }}
-                    InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+                    InputProps={{ style: { fontSize: '1.4rem' } }}
+                    InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                     required
                     select
                     // value={data.ward}
                     onChange={handleChangeWardResidence}
                   >
                     {wardResidences.map((wardResidence) => (
-                      <MenuItem key={wardResidence.code} value={wardResidence.code}>
+                      <MenuItem
+                        sx={{ fontSize: '1.4rem' }}
+                        key={wardResidence.code}
+                        value={wardResidence.code}
+                      >
                         {wardResidence.name}
                       </MenuItem>
                     ))}
                   </TextField>
                 </div>
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -316,6 +331,8 @@ export default function RegisterForm() {
                 />
 
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -332,14 +349,14 @@ export default function RegisterForm() {
                   }
                 />
 
-                <Button onClick={handleSubmit} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Sign Up
+                <Button
+                  onClick={handleSubmit}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
+                >
+                  Thêm tài khoản
                 </Button>
-                <Grid container>
-                  <Grid item>
-                    <NavLink to="/">{' you have an account? Sign in '}</NavLink>
-                  </Grid>
-                </Grid>
               </Box>
             </Box>
           </Grid>

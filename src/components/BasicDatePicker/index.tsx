@@ -32,16 +32,18 @@ export default function BasicDatePicker({ value, setValue, error, setError }: pr
           }
           setValue(newValue)
         }}
-        InputProps={{ style: { fontSize: '1.2rem' }, readOnly: true }}
+        InputProps={{ style: { fontSize: '1.4rem' }, readOnly: true }}
         renderInput={(params) => (
           <TextField
+            InputProps={{ style: { fontSize: '4.4rem' } }}
+            className="date"
             {...params}
             sx={{
               minWidth: 'calc(calc(100%/3) - 1.33rem)',
               marginBottom: '1rem',
               marginTop: '1rem',
             }}
-            InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             required
             type="date"
             error={error?.date.val}

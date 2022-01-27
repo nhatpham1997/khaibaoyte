@@ -52,8 +52,8 @@ input {
 }
 
 .wrap {
-  width: 100%;
-  margin: 2rem 2rem 2rem 29rem;
+  width: calc(100% - 28rem);
+  margin-left: 28rem;
 }
 
 /* container */
@@ -61,4 +61,18 @@ input {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+}
+
+/* responsive */
+@media screen and (max-width: 1200px) {
+  .wrap {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .row {
+    flex-direction: column;
+  }
 }
