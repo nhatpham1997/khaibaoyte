@@ -11,7 +11,7 @@ function Breadcrumbs() {
     <MuiBreadcrumbs aria-label="breadcrumb" sx={{ color: 'white' }}>
       <Link to="/admin" style={{ color: 'grey', textDecoration: 'none' }}>
         <Typography>
-          <HomeIcon sx={{ mr: 0.5, color: 'white' }} fontSize="large" />
+          <HomeIcon sx={{ mr: 0.5, mb: '-1px', color: 'white' }} fontSize="large" />
         </Typography>
       </Link>
       <Typography color="text.primary" sx={{ fontSize: '14px', color: 'white' }}>
