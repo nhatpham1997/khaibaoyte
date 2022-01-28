@@ -46,10 +46,8 @@ function ApplicationForMoving() {
 
   return (
     <Box>
-      <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>
-          Danh sách khai báo của nhân viên
-        </span>
+      <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+        <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Đơn xin di chuyển</span>
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -58,8 +56,8 @@ function ApplicationForMoving() {
               <TableCell>Tên nhân viên</TableCell>
               <TableCell>Điểm đi</TableCell>
               <TableCell>Điểm đến</TableCell>
+              <TableCell>Ngày đăng ký</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Số điện thoại</TableCell>
               <TableCell>Phê duyệt</TableCell>
             </TableRow>
           </TableHead>
@@ -82,8 +80,8 @@ function ApplicationForMoving() {
                   {row.wardResidenceName} - {row.districtResidenceName} -{' '}
                   {row.provinceResidenceName}
                 </TableCell>
+                <TableCell>{row.time}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{row.phone}</TableCell>
                 <TableCell sx={{ minWidth: '220px' }}>
                   {row.status === 1 ? (
                     <Typography sx={{ color: 'green', fontSize: '1.4rem', mb: '-4px' }}>

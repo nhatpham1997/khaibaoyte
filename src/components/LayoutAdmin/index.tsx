@@ -103,7 +103,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 function LayoutAdmin() {
   const {
-    miniSideNav,
     dataCovidLocations,
     isLogin,
     setLogin,
@@ -207,61 +206,67 @@ function LayoutAdmin() {
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon fontSize="large" />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              width: '100%',
-            }}
-          >
-            <Breadcrumbs />
-            <Navbar />
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader sx={{ fontSize: '18px' }}>
-          <img src="/Logo2.png" alt="logo" style={{ width: '100px', margin: '0 auto' }} />
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronRightIcon fontSize="large" />
-            ) : (
-              <ChevronLeftIcon fontSize="large" />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          <Sidebar />
-        </List>
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, padding: '1.2rem' }}>
-        <DrawerHeader />
-        <Typography paragraph>
-          <Outlet />
-        </Typography>
-      </Box>
-    </Box>
+    <>
+      {!loading && isLogin === '' ? (
+        <LoginAdmin />
+      ) : (
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar position="fixed" open={open}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: '36px',
+                  ...(open && { display: 'none' }),
+                }}
+              >
+                <MenuIcon fontSize="large" />
+              </IconButton>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+              >
+                <Breadcrumbs />
+                <Navbar />
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer variant="permanent" open={open}>
+            <DrawerHeader sx={{ fontSize: '18px' }}>
+              <img src="/Logo2.png" alt="logo" style={{ width: '100px', margin: '0 auto' }} />
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'rtl' ? (
+                  <ChevronRightIcon fontSize="large" />
+                ) : (
+                  <ChevronLeftIcon fontSize="large" />
+                )}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
+              <Sidebar />
+            </List>
+          </Drawer>
+          <Box component="main" sx={{ flexGrow: 1, padding: '1.2rem' }}>
+            <DrawerHeader />
+            <Typography component="div">
+              <Outlet />
+            </Typography>
+          </Box>
+        </Box>
+      )}
+    </>
   )
 }
 

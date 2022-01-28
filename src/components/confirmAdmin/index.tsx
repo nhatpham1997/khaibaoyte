@@ -11,6 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import axios from 'axios'
 import { GlobalContext } from 'contexts'
 import { Box } from '@mui/system'
+import Confirm from 'components/Confirm'
+import { Alert, Snackbar } from '@mui/material'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -30,6 +32,8 @@ type message = {
 
 export default function ConfirmAdmin(props: message) {
   const [open, setOpen] = useState(false)
+  const [show, setShow] = useState(false)
+  console.log(show)
   const {
     users,
     dataUsers,
@@ -39,6 +43,7 @@ export default function ConfirmAdmin(props: message) {
     dataMovingRegister,
     movingDeclaration,
     dataMovingDeclaration,
+    setShowConfirm,
   } = useContext(GlobalContext)
 
   const handleClickOpen = () => {
@@ -54,6 +59,8 @@ export default function ConfirmAdmin(props: message) {
       const response = await axios.delete(`https://dbkhaibaoyte.herokuapp.com/user/${id}`)
 
       if (response.status === 200) {
+        setShowConfirm(true)
+
         const newData = users.filter((item) => item.id !== id)
         // lọc danh sách đăng kí
         const dataRegister = movingRegister.filter((item: any) => item.userId == id)
@@ -91,11 +98,12 @@ export default function ConfirmAdmin(props: message) {
       }
     } else {
       const response = await axios.delete(`https://dbkhaibaoyte.herokuapp.com/admin/${id}`)
-      console.log(response)
       if (response.status === 200) {
+        setShowConfirm(true)
         const newData = admins.filter((item) => item.id !== id)
         dataAdmins([...newData])
         setOpen(false)
+        setShow(true)
       } else {
         alert('Vui lòng thử lại')
       }
@@ -133,6 +141,7 @@ export default function ConfirmAdmin(props: message) {
             </DialogContent>
             <DialogActions sx={{ '& .MuiButton-root': { fontSize: '1.4rem' } }}>
               <Button onClick={() => handleDelete(props.id)}>Xác nhận</Button>
+
               <Button onClick={handleClose}>Hủy</Button>
             </DialogActions>
           </Dialog>
