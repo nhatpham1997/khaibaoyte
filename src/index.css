@@ -62,3 +62,12 @@ input {
   align-items: flex-start;
   justify-content: space-between;
 }
+
+.error {
+  color: red;
+}
+
+.border-error {
+  border: solid 1px red !important;
+  border-radius: 5px !important;
+}

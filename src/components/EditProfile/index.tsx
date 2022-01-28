@@ -14,61 +14,50 @@ import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
-import MenuItem from '@mui/material/MenuItem'
+import { MenuItem } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
+import Noti from 'components/Noti'
+import SendIcon from '@mui/icons-material/Send'
 
 const theme = createTheme()
 
 export default function EditProfile() {
   const today = new Date()
   const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-  //   const data = new FormData(event.currentTarget)
-  //   // eslint-disable-next-line no-console
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   })
-  // }
-  const [provinceResidences, setProvinceResidences] = useState<any[]>([])
-  const [provinces, setProvinces] = useState<any[]>([])
-  const [districtResidences, setDistrictResidences] = useState<any[]>([])
-  const [wardResidences, setWardResidences] = useState<any[]>([])
-
-  // const [error, setError] = useState({
-  //   name: { val: false, code: 0 },
-  //   yearOfBirth: { val: false, code: 0 },
-  //   sex: false,
-  //   email: { val: false, code: 0 },
-  //   phone: { val: false, code: 0 },
-  //   provinceResidence: false,
-  //   districtResidence: false,
-  //   wardResidence: false,
-  //   specificAddressResidence: false,
-  //   date: { val: false, code: 0 },
-  //   province: false,
-  //   district: false,
-  //   ward: false,
-  //   specificAddress: false,
-  // })
-
-  const [user, setUser] = useState<any>()
-  const [dataUser, setDataUser] = useState<any>({})
-
   const [data, setData] = useState({
     fullName: '',
     yearOfBirth: '',
     citizenIdentification: '',
     gender: Number,
     province: '',
+    provinceName: '',
     district: '',
     ward: '',
     specificAddress: '',
     phone: '',
+    createdDate: date,
   })
+
+  const [dataUser, setDataUser] = useState<any>({})
+
   const id = localStorage.getItem('userId')
+
+  useEffect(() => {
+    fetch(`https://dbkhaibaoyte.herokuapp.com/user?id=${id}`)
+      .then((res) => res.json())
+      .then((dataUsers) => {
+        console.log(dataUsers[0])
+        setDataUser(dataUsers[0])
+      })
+  }, [])
+
+  const [showNoti, setShowNoti] = useState(false)
+
+  const [provinceResidences, setProvinceResidences] = useState<any[]>([])
+  const [provinces, setProvinces] = useState<any[]>([])
+  const [districtResidences, setDistrictResidences] = useState<any[]>([])
+  const [wardResidences, setWardResidences] = useState<any[]>([])
 
   useEffect(() => {
     fetch('https://provinces.open-api.vn/api/?depth=3')
@@ -79,54 +68,17 @@ export default function EditProfile() {
       })
   }, [])
 
-  useEffect(() => {
-    fetch(`https://dbkhaibaoyte.herokuapp.com/user?id=${id}`)
-      .then((res) => res.json())
-      .then((dataUsers) => {
-        console.log(dataUsers[0])
-        setDataUser(dataUsers[0])
-      })
-
-    axios
-      .post(`https://dbkhaibaoyte.herokuapp.com/user`, {
-        email: 'phuhoang1111111@gmail.com',
-        password: '123456',
-        fullname: 'Phú1111',
-        yearofbirth: '123222',
-        citizenIdentification: '111111111111111',
-        gender: 1,
-        province: 26,
-        provinceName: 'Hà Nội 1111',
-        district: 243,
-        ward: 8710,
-        specificAddress: '11122',
-        phone: '111111111111111131',
-        createdDate: date,
-        createdAt: 1643182987203,
-        fullName: 'ssssssssassss',
-        yearOfBirth: '11211',
-      })
-      .then((res) => {
-        console.log('res', res)
-      })
-  }, [])
-
-  const handleSubmit = () => {
-    axios
-      .put(`https://dbkhaibaoyte.herokuapp.com/user/${id}/`, { ...dataUser, ...data })
-      .then((res) => {
-        console.log('res', res)
-      })
-  }
-  // Hàm xử lý chọn tỉnh/thành phố cư trú
   function handleChangeProvinceResidence(e: React.ChangeEvent<HTMLInputElement>) {
     const codeProvinceResidence = e.target.value
     provinceResidences.forEach((provinceResidence) => {
       if (provinceResidence.code === codeProvinceResidence) {
-        console.log({ provincesName: provinceResidence.name })
         setDistrictResidences(provinceResidence.districts)
+        setData({ ...data, provinceName: provinceResidence.name })
       }
     })
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, province: true }))
+    }
     setData((old) => {
       return {
         ...old,
@@ -142,6 +94,9 @@ export default function EditProfile() {
         setWardResidences(districtResidence.wards)
       }
     })
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, district: true }))
+    }
     setData((old) => {
       return {
         ...old,
@@ -157,189 +112,341 @@ export default function EditProfile() {
         ward: e.target.value,
       }
     })
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, ward: true }))
+    }
   }
+  const [payloadNoti, setPayloadNoti] = useState({
+    status: 'success',
+    text: '',
+  })
+
+  const handleSubmit = () => {
+    axios
+      .put(`https://dbkhaibaoyte.herokuapp.com/user/${id}/`, { ...dataUser, ...data })
+      .then((res) => {
+        console.log('res', res)
+      })
+    if (!data.fullName) {
+      setError((prev) => {
+        return { ...prev, name: { val: true, code: 1 } }
+      })
+    }
+    if (!data.yearOfBirth) {
+      setError((prev) => {
+        return { ...prev, yearOfBirth: { val: true, code: 1 } }
+      })
+    }
+    if (!data.gender) {
+      setError((prev) => {
+        return { ...prev, gerder: true }
+      })
+    }
+    if (!data.phone) {
+      setError((prev) => {
+        return { ...prev, phone: { val: true, code: 1 } }
+      })
+    }
+    if (!data.province) {
+      setError((prev) => {
+        return { ...prev, provinceResidence: true }
+      })
+    }
+    if (!data.district) {
+      setError((prev) => {
+        return { ...prev, districtResidence: true }
+      })
+    }
+    if (!data.ward) {
+      setError((prev) => {
+        return { ...prev, wardResidence: true }
+      })
+    }
+    if (!data.specificAddress) {
+      setError((prev) => {
+        return { ...prev, specificAddressResidence: true }
+      })
+    }
+
+    if (!data.specificAddress) {
+      setError((prev) => {
+        return { ...prev, specificAddress: true }
+      })
+    }
+  }
+
+  const [error, setError] = useState({
+    name: { val: false, code: 0 },
+    yearOfBirth: { val: false, code: 0 },
+    gerder: false,
+    phone: { val: false, code: 0 },
+    provinceResidence: false,
+    districtResidence: false,
+    wardResidence: false,
+    specificAddressResidence: false,
+    specificAddress: false,
+  })
+
+  function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, fullName: { val: true, code: 1 } }))
+    } else if (
+      e.target.value.match(/^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g) ===
+      null
+    ) {
+      setError((prev) => ({ ...prev, fullName: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, fullName: { val: false, code: 0 } }))
+    }
+    setData((old) => {
+      return { ...old, fullName: e.target.value }
+    })
+  }
+
+  function handleChangeCitizen(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 1 } }))
+    } else if (
+      e.target.value.match(/^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g) ===
+      null
+    ) {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: false, code: 0 } }))
+    }
+    setData((old) => {
+      return { ...old, citizenIdentification: e.target.value }
+    })
+  }
+  function handleChangeYOB(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, yearOfBirth: { val: true, code: 1 } }))
+    } else if (parseInt(e.target.value) < 1900) {
+      setError((prev) => ({
+        ...prev,
+        yearOfBirth: { val: true, code: 2 },
+      }))
+    } else if (parseInt(e.target.value) > new Date().getFullYear()) {
+      setError((prev) => ({
+        ...prev,
+        yearOfBirth: { val: true, code: 3 },
+      }))
+    } else {
+      setError((prev) => ({ ...prev, yearOfBirth: { val: false, code: 0 } }))
+    }
+    setData((old) => {
+      return { ...old, yearOfBirth: e.target.value }
+    })
+  }
+  function handleChangePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, phone: { val: true, code: 1 } }))
+    } else if (e.target.value.match(/((09|03|07|08|05)+([0-9]{8})\b)/i) === null) {
+      setError((prev) => ({ ...prev, phone: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, phone: { val: false, code: 0 } }))
+    }
+    setData((prev) => {
+      return { ...prev, phone: e.target.value }
+    })
+  }
+
+  // Hàm thay đổi nơi ở hiện tại
+  function handleChangeSpecificAddressResidence(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, specificAddressResidence: true }))
+    } else {
+      setError((prev) => ({ ...prev, specificAddressResidence: false }))
+    }
+    setData((prev) => {
+      return { ...prev, specificAddress: e.target.value }
+    })
+  }
+
   return (
     <Box>
-      <ThemeProvider theme={theme}>
-        <Box
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="fullname"
+        label="Họ và tên"
+        name="fullname"
+        autoComplete="fullname"
+        autoFocus
+        onChange={handleChangeName}
+        error={error.name.val}
+        helperText={error.name.val === false ? '' : 'Vui lòng nhập trường này'}
+      />
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="yearOfBirth"
+        label="Năm sinh"
+        name="yearofbirth"
+        autoComplete="yearofbirth"
+        autoFocufa-stack
+        onChange={handleChangeYOB}
+        error={error.yearOfBirth.val}
+        helperText={
+          error.yearOfBirth.val === true && error.yearOfBirth.code === 1
+            ? 'Bạn chưa nhập năm sinh'
+            : error.yearOfBirth.val === true && error.yearOfBirth.code === 2
+            ? 'Năm sinh không hợp lệ'
+            : error.yearOfBirth.val === true && error.yearOfBirth.code === 3
+            ? 'Năm sinh không thể lớn hơn năm hiện tại'
+            : ''
+        }
+      />
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="citizenIdentification"
+        label="CMND/CCCD"
+        name="citizen_identification"
+        autoComplete="citizen_identification"
+        autoFocus
+        onChange={handleChangeCitizen}
+      />
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        id="gender"
+        name="Giới Tính"
+        onChange={(e) =>
+          setData((old: any) => {
+            return { ...old, gender: Number(e.target.value) }
+          })
+        }
+      >
+        <FormControlLabel value="1" control={<Radio />} label="Nam" />
+        <FormControlLabel value="2" control={<Radio />} label="Nữ" />
+        <FormControlLabel value="3" control={<Radio />} label="Khác" />
+      </RadioGroup>
+      <div className="row">
+        <TextField
+          id="province-residence"
+          label="Tỉnh/Thành phố"
           sx={{
-            mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            marginBottom: '1rem',
+            marginTop: '1rem',
+            minWidth: 'calc(calc(100%/4) - 1.5rem)',
           }}
+          size="medium"
+          InputProps={{ style: { fontSize: '1.2rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          required
+          select
+          value={data.province}
+          onChange={handleChangeProvinceResidence}
+          error={error.provinceResidence}
+          helperText={error.provinceResidence === false ? '' : 'Bạn chưa chọn tỉnh/thành phố'}
         >
-          <Typography component="h1" variant="h5">
-            Thay Đổi Thông Tin Cá Nhân
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="fullname"
-              label="Họ và tên"
-              name="fullname"
-              autoComplete="fullname"
-              autoFocus
-              onChange={(e) =>
-                setData((old) => {
-                  return { ...old, fullName: e.target.value }
-                })
-              }
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="yearofbirth"
-              label="Năm Sinh"
-              name="yearofbirth"
-              autoComplete="yearofbirth"
-              autoFocus
-              onChange={(e) =>
-                setData((old) => {
-                  return { ...old, yearOfBirth: e.target.value }
-                })
-              }
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="citizen_identification"
-              label="Số hộ chiếu/CMND/CCCD"
-              name="citizen_identification"
-              autoComplete="citizen_identification"
-              autoFocus
-              onChange={(e) =>
-                setData((old) => {
-                  return { ...old, citizenIdentification: e.target.value }
-                })
-              }
-            />
-
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              id="gender"
-              name="Giới Tính"
-              onChange={(e) =>
-                setData((old: any) => {
-                  return { ...old, gender: Number(e.target.value) }
-                })
-              }
-            >
-              <FormControlLabel value="1" control={<Radio />} label="Nam" />
-              <FormControlLabel value="2" control={<Radio />} label="Nữ" />
-              <FormControlLabel value="3" control={<Radio />} label="Khác" />
-            </RadioGroup>
-
-            <div className="row">
-              <TextField
-                id="province-residence"
-                label="Tỉnh/Thành phố"
-                sx={{
-                  marginBottom: '1rem',
-                  marginTop: '1rem',
-                  minWidth: 'calc(calc(100%/4) - 1.5rem)',
-                }}
-                size="medium"
-                InputProps={{ style: { fontSize: '1.2rem' } }}
-                InputLabelProps={{ style: { fontSize: '1.2rem' } }}
-                required
-                select
-                value={data.province}
-                onChange={handleChangeProvinceResidence}
-              >
-                {provinceResidences.map((provinceResidence) => (
-                  <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
-                    {provinceResidence.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                id="district-residence"
-                label="Quận/Huyện"
-                sx={{
-                  marginBottom: '1rem',
-                  marginTop: '1rem',
-                  minWidth: 'calc(calc(100%/4) - 1.5rem)',
-                }}
-                size="medium"
-                InputProps={{ style: { fontSize: '1.2rem' } }}
-                InputLabelProps={{ style: { fontSize: '1.2rem' } }}
-                required
-                select
-                value={data.district}
-                onChange={handleChangeDistrictResidence}
-              >
-                {districtResidences.map((districtResidence) => (
-                  <MenuItem key={districtResidence.code} value={districtResidence.code}>
-                    {districtResidence.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                id="ward-residence"
-                label="Phường/Xã"
-                sx={{
-                  marginBottom: '1rem',
-                  marginTop: '1rem',
-                  minWidth: 'calc(calc(100%/4) - 1.5rem)',
-                }}
-                size="medium"
-                InputProps={{ style: { fontSize: '1.2rem' } }}
-                InputLabelProps={{ style: { fontSize: '1.2rem' } }}
-                required
-                select
-                value={data.ward}
-                onChange={handleChangeWardResidence}
-              >
-                {wardResidences.map((wardResidence) => (
-                  <MenuItem key={wardResidence.code} value={wardResidence.code}>
-                    {wardResidence.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="specificAddress"
-              label="Số nhà, phố, tổ dân phố/thôn/đội"
-              name="specificAddress"
-              autoComplete="specificAddress"
-              autoFocus
-              onChange={(e) =>
-                setData((old) => {
-                  return { ...old, specificAddress: e.target.value }
-                })
-              }
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="phone"
-              label="Số Điện Thoại"
-              name="phone"
-              autoComplete="phone"
-              autoFocus
-              onChange={(e) =>
-                setData((old) => {
-                  return { ...old, phone: e.target.value }
-                })
-              }
-            />
-
-            <Button onClick={handleSubmit} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Save
-            </Button>
-          </Box>
-        </Box>
-      </ThemeProvider>
+          {provinceResidences.map((provinceResidence) => (
+            <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
+              {provinceResidence.name}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="district-residence"
+          label="Quận/Huyện"
+          sx={{
+            marginBottom: '1rem',
+            marginTop: '1rem',
+            minWidth: 'calc(calc(100%/4) - 1.5rem)',
+          }}
+          size="medium"
+          InputProps={{ style: { fontSize: '1.2rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          required
+          select
+          value={data.district}
+          onChange={handleChangeDistrictResidence}
+          error={error.districtResidence}
+          helperText={error.districtResidence === false ? '' : 'Bạn chưa chọn quận/huyện'}
+        >
+          {districtResidences.map((districtResidence) => (
+            <MenuItem key={districtResidence.code} value={districtResidence.code}>
+              {districtResidence.name}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="ward-residence"
+          label="Phường/Xã"
+          sx={{
+            marginBottom: '1rem',
+            marginTop: '1rem',
+            minWidth: 'calc(calc(100%/4) - 1.5rem)',
+          }}
+          size="medium"
+          InputProps={{ style: { fontSize: '1.2rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          required
+          select
+          onChange={handleChangeWardResidence}
+          error={error.wardResidence}
+          helperText={error.wardResidence === false ? '' : 'Bạn chưa chọn phường/xã'}
+        >
+          {wardResidences.map((wardResidence) => (
+            <MenuItem key={wardResidence.code} value={wardResidence.code}>
+              {wardResidence.name}
+            </MenuItem>
+          ))}
+        </TextField>
+      </div>
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="specificAddress"
+        label="Số nhà, phố, tổ dân phố/thôn/đội"
+        name="specificAddress"
+        autoComplete="specificAddress"
+        autoFocus
+        onChange={handleChangeSpecificAddressResidence}
+        error={error.specificAddressResidence}
+        helperText={error.specificAddressResidence === false ? '' : 'Vui lòng nhập trường này'}
+      />
+      <TextField
+        margin="normal"
+        required
+        style={{ width: '265px' }}
+        id="phone"
+        label="Số Điện Thoại"
+        name="phone"
+        autoComplete="phone"
+        autoFocus
+        onChange={handleChangePhone}
+        error={error.phone.val}
+        helperText={
+          error.phone.val === true && error.phone.code === 1
+            ? 'Bạn chưa nhập số điện thoại'
+            : error.phone.val === true && error.phone.code === 2
+            ? 'Số điện thoại không hợp lệ'
+            : ''
+        }
+      />
+      <div style={{ textAlign: 'center' }}>
+        <Button
+          onClick={handleSubmit}
+          sx={{
+            fontSize: '1.4rem',
+            marginTop: '2rem',
+            textAlign: 'center',
+            textTransform: 'initial',
+            padding: '1rem 3rem',
+            borderRadius: '2rem',
+          }}
+          variant="contained"
+        >
+          LƯU
+        </Button>
+      </div>
+      <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />/
     </Box>
   )
 }
