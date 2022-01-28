@@ -133,7 +133,7 @@ function EpidemicArea() {
         </span>
       </Box>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650, minHeight: '88vh' }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem' } }}>
               <TableCell align="left" sx={{ minWidth: '150px' }}>
@@ -142,7 +142,7 @@ function EpidemicArea() {
               <TableCell align="right">Địa chỉ khai báo</TableCell>
               <TableCell align="right">Ngày khai báo</TableCell>
               <TableCell align="right">Số điện thoại</TableCell>
-              <TableCell align="right">Tra cứu</TableCell>
+              <TableCell align="right">Cấp độ dịch</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -179,7 +179,7 @@ function EpidemicArea() {
           <TableFooter>
             <TableRow>
               <TablePagination
-                align="right"
+                align="left"
                 rowsPerPageOptions={[7, 14, 21, { label: 'All', value: -1 }]}
                 colSpan={3}
                 count={movingDeclaration.length}
@@ -194,6 +194,11 @@ function EpidemicArea() {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 ActionsComponent={TablePaginationActions}
+                sx={{
+                  fontSize: '1.6rem',
+                  '& p': { fontSize: '1.6rem' },
+                  '& .MuiSvgIcon-root': { fontSize: '2rem' },
+                }}
               />
             </TableRow>
           </TableFooter>
