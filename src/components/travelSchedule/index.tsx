@@ -84,104 +84,114 @@ export default function TravelSchedule(props: typeProps) {
           </DialogTitle>
           <DialogContent dividers={scroll === 'paper'}>
             <DialogContent
-              sx={{ padding: 0 }}
+              sx={{
+                padding: 0,
+                minWidth: { lg: '550px' },
+                minHeight: { lg: '5rem' },
+                fontSize: '1.4rem',
+              }}
               id="scroll-dialog-description"
               ref={descriptionElementRef}
               tabIndex={-1}
             >
-              {data?.map((item: any, index: number) => {
-                if (item.status === 0) {
-                  return
-                }
-                // di chuyển từ
-                const province =
-                  address.filter((itemAddress: any) => item.province === itemAddress.code)[0] || {}
-                const district =
-                  province.districts?.filter(
-                    (itemAddress: any) => item.district === itemAddress.code
-                  )[0] || {}
-                const ward =
-                  district.wards?.filter((itemAddress: any) => item.ward === itemAddress.code)[0] ||
-                  {}
-                // di chuyển tới
-                const responseProvince =
-                  address.filter(
-                    (itemAddress: any) => item.provinceResidence === itemAddress.code
-                  )[0] || {}
-                const responseDistrict =
-                  responseProvince.districts?.filter(
-                    (itemAddress: any) => item.districtResidence === itemAddress.code
-                  )[0] || {}
-                const responseWard =
-                  responseDistrict.wards?.filter(
-                    (itemAddress: any) => item.wardResidence === itemAddress.code
-                  )[0] || {}
-                return (
-                  <Timeline
-                    key={index}
-                    position="alternate"
-                    sx={{ minWidth: { lg: '550px' }, padding: 0 }}
-                  >
-                    <TimelineItem>
-                      <TimelineOppositeContent
-                        sx={{
-                          m: 'auto 0',
-                          fontSize: '1.5rem',
-                          fontWeight: 'bold',
-                          maxWidth: { lg: '12rem' },
-                        }}
-                        align="right"
-                        variant="body2"
-                        // color="text.black"
-                      >
-                        {item.time}
-                        {item.status !== 0 && item.status !== undefined && (
-                          <Typography
-                            sx={{
-                              display: 'inline-block',
-                              fontSize: '1.4rem',
-                              borderRadius: '20px',
-                              padding: '3px 6px',
-                              marginBottom: '5px',
-                              color: `${item.status === 1 ? '#1976d2' : 'red'}`,
-                              fontWeight: 'bold',
-                              // border: `${
-                              //   item.status === 1 ? '1px solid #1976d2' : '1px solid red'
-                              // }`,
-                            }}
-                            component="span"
-                          >
-                            {item.status === 1 ? 'Đã duyệt' : 'Từ chối'}
-                          </Typography>
-                        )}
-                      </TimelineOppositeContent>
-                      <TimelineSeparator>
-                        {/* <TimelineConnector /> */}
-                        <TimelineDot color="primary">
-                          <AddLocationIcon />
-                        </TimelineDot>
-                        <TimelineConnector />
-                      </TimelineSeparator>
-                      <TimelineContent sx={{ py: '12px', px: 2 }}>
-                        <Typography variant="h6" component="span" sx={{ fontSize: '1.4rem' }}>
-                          Đi từ: {item.specificAddress}
-                        </Typography>
-                        <Typography sx={{ fontSize: '1.4rem', marginBottom: '0.5rem' }}>
-                          {ward.name || ''} - {district.name || ''} - {province.name || ''}
-                        </Typography>
+              {data.length > 0
+                ? data?.map((item: any, index: number) => {
+                    if (item.status === 0) {
+                      return
+                    }
 
-                        <Typography variant="h6" component="span" sx={{ fontSize: '1.4rem' }}>
-                          Đi tới: {item.specificAddressResidence}
-                        </Typography>
-                        <Typography sx={{ fontSize: '1.4rem', marginBottom: '1rem' }}>
-                          {responseWard.name || ''} - {responseDistrict.name || ''} -{' '}
-                          {responseProvince.name || ''}
-                        </Typography>
-                      </TimelineContent>
-                    </TimelineItem>
-                  </Timeline>
-                )
-              })}
+                    // di chuyển từ
+                    const province =
+                      address.filter((itemAddress: any) => item.province === itemAddress.code)[0] ||
+                      {}
+                    const district =
+                      province.districts?.filter(
+                        (itemAddress: any) => item.district === itemAddress.code
+                      )[0] || {}
+                    const ward =
+                      district.wards?.filter(
+                        (itemAddress: any) => item.ward === itemAddress.code
+                      )[0] || {}
+                    // di chuyển tới
+                    const responseProvince =
+                      address.filter(
+                        (itemAddress: any) => item.provinceResidence === itemAddress.code
+                      )[0] || {}
+                    const responseDistrict =
+                      responseProvince.districts?.filter(
+                        (itemAddress: any) => item.districtResidence === itemAddress.code
+                      )[0] || {}
+                    const responseWard =
+                      responseDistrict.wards?.filter(
+                        (itemAddress: any) => item.wardResidence === itemAddress.code
+                      )[0] || {}
+                    return (
+                      <Timeline
+                        key={index}
+                        position="alternate"
+                        sx={{ minWidth: { lg: '550px' }, padding: 0 }}
+                      >
+                        <TimelineItem>
+                          <TimelineOppositeContent
+                            sx={{
+                              m: 'auto 0',
+                              fontSize: '1.5rem',
+                              fontWeight: 'bold',
+                              maxWidth: { lg: '12rem' },
+                            }}
+                            align="right"
+                            variant="body2"
+                            // color="text.black"
+                          >
+                            {item.time}
+                            {item.status !== 0 && item.status !== undefined && (
+                              <Typography
+                                sx={{
+                                  display: 'inline-block',
+                                  fontSize: '1.4rem',
+                                  borderRadius: '20px',
+                                  padding: '3px 6px',
+                                  marginBottom: '5px',
+                                  color: `${item.status === 1 ? '#1976d2' : 'red'}`,
+                                  fontWeight: 'bold',
+                                  // border: `${
+                                  //   item.status === 1 ? '1px solid #1976d2' : '1px solid red'
+                                  // }`,
+                                }}
+                                component="span"
+                              >
+                                {item.status === 1 ? 'Đã duyệt' : 'Từ chối'}
+                              </Typography>
+                            )}
+                          </TimelineOppositeContent>
+                          <TimelineSeparator>
+                            {/* <TimelineConnector /> */}
+                            <TimelineDot color="primary">
+                              <AddLocationIcon />
+                            </TimelineDot>
+                            <TimelineConnector />
+                          </TimelineSeparator>
+                          <TimelineContent sx={{ py: '12px', px: 2 }}>
+                            <Typography variant="h6" component="span" sx={{ fontSize: '1.4rem' }}>
+                              Đi từ: {item.specificAddress}
+                            </Typography>
+                            <Typography sx={{ fontSize: '1.4rem', marginBottom: '0.5rem' }}>
+                              {ward.name || ''} - {district.name || ''} - {province.name || ''}
+                            </Typography>
+
+                            <Typography variant="h6" component="span" sx={{ fontSize: '1.4rem' }}>
+                              Đi tới: {item.specificAddressResidence}
+                            </Typography>
+                            <Typography sx={{ fontSize: '1.4rem', marginBottom: '1rem' }}>
+                              {responseWard.name || ''} - {responseDistrict.name || ''} -{' '}
+                              {responseProvince.name || ''}
+                            </Typography>
+                          </TimelineContent>
+                        </TimelineItem>
+                      </Timeline>
+                    )
+                  })
+                : 'Không có thông báo gì!'}
             </DialogContent>
           </DialogContent>
           <DialogActions>
