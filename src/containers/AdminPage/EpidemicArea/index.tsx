@@ -53,11 +53,10 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 function EpidemicArea() {
-  const { movingDeclaration } = useContext(GlobalContext)
+  const { movingDeclaration, dataCovid, setDataCovid } = useContext(GlobalContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(7)
   const [dataAddress, setDataAddress] = useState<any[]>([])
-  const [locationCovid, setLocationCovid] = useState<any[]>([])
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - movingDeclaration.length) : 0
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage)
@@ -90,38 +89,41 @@ function EpidemicArea() {
     return `${dataAddress[provinceIndex]?.districts[districtIndex]?.wards[wardIndex]?.name} - ${dataAddress[provinceIndex]?.districts[districtIndex]?.name} - ${dataAddress[provinceIndex]?.name}`
   }
 
-  const getLevel = async (ward: number) => {
-    try {
-      const uri = {
-        filters: [
-          {
-            and: [
-              {
-                member: 'dtm_covid_nguy_co.ma_quan_huyen',
-                operator: 'equals',
-                values: [`${ward}`],
-              },
-              { member: 'dtm_covid_nguy_co.cap', operator: 'equals', values: ['Cấp xã'] },
-            ],
-          },
-        ],
-        dimensions: [
-          'dtm_covid_nguy_co.nguy_co',
-          'dtm_covid_nguy_co.cap',
-          'dtm_covid_nguy_co.ngay_cap_nhap',
-        ],
-      }
-      const encode = encodeURI(JSON.stringify(uri))
-      const data = await covidApi.getAll(encode)
-      const newData = [
-        ...locationCovid,
-        { ward: ward, level: data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co'] },
-      ]
-      return data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co']
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  // const getLevel = (ward: number) => {
+  //   try {
+  //     const uri = {
+  //       filters: [
+  //         {
+  //           and: [
+  //             {
+  //               member: 'dtm_covid_nguy_co.ma_quan_huyen',
+  //               operator: 'equals',
+  //               values: [`${ward}`],
+  //             },
+  //             { member: 'dtm_covid_nguy_co.cap', operator: 'equals', values: ['Cấp xã'] },
+  //           ],
+  //         },
+  //       ],
+  //       dimensions: [
+  //         'dtm_covid_nguy_co.nguy_co',
+  //         'dtm_covid_nguy_co.cap',
+  //         'dtm_covid_nguy_co.ngay_cap_nhap',
+  //       ],
+  //     }
+  //     const encode = encodeURI(JSON.stringify(uri))
+  //     const data = covidApi.getAll(encode)
+  //     const newData = [
+  //       ...dataCovid,
+  //       { ward: ward, level: data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co'] },
+  //     ]
+  //     setDataCovid(newData)
+  //     // return `${data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co']}`
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
+
+  // console.log(dataCovid)
 
   return (
     <Box>
@@ -133,7 +135,7 @@ function EpidemicArea() {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650, minHeight: '88vh' }} aria-label="simple table">
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem' } }}>
               <TableCell align="left" sx={{ minWidth: '150px' }}>
                 Tên nhân viên
               </TableCell>
@@ -147,11 +149,15 @@ function EpidemicArea() {
             {(rowsPerPage > 0
               ? movingDeclaration.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : movingDeclaration
-            ).map(async (item) => {
-              const data = await getLevel(item.ward)
-              console.log(data)
+            ).map((item) => {
               return (
-                <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableRow
+                  key={item.id}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    '& .MuiTableCell-root': { fontSize: '1.6rem' },
+                  }}
+                >
                   <TableCell component="th" scope="row">
                     {item.fullName}
                   </TableCell>
