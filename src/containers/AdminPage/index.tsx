@@ -73,9 +73,9 @@ const HomePage = () => {
   ]
 
   return (
-    <>
-      <h3 style={{ margin: '0 20px', fontSize: '1.8rem' }}>Thống kê</h3>
-      <Grid container spacing={3} px={1} mt={3}>
+    <Box>
+      <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Thống kê</span>
+      <Grid container spacing={3} mt={3}>
         {data.map((item, i) => (
           <Grid key={i} item xs={12} md={6} lg={3}>
             <Link to={item.path} style={{ textDecoration: 'none' }}>
@@ -109,8 +109,8 @@ const HomePage = () => {
         ))}
       </Grid>
 
-      <h3 style={{ margin: '20px 20px 0', fontSize: '1.8rem' }}>Xem thêm</h3>
-      <Grid container spacing={3} px={1}>
+      <span style={{ fontSize: '1.6rem', marginTop: '2rem', fontWeight: 'bold' }}>Xem thêm</span>
+      <Grid container spacing={3}>
         {data1.map((item, index) => (
           <Grid
             item
@@ -123,7 +123,7 @@ const HomePage = () => {
             <a href={item.path} target="_ blank" rel="noreferrer">
               {item ? (
                 <img
-                  style={{ width: '100%', height: '20rem', objectFit: 'cover' }}
+                  style={{ width: '100%', height: '25rem', objectFit: 'cover' }}
                   alt={item.title}
                   src={item.src}
                 />
@@ -139,7 +139,7 @@ const HomePage = () => {
                     color: 'blue',
                   }}
                 >
-                  <Typography gutterBottom variant="body2">
+                  <Typography gutterBottom variant="body2" sx={{ fontSize: '1.4rem' }}>
                     {item.title}
                   </Typography>
                   {/* <Typography display="block" variant="caption" color="text.secondary">
@@ -159,7 +159,7 @@ const HomePage = () => {
           </Grid>
         ))}
       </Grid>
-    </>
+    </Box>
   )
 }
 

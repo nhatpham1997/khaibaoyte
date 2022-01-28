@@ -12,12 +12,12 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { NavLink } from 'react-router-dom'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 
 const theme = createTheme()
 
-export default function ForgotPassword() {
+export default function AdminPassword() {
   const [dataUser, setDataUser] = useState<any>([])
   const [id, setId] = useState<any>()
   const [validPassCurrent, setValidPassCurrent] = useState(false)
@@ -26,7 +26,7 @@ export default function ForgotPassword() {
   const [messPassConfirm, setMessPassConfirm] = useState('')
   const [validPassNew, setValidPassNew] = useState(false)
   const [messPassNew, setMessPassNew] = useState('')
-  const navigate = useNavigate()
+
   const data1 = {
     id: 1,
     number1: 2,
@@ -40,13 +40,13 @@ export default function ForgotPassword() {
       const dataUsers = await axios.get('https://dbkhaibaoyte.herokuapp.com/user')
       setDataUser(dataUsers.data)
 
-      setId(localStorage.getItem('userId'))
+      setId(localStorage.getItem('adminId'))
     }
     fetchData()
   }, [])
 
   const handleChangePassword = async (response: any, passwordNew: any) => {
-    const result = axios.put(`https://dbkhaibaoyte.herokuapp.com/user/${id}`, {
+    const result = axios.put(`https://dbkhaibaoyte.herokuapp.com/admin/${id}`, {
       ...response,
       password: passwordNew,
     })
@@ -55,7 +55,7 @@ export default function ForgotPassword() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data: any = new FormData(event.currentTarget)
+    const data = new FormData(event.currentTarget)
     console.log({
       currentPassword: data.get('current_password'),
       passwordNew: data.get('password_new'),
@@ -72,16 +72,8 @@ export default function ForgotPassword() {
 
       if (data.get('password_new') === data.get('current_password')) {
         setValidPassNew(true)
-        setMessPassNew('mật khẩu mới không được trùng với mật khẩu cũ!')
+        setMessPassNew('password error!')
       } else {
-        if (data.get('password_new').length < 6 && data.get('password_confirm').length < 6) {
-          setValidPassNew(true)
-          setMessPassNew('mật khẩu mới phải lớn hơn 5 kí tự')
-          setValidPassConfirm(true)
-          setMessPassConfirm(' mật khẩu mới phải lớn hơn 5 kí tự !')
-
-          return
-        }
         if (data.get('password_new') === data.get('password_confirm')) {
           setValidPassNew(false)
           setMessPassNew('')
@@ -90,23 +82,21 @@ export default function ForgotPassword() {
 
           console.log(response[0], data.get('password_new'))
           handleChangePassword(response[0], data.get('password_new'))
-
-          alert(' thay đổi mật khẩu thành công!')
-          navigate('/user')
+          alert('successful!')
         } else {
           setValidPassConfirm(true)
-          setMessPassConfirm('Mật khẩu không trùng khớp!')
+          setMessPassConfirm('Mat khau khong khop!')
           setValidPassNew(false)
           setMessPassNew('')
         }
       }
     } else {
       setValidPassCurrent(true)
-      setMessPassCurrent('Mật khẩu hiện tại không đúng!')
+      setMessPassCurrent('password current error!')
       setValidPassNew(true)
-      setMessPassNew('Mật khẩu hiện tại không đúng!')
+      setMessPassNew('MessPass Error!')
       setValidPassConfirm(true)
-      setMessPassConfirm('Mật khẩu hiện tại không đúng!')
+      setMessPassConfirm(' MessPassConfirm error!')
     }
   }
 
@@ -120,54 +110,56 @@ export default function ForgotPassword() {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5" sx={{ fontSize: '18px' }}>
-          Thay đổi mật khẩu
-        </Typography>
+        <h3 style={{ fontSize: '1.6rem' }}>Đổi Mật khẩu Admin</h3>
         <Box
           component="form"
           noValidate
           onSubmit={handleSubmit}
-          sx={{ mt: 1, maxWidth: { xs: '100%', lg: '60%' } }}
+          sx={{
+            mt: 1,
+            '& input': { fontSize: '1.6rem' },
+            '& .MuiOutlinedInput-input': { fontSize: '1.6rem' },
+          }}
         >
           <TextField
-            inputProps={{ style: { fontSize: '14px' } }}
-            InputLabelProps={{ style: { fontSize: '14px' } }}
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassCurrent}
             error={validPassCurrent}
             margin="normal"
             required
             fullWidth
             id="current_password"
-            label="Mật khẩu hiện tại!"
+            label="Current Password"
             name="current_password"
             autoComplete="current_password"
             autoFocus
             type="password"
           />
           <TextField
-            inputProps={{ style: { fontSize: '14px' } }}
-            InputLabelProps={{ style: { fontSize: '14px' } }}
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassNew}
             error={validPassNew}
             margin="normal"
             required
             fullWidth
             name="password_new"
-            label="Mật khẩu mới "
+            label="New Password"
             type="password"
             id="password_new"
             autoComplete="password_new"
           />
           <TextField
-            inputProps={{ style: { fontSize: '14px' } }}
-            InputLabelProps={{ style: { fontSize: '14px' } }}
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassConfirm}
             error={validPassConfirm}
             margin="normal"
             required
             fullWidth
             name="password_confirm"
-            label="Xác nhận mật khẩu mới!"
+            label="Confirm New Password"
             type="password"
             id="password_confirm"
             autoComplete="password_confirm"
@@ -177,9 +169,9 @@ export default function ForgotPassword() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, fontSize: '14px', py: '10px' }}
+            sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
           >
-            lưu mật khẩu
+            Save
           </Button>
         </Box>
       </Box>

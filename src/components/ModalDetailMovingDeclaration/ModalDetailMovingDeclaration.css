@@ -8,7 +8,7 @@
   opacity: 0;
   visibility: hidden;
   transition: all 0.5s ease;
-  z-index: 1;
+  z-index: 20;
 }
 .modal-detail-moving-declaration.is-show {
   opacity: 1;
@@ -27,4 +27,59 @@
   background-color: white;
   border-collapse: collapse;
   padding: 2rem;
+}
+
+.row-modal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1023px) {
+  .modal-detail-moving-declaration-content {
+    width: 50rem;
+    height: 50rem;
+    overflow-y: scroll;
+  }
+  .row-modal {
+    flex-direction: column;
+  }
+  .row-modal:first-child {
+    flex-direction: row;
+  }
+  .year-of-birth-modal,
+  .sex-modal,
+  .email-modal,
+  .phone-modal,
+  .province-residence-modal,
+  .district-residence-modal,
+  .ward-residence-modal,
+  .detail-address-residence-modal,
+  .province-modal,
+  .district-modal,
+  .ward-modal,
+  .detail-address-modal {
+    width: 100%;
+  }
+  .modal-detail-moving-declaration-content::-webkit-scrollbar {
+    width: 2px;
+    border-radius: 1rem;
+  }
+
+  .modal-detail-moving-declaration-content::-webkit-scrollbar-track {
+    border-radius: 1rem;
+    /* background-color: #c5cccc; */
+  }
+
+  .modal-detail-moving-declaration-content::-webkit-scrollbar-thumb {
+    background-color: #7b809a;
+    outline: 1px solid slategrey;
+    border-radius: 1rem;
+  }
+}
+
+@media screen and (max-width: 555px) {
+  .modal-detail-moving-declaration-content {
+    width: 30rem;
+  }
 }

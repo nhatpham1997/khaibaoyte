@@ -1,8 +1,7 @@
-.MuiTableCell-root {
-  font-size: 1.2rem !important;
+.tbody {
+  font-size: 1.4rem !important;
 }
 .tableContainer {
-  border-radius: 8px !important;
   margin-top: 15px;
 }
 .name {
@@ -12,6 +11,7 @@
 .status {
   font-weight: bold !important;
   color: white;
-  border-radius: 8px !important;
-  padding: 3px 10px !important;
+}
+.center {
+  text-align: center;
 }

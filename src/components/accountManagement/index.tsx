@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -11,7 +11,9 @@ import ConfirmAdmin from 'components/confirmAdmin'
 import { Link } from 'react-router-dom'
 import FileOpenIcon from '@mui/icons-material/FileOpen'
 import { GlobalContext } from 'contexts'
-import { Box } from '@mui/material'
+import { Box, Snackbar } from '@mui/material'
+import SearchAccount from 'components/searchAccount'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
 
 type dataAdmin = {
   data: {
@@ -33,18 +35,47 @@ type dataAdmin = {
   name: string
 }
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
+
 const AccountManagement = (props: dataAdmin) => {
-  const { isLogin } = useContext(GlobalContext)
-  console.log(isLogin)
+  const { isLogin, showConfirm, setShowConfirm } = useContext(GlobalContext)
+  const [data, setData] = useState([...props.data])
+  console.log(data, props.data)
+
+  useEffect(() => {
+    setData(props.data)
+  }, [props.data])
+
+  const handleSearch = (e: any) => {
+    console.log(e)
+    setData(e)
+  }
   return (
     <>
       {isLogin !== '' && (
         <Box>
-          <h3 style={{ margin: '16px', fontSize: '1.6rem' }}>Danh sách {props.name}</h3>
-          <TableContainer component={Paper}>
+          <Snackbar
+            open={showConfirm}
+            autoHideDuration={4000}
+            onClose={() => setShowConfirm(false)}
+          >
+            <Alert
+              severity="success"
+              sx={{ width: '30rem', color: 'white', fontSize: '1.6rem', bgcolor: '#2e7d32' }}
+            >
+              Xóa thành công!
+            </Alert>
+          </Snackbar>
+          <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Danh sách {props.name}</span>
+            <SearchAccount search={handleSearch} data={props.data} />
+          </Box>
+          <TableContainer component={Paper} sx={{ borderRadius: 0 }}>
             <Table sx={{ minWidth: 650 }} color="primary" aria-label="a dense table">
               <TableHead>
-                <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem !important' } }}>
+                <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.4rem !important' } }}>
                   <TableCell sx={{ width: '30px' }}>STT</TableCell>
                   <TableCell align="left">Email</TableCell>
                   <TableCell sx={{ minWidth: '170px' }} align="left">
@@ -56,19 +87,17 @@ const AccountManagement = (props: dataAdmin) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.data.map((row, index) => (
+                {data.map((row, index) => (
                   <TableRow
                     key={row.id}
                     sx={{
                       height: '100%',
-                      '&:nth-of-type(odd)': { backgroundColor: '#ccc' },
                       '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
                         transition: '0.2s ease-in-out',
                       },
                       '& .MuiTableCell-root': {
-                        fontSize: '1.6rem !important',
-                        borderBottom: 'none',
+                        fontSize: '1.4rem !important',
                       },
                     }}
                   >
@@ -85,9 +114,8 @@ const AccountManagement = (props: dataAdmin) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-evenly',
-                        padding: '8px',
                         '& button': {
-                          fontSize: '1.6rem',
+                          fontSize: '1.4rem',
                         },
                       }}
                     >
@@ -125,7 +153,6 @@ const AccountManagement = (props: dataAdmin) => {
                               color="primary"
                               size="small"
                               startIcon={<FileOpenIcon />}
-                              sx={{ fontSize: '1.2rem' }}
                             >
                               Xem
                             </Button>

@@ -36,7 +36,7 @@ export default function Noti({ showNoti, setShowNoti, payload }: props) {
         <Alert
           onClose={handleClose}
           severity={payload.status}
-          sx={{ width: '100%', display: 'flex', alignItems: 'center', fontSize: '1.3rem' }}
+          sx={{ width: '100%', display: 'flex', alignItems: 'center', fontSize: '1.4rem' }}
         >
           {payload.text}
         </Alert>

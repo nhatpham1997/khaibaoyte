@@ -52,8 +52,8 @@ input {
 }
 
 .wrap {
-  width: 100%;
-  margin: 2rem 2rem 2rem 29rem;
+  width: calc(100% - 28rem);
+  margin-left: 28rem;
 }
 
 /* container */
@@ -61,13 +61,4 @@ input {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-}
-
-.error {
-  color: red;
-}
-
-.border-error {
-  border: solid 1px red !important;
-  border-radius: 5px !important;
 }

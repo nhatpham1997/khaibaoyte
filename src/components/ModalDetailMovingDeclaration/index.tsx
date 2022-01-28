@@ -82,14 +82,14 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
   return (
     <div className={`modal-detail-moving-declaration ${isShow && 'is-show'}`}>
       <div className="modal-detail-moving-declaration-content">
-        <div className="row">
+        <div className="row-modal">
           <LabelHeading text="Chi tiết tờ khai di chuyển" />
-          <IconButton onClick={handleCloseModal} sx={{ background: 'silver' }} aria-label="delete">
+          <IconButton onClick={handleCloseModal} aria-label="delete">
             <CloseIcon />
           </IconButton>
         </div>
         <TextField
-          id="name"
+          className="name"
           label="Họ và tên"
           variant="outlined"
           sx={{ marginBottom: '1rem', marginTop: '1rem', fontSize: '3rem' }}
@@ -99,9 +99,10 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
           fullWidth
           value={item.fullName || ''}
         />
-        <div className="row">
+        <div className="row-modal">
           <TextField
-            id="year-of-birth"
+            type="number"
+            className="year-of-birth-modal"
             label="Năm sinh"
             sx={{
               marginBottom: '1rem',
@@ -115,7 +116,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             value={item.yearOfBirth || 0}
           />
           <TextField
-            id="sex"
+            className="sex-modal"
             label="Giới tính"
             sx={{
               marginBottom: '1rem',
@@ -148,9 +149,9 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
           fullWidth
           value={item.citizenIdentification || ''}
         />
-        <div className="row">
+        <div className="row-modal">
           <TextField
-            id="email"
+            className="email-modal"
             label="Email"
             sx={{
               marginBottom: '1rem',
@@ -164,7 +165,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             value={item.email || ''}
           />
           <TextField
-            id="phone"
+            className="phone-modal"
             label="Số điện thoại"
             sx={{
               marginBottom: '1rem',
@@ -178,12 +179,12 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             value={item.phone || ''}
           />
         </div>
-        <div className="row">
+        <div className="row-modal">
           <LabelHeading text="Nơi cư trú" />
         </div>
-        <div className="row">
+        <div className="row-modal">
           <TextField
-            id="province-residence"
+            className="province-residence-modal"
             label="Tỉnh/Thành phố"
             sx={{
               marginBottom: '1rem',
@@ -204,7 +205,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             ))}
           </TextField>
           <TextField
-            id="district-residence"
+            className="district-residence-modal"
             label="Quận/Huyện"
             sx={{
               marginBottom: '1rem',
@@ -225,7 +226,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             ))}
           </TextField>
           <TextField
-            id="ward-residence"
+            className="ward-residence-modal"
             label="Phường/Xã"
             sx={{
               marginBottom: '1rem',
@@ -246,7 +247,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             ))}
           </TextField>
           <TextField
-            id="detail-address-residence"
+            className="detail-address-residence-modal"
             label="Số nhà, phố, tổ dân phố/thôn/đội"
             sx={{
               marginBottom: '1rem',
@@ -260,12 +261,12 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             value={item.specificAddressResidence || ''}
           />
         </div>
-        <div className="row">
+        <div className="row-modal">
           <LabelHeading text="Địa điểm di chuyển" />
         </div>
-        <div className="row">
+        <div className="row-modal">
           <TextField
-            id="province"
+            className="province-modal"
             label="Tỉnh/Thành phố"
             sx={{
               marginBottom: '1rem',
@@ -286,7 +287,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             ))}
           </TextField>
           <TextField
-            id="district"
+            className="district-modal"
             label="Quận/Huyện"
             sx={{
               marginBottom: '1rem',
@@ -307,7 +308,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             ))}
           </TextField>
           <TextField
-            id="ward"
+            className="ward-modal"
             label="Phường/Xã"
             sx={{
               marginBottom: '1rem',
@@ -328,7 +329,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
             ))}
           </TextField>
           <TextField
-            id="detail-address"
+            className="detail-address-modal"
             label="Số nhà, phố, tổ dân phố/thôn/đội"
             sx={{
               marginBottom: '1rem',

@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { MenuItem } from '@mui/material'
 import Radio from '@mui/material/Radio'
@@ -21,6 +21,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 const theme = createTheme()
 
 export default function RegisterForm() {
+  const navigate = useNavigate()
   const today = new Date()
   const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
   const [data, setData] = useState({
@@ -104,7 +105,7 @@ export default function RegisterForm() {
 
   const handleSubmit = () => {
     axios.post('https://dbkhaibaoyte.herokuapp.com/user/', data).then((res) => {
-      console.log('res', res)
+      navigate('/')
     })
     if (!data.fullName) {
       setError((prev) => {
@@ -274,13 +275,11 @@ export default function RegisterForm() {
             md={7}
             sx={{
               backgroundImage:
-                'url(https://upload.wikimedia.org/wikipedia/commons/b/ba/Logo-Rikkei.png)',
+                'url(https://dtcfurniture.vn/uploads/projects/banner-web-show.jpg?fbclid=IwAR3uyd-iw66sJwELVYE9lSiX0sCphZRYmqwGqxc9SXA1guNRtPKc-mjasmI)',
               backgroundRepeat: 'no-repeat',
               backgroundColor: (t) =>
                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
               backgroundSize: 'cover',
-              width: '500px',
-              height: '500px',
               backgroundPosition: 'center',
             }}
           />
@@ -298,7 +297,7 @@ export default function RegisterForm() {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Register
+                Đăng ký tài khoản
               </Typography>
               <Box component="form" noValidate sx={{ mt: 1 }}>
                 <TextField
@@ -516,11 +515,11 @@ export default function RegisterForm() {
                 />
 
                 <Button onClick={handleSubmit} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Sign Up
+                  Đăng ký
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <NavLink to="/">{' you have an account? Sign in '}</NavLink>
+                    <NavLink to="/">{' Bạn đã có tài khoản? Đăng nhập '}</NavLink>
                   </Grid>
                 </Grid>
               </Box>

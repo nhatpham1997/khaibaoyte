@@ -13,10 +13,11 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 const styleSpan = {
-  marginRight: '20px',
   fontWeight: '500',
-  display: 'inline',
-  fontSize: '1.6rem',
+  display: 'inline-block',
+  fontSize: '1.4rem',
+  minWidth: '14rem',
+  height: '100%',
 }
 
 const styleBox = {
@@ -47,32 +48,9 @@ const AccountInformation = () => {
       responseProvince.districts?.filter((item: any) => data.district === item.code)[0] || {}
     responseWard = responseDistrict.wards?.filter((item: any) => data.ward === item.code)[0] || {}
   }
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (match.pathname.includes('account-admin')) {
-  //       try {
-  //         const response = await axios.get(
-  //           `https://dbkhaibaoyte.herokuapp.com/admin?id=${params.id}`
-  //         )
-  //         setData(response.data[0])
-  //       } catch (error) {
-  //         console.log('Failed to fetch post list: ', error)
-  //       }
-  //     } else {
-  //       try {
-  //         const response = await axios.get(
-  //           `https://dbkhaibaoyte.herokuapp.com/user?id=${params.id}`
-  //         )
-  //         setData(response.data[0])
-  //       } catch (error) {
-  //         console.log('Failed to fetch post list: ', error)
-  //       }
-  //     }
-  //   }
-  //   fetchData()
-  // }, [])
+
   return (
-    <div>
+    <Box>
       {address.length > 0 && (
         <Item
           sx={{
@@ -80,7 +58,8 @@ const AccountInformation = () => {
             flexDirection: 'column',
             textAlign: 'start',
             boxShadow: 3,
-            fontSize: '1.6rem',
+            fontSize: '1.4rem',
+            borderRadius: 0,
           }}
         >
           <Box sx={styleBox}>
@@ -147,7 +126,7 @@ const AccountInformation = () => {
           </Box>
         </Item>
       )}
-    </div>
+    </Box>
   )
 }
 

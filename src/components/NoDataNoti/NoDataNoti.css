@@ -1,0 +1,14 @@
+.no-data-noti {
+  margin: 2rem 0;
+  width: 100%;
+  text-align: center;
+}
+.no-data-noti-icon {
+  font-size: 4rem;
+  color: #aeb8c2;
+}
+
+.no-data-noti-text {
+  margin-top: 1rem;
+  color: #3d3d3d;
+}

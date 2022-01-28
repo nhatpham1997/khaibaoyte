@@ -3,6 +3,7 @@ import { emphasize, styled } from '@mui/material/styles'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Chip from '@mui/material/Chip'
 import HomeIcon from '@mui/icons-material/Home'
+import './HeaderLeft.css'
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -36,13 +37,13 @@ export default function HeaderLeft({ titleHeader }: props) {
     <div className="header-left" role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb">
         <StyledBreadcrumb
-          sx={{ fontSize: '1.2rem' }}
+          sx={{ fontSize: '1.4rem' }}
           component="a"
           href="#"
           label="Trang chủ"
           icon={<HomeIcon fontSize="small" />}
         />
-        <StyledBreadcrumb sx={{ fontSize: 12 }} component="a" href="#" label={titleHeader} />
+        <StyledBreadcrumb sx={{ fontSize: '1.4rem' }} component="a" href="#" label={titleHeader} />
       </Breadcrumbs>
     </div>
   )

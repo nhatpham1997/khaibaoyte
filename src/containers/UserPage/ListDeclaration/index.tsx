@@ -1,5 +1,6 @@
 import LabelHeading from 'components/LabelHeading'
 import MovingDeclarationItem from 'components/MovingDeclarationItem'
+import NoDataNoti from 'components/NoDataNoti'
 import { useEffect, useState } from 'react'
 
 function ListDeclaration() {
@@ -44,11 +45,15 @@ function ListDeclaration() {
   return (
     <>
       <LabelHeading text="Danh sách tờ khai" />
-      <div className="moving-declaration-list">
-        {listDeclarations.map((item, index) => {
-          return <MovingDeclarationItem key={index} item={item} name={item.fullName} />
-        })}
-      </div>
+      {listDeclarations.length > 0 ? (
+        <div className="moving-declaration-list">
+          {listDeclarations.map((item, index) => {
+            return <MovingDeclarationItem key={index} item={item} name={item.fullName} />
+          })}
+        </div>
+      ) : (
+        <NoDataNoti />
+      )}
     </>
   )
 }

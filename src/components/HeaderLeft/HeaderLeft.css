@@ -1,0 +1,6 @@
+/* responsive */
+@media screen and (max-width: 730px) {
+  .header-left {
+    display: none;
+  }
+}

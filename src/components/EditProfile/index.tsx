@@ -25,6 +25,7 @@ const theme = createTheme()
 export default function EditProfile() {
   const today = new Date()
   const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
+
   const [data, setData] = useState({
     fullName: '',
     yearOfBirth: '',
@@ -273,6 +274,13 @@ export default function EditProfile() {
         label="Họ và tên"
         name="fullname"
         autoComplete="fullname"
+        sx={{
+          marginBottom: '1rem',
+          marginTop: '1rem',
+          fontSize: '3rem',
+        }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         autoFocus
         onChange={handleChangeName}
         error={error.name.val}
@@ -286,6 +294,13 @@ export default function EditProfile() {
         label="Năm sinh"
         name="yearofbirth"
         autoComplete="yearofbirth"
+        sx={{
+          marginBottom: '1rem',
+          marginTop: '1rem',
+          fontSize: '3rem',
+        }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         autoFocufa-stack
         onChange={handleChangeYOB}
         error={error.yearOfBirth.val}
@@ -307,6 +322,13 @@ export default function EditProfile() {
         label="CMND/CCCD"
         name="citizen_identification"
         autoComplete="citizen_identification"
+        sx={{
+          marginBottom: '1rem',
+          marginTop: '1rem',
+          fontSize: '3rem',
+        }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         autoFocus
         onChange={handleChangeCitizen}
       />
@@ -314,6 +336,7 @@ export default function EditProfile() {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         id="gender"
+        style={{}}
         name="Giới Tính"
         onChange={(e) =>
           setData((old: any) => {
@@ -406,6 +429,13 @@ export default function EditProfile() {
         label="Số nhà, phố, tổ dân phố/thôn/đội"
         name="specificAddress"
         autoComplete="specificAddress"
+        sx={{
+          marginBottom: '1rem',
+          marginTop: '1rem',
+          fontSize: '3rem',
+        }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         autoFocus
         onChange={handleChangeSpecificAddressResidence}
         error={error.specificAddressResidence}
@@ -419,6 +449,13 @@ export default function EditProfile() {
         label="Số Điện Thoại"
         name="phone"
         autoComplete="phone"
+        sx={{
+          marginBottom: '1rem',
+          marginTop: '1rem',
+          fontSize: '3rem',
+        }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         autoFocus
         onChange={handleChangePhone}
         error={error.phone.val}
@@ -443,7 +480,14 @@ export default function EditProfile() {
           }}
           variant="contained"
         >
-          LƯU
+          <NavLink
+            style={{
+              color: 'white',
+            }}
+            to="/user"
+          >
+            {' LƯU '}
+          </NavLink>
         </Button>
       </div>
       <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />/

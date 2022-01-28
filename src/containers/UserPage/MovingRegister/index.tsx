@@ -6,6 +6,7 @@ import DateRegister from 'components/DateRegister'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
 import Noti from 'components/Noti'
+import './MovingRegister.css'
 
 function MovingRegister() {
   const userAPI = 'https://dbkhaibaoyte.herokuapp.com/user'
@@ -127,17 +128,17 @@ function MovingRegister() {
   // Hàm xử lý thay đổi tên
   function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.value) {
-      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 1 } }))
+      setError((prev) => ({ ...prev, name: { val: true, code: 1 } }))
     } else if (
       e.target.value.match(/^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g) ===
       null
     ) {
-      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 2 } }))
+      setError((prev) => ({ ...prev, name: { val: true, code: 2 } }))
     } else {
-      setError((prev) => ({ ...prev, citizenIdentification: { val: false, code: 0 } }))
+      setError((prev) => ({ ...prev, name: { val: false, code: 0 } }))
     }
     setCurrentUser((prev) => {
-      return { ...prev, citizenIdentification: e.target.value }
+      return { ...prev, fullName: e.target.value }
     })
   }
 
@@ -501,10 +502,12 @@ function MovingRegister() {
           setShowNoti(true)
         })
       setProvince('')
+      setDistricts([])
       setDistrict('')
+      setWards([])
       setWard('')
       setSpecificAddress('')
-      setDayMY('')
+      setDayMY(null)
     }
   }
 
@@ -515,7 +518,6 @@ function MovingRegister() {
       </div>
       <TextField
         autoComplete="off"
-        ref={nameRef}
         id="name"
         label="Họ và tên"
         variant="outlined"
@@ -524,8 +526,8 @@ function MovingRegister() {
           marginTop: '1rem',
           fontSize: '3rem',
         }}
-        InputProps={{ style: { fontSize: '1.2rem' } }}
-        InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         required
         fullWidth
         value={currentUser.fullName || ''}
@@ -541,13 +543,14 @@ function MovingRegister() {
       />
       <div className="row">
         <TextField
+          className="year-of-birth"
           autoComplete="off"
           id="year-of-birth"
           label="Năm sinh"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.yearOfBirth || ''}
           onChange={handleChangeYOB}
@@ -563,12 +566,13 @@ function MovingRegister() {
           }
         />
         <TextField
+          className="sex"
           id="sex"
           label="Giới tính"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.gender || ''}
@@ -586,12 +590,13 @@ function MovingRegister() {
 
       <div className="row">
         <TextField
+          className="email"
           id="email"
           label="Email"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           onChange={handleChangeEmail}
           value={currentUser.email || ''}
@@ -605,12 +610,13 @@ function MovingRegister() {
           }
         />
         <TextField
+          className="phone"
           id="phone"
           label="Số điện thoại"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.phone || ''}
           onChange={handleChangePhone}
@@ -629,12 +635,13 @@ function MovingRegister() {
       </div>
       <div className="row">
         <TextField
+          className="province-residence"
           id="province-residence"
           label="Tỉnh/Thành phố"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.province || ''}
@@ -649,12 +656,13 @@ function MovingRegister() {
           ))}
         </TextField>
         <TextField
+          className="district-residence"
           id="district-residence"
           label="Quận/Huyện"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.district || ''}
@@ -669,12 +677,13 @@ function MovingRegister() {
           ))}
         </TextField>
         <TextField
+          className="ward-residence"
           id="ward-residence"
           label="Phường/Xã"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.ward || ''}
@@ -689,12 +698,13 @@ function MovingRegister() {
           ))}
         </TextField>
         <TextField
+          className="detail-address-residence"
           id="detail-address-residence"
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.specificAddress || ''}
           onChange={handleChangeSpecificAddressResidence}
@@ -707,6 +717,7 @@ function MovingRegister() {
       </div>
       <div className="row">
         <TextField
+          className="province"
           id="province-residence"
           label="Tỉnh/Thành phố"
           sx={{
@@ -715,8 +726,8 @@ function MovingRegister() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={province}
@@ -731,6 +742,7 @@ function MovingRegister() {
           ))}
         </TextField>
         <TextField
+          className="district"
           id="district-residence"
           label="Quận/Huyện"
           sx={{
@@ -739,8 +751,8 @@ function MovingRegister() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={district}
@@ -755,6 +767,7 @@ function MovingRegister() {
           ))}
         </TextField>
         <TextField
+          className="ward"
           id="ward-residence"
           label="Phường/Xã"
           sx={{
@@ -763,8 +776,8 @@ function MovingRegister() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={ward}
@@ -783,12 +796,13 @@ function MovingRegister() {
         <DateRegister error={error} setError={setError} value={dayMY} setValue={setDayMY} />
 
         <TextField
+          className="detail-address"
           id="detail-address"
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={specificAddress}
           onChange={handleChangeSpecificAddress}

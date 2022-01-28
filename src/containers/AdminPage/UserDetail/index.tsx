@@ -11,9 +11,6 @@ import { GlobalContext } from 'contexts'
 const headerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
-  backgroundColor: '#ccc',
-  borderRadius: '10px',
-  margin: '0 20px',
   boxShadow: 3,
 }
 
@@ -66,17 +63,21 @@ export default function UserDetail() {
               <TravelSchedule name="Yêu cầu đã xác nhận" />
             </Box>
           </Box>
-          <Box sx={{ flexGrow: 1, margin: '0 20px' }}>
+          <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={7}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Thông tin chi tiết</h3>
+                  <span style={{ margin: '20px 0', fontSize: '1.6rem', fontWeight: 'bold' }}>
+                    Thông tin chi tiết
+                  </span>
                 </Box>
                 <AccountInformation />
               </Grid>
-              <Grid item xs={0} md={5}>
+              <Grid item xs={0} md={5} padding={0}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3 style={{ margin: '20px 0', fontSize: '1.6rem' }}>Yêu cầu xác nhận</h3>
+                  <span style={{ margin: '20px 0', fontSize: '1.6rem', fontWeight: 'bold' }}>
+                    Yêu cầu xác nhận
+                  </span>
                 </Box>
                 <Confirmation />
               </Grid>

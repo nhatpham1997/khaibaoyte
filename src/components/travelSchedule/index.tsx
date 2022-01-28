@@ -8,6 +8,19 @@ import { useParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { GlobalContext } from 'contexts'
 
+import Timeline from '@mui/lab/Timeline'
+import TimelineItem from '@mui/lab/TimelineItem'
+import TimelineSeparator from '@mui/lab/TimelineSeparator'
+import TimelineConnector from '@mui/lab/TimelineConnector'
+import TimelineContent from '@mui/lab/TimelineContent'
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent'
+import TimelineDot from '@mui/lab/TimelineDot'
+import FastfoodIcon from '@mui/icons-material/Fastfood'
+import LaptopMacIcon from '@mui/icons-material/LaptopMac'
+import HotelIcon from '@mui/icons-material/Hotel'
+import RepeatIcon from '@mui/icons-material/Repeat'
+import AddLocationIcon from '@mui/icons-material/AddLocation'
+
 type typeProps = {
   name: string
 }
@@ -104,93 +117,69 @@ export default function TravelSchedule(props: typeProps) {
                     (itemAddress: any) => item.wardResidence === itemAddress.code
                   )[0] || {}
                 return (
-                  <ListItem
+                  <Timeline
                     key={index}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      margin: 'auto',
-                      //
-                      border: `${
-                        item.status === 0 || item.status === undefined
-                          ? '2px solid #1976d2'
-                          : item.status === 1
-                          ? '2px solid #1976d2'
-                          : '2px solid red'
-                      }`,
-                      minWidth: { lg: '400px' },
-                      borderRadius: '15px',
-                      marginBottom: '25px',
-                      alignItems: 'flex-start',
-                      '&:last-child': { marginBottom: '0' },
-                    }}
+                    position="alternate"
+                    sx={{ minWidth: { lg: '550px' }, padding: 0 }}
                   >
-                    <Box
-                      sx={{
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        borderBottom: `${
-                          item.status === 0 || item.status === undefined
-                            ? '1px solid #1976d2'
-                            : item.status === 1
-                            ? '1px solid #1976d2'
-                            : '1px solid red'
-                        }`,
-                      }}
-                    >
-                      <Typography
-                        component="span"
-                        m={0}
+                    <TimelineItem>
+                      <TimelineOppositeContent
                         sx={{
+                          m: 'auto 0',
+                          fontSize: '1.5rem',
                           fontWeight: 'bold',
-                          fontSize: '1.6rem',
+                          maxWidth: { lg: '12rem' },
                         }}
+                        align="right"
+                        variant="body2"
+                        // color="text.black"
                       >
-                        Ngày {item.time}
-                      </Typography>
-                      {item.status !== 0 && item.status !== undefined && (
-                        <Typography
-                          sx={{
-                            fontSize: '1.4rem',
-                            borderRadius: '20px',
-                            padding: '3px 6px',
-                            marginBottom: '5px',
-                            color: `${item.status === 1 ? '#1976d2' : 'red'}`,
-                            fontWeight: 'bold',
-                            border: `${item.status === 1 ? '1px solid #1976d2' : '1px solid red'}`,
-                          }}
-                          component="span"
-                        >
-                          {item.status === 1 ? 'Đã duyệt' : 'Từ chối'}
+                        {item.time}
+                        {item.status !== 0 && item.status !== undefined && (
+                          <Typography
+                            sx={{
+                              display: 'inline-block',
+                              fontSize: '1.4rem',
+                              borderRadius: '20px',
+                              padding: '3px 6px',
+                              marginBottom: '5px',
+                              color: `${item.status === 1 ? '#1976d2' : 'red'}`,
+                              fontWeight: 'bold',
+                              // border: `${
+                              //   item.status === 1 ? '1px solid #1976d2' : '1px solid red'
+                              // }`,
+                            }}
+                            component="span"
+                          >
+                            {item.status === 1 ? 'Đã duyệt' : 'Từ chối'}
+                          </Typography>
+                        )}
+                      </TimelineOppositeContent>
+                      <TimelineSeparator>
+                        {/* <TimelineConnector /> */}
+                        <TimelineDot color="primary">
+                          <AddLocationIcon />
+                        </TimelineDot>
+                        <TimelineConnector />
+                      </TimelineSeparator>
+                      <TimelineContent sx={{ py: '12px', px: 2 }}>
+                        <Typography variant="h6" component="span" sx={{ fontSize: '1.4rem' }}>
+                          Đi từ: {item.specificAddress}
                         </Typography>
-                      )}
-                    </Box>
-                    <ListItemText
-                      sx={{
-                        color: 'black',
-                        width: '100%',
-                        margin: '10px 0',
-                        '& .MuiTypography-root': { fontSize: '1.4rem', fontWeight: '500' },
-                      }}
-                      primary={`Di chuyển từ: ${item.specificAddress}`}
-                      secondary={`${ward.name || ''} - ${district.name || ''} - ${
-                        province.name || ''
-                      }`}
-                    />
-                    <ListItemText
-                      sx={{
-                        color: 'black',
-                        width: '100%',
-                        margin: '10px 0',
-                        '& .MuiTypography-root': { fontSize: '1.4rem', fontWeight: '500' },
-                      }}
-                      primary={`Di chuyển tới: ${item.specificAddressResidence}`}
-                      secondary={`${responseWard.name || ''} - ${responseDistrict.name || ''} - ${
-                        responseProvince.name || ''
-                      }`}
-                    />
-                  </ListItem>
+                        <Typography sx={{ fontSize: '1.4rem', marginBottom: '0.5rem' }}>
+                          {ward.name || ''} - {district.name || ''} - {province.name || ''}
+                        </Typography>
+
+                        <Typography variant="h6" component="span" sx={{ fontSize: '1.4rem' }}>
+                          Đi tới: {item.specificAddressResidence}
+                        </Typography>
+                        <Typography sx={{ fontSize: '1.4rem', marginBottom: '1rem' }}>
+                          {responseWard.name || ''} - {responseDistrict.name || ''} -{' '}
+                          {responseProvince.name || ''}
+                        </Typography>
+                      </TimelineContent>
+                    </TimelineItem>
+                  </Timeline>
                 )
               })}
             </DialogContent>
