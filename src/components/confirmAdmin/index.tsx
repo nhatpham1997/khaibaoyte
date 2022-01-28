@@ -11,8 +11,6 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import axios from 'axios'
 import { GlobalContext } from 'contexts'
 import { Box } from '@mui/system'
-import Confirm from 'components/Confirm'
-import { Alert, Snackbar } from '@mui/material'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -33,7 +31,7 @@ type message = {
 export default function ConfirmAdmin(props: message) {
   const [open, setOpen] = useState(false)
   const [show, setShow] = useState(false)
-  console.log(show)
+  // console.log(show)
   const {
     users,
     dataUsers,

@@ -127,7 +127,7 @@ function EpidemicArea() {
 
   return (
     <Box>
-      <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
         <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>
           Danh sách khai báo của nhân viên
         </span>
