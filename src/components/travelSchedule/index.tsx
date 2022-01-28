@@ -96,9 +96,10 @@ export default function TravelSchedule(props: typeProps) {
             >
               {data.length > 0
                 ? data?.map((item: any, index: number) => {
-                    if (item.status === 0 || item.status === undefined) {
-                      return 'Không có Thông báo gì!'
+                    if (item.status === 0) {
+                      return
                     }
+
                     // di chuyển từ
                     const province =
                       address.filter((itemAddress: any) => item.province === itemAddress.code)[0] ||
