@@ -32,7 +32,7 @@ function HeaderRight({ setShowNav, showNav }: props) {
         setCurrentUser(user)
       })
       .catch((error) => {
-        console.log('error', error)
+        // console.log('error', error)
       })
   }, [])
 

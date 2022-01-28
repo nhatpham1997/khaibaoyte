@@ -53,7 +53,7 @@ export default function AdminPersonalInformation() {
     fetch(`https://dbkhaibaoyte.herokuapp.com/admin?id=${id}`)
       .then((res) => res.json())
       .then((dataUsers) => {
-        console.log(dataUsers[0])
+        // console.log(dataUsers[0])
         setDataUser(dataUsers[0])
       })
   }, [])
@@ -84,7 +84,7 @@ export default function AdminPersonalInformation() {
     const codeProvinceResidence = e.target.value
     provinceResidences.forEach((provinceResidence) => {
       if (provinceResidence.code === codeProvinceResidence) {
-        console.log({ provincesName: provinceResidence.name })
+        // console.log({ provincesName: provinceResidence.name })
         setDistrictResidences(provinceResidence.districts)
       }
     })

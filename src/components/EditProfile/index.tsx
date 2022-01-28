@@ -57,7 +57,6 @@ export default function EditProfile() {
     fetch(`https://dbkhaibaoyte.herokuapp.com/user?id=${id}`)
       .then((res) => res.json())
       .then((dataUsers) => {
-        console.log(dataUsers[0])
         setDataUser(dataUsers[0])
       })
   }, [])
@@ -66,7 +65,7 @@ export default function EditProfile() {
     axios
       .put(`https://dbkhaibaoyte.herokuapp.com/user/${id}/`, { ...dataUser, ...data })
       .then((res) => {
-        console.log('res', res)
+        //
       })
   }
   // Hàm xử lý chọn tỉnh/thành phố cư trú
@@ -74,7 +73,6 @@ export default function EditProfile() {
     const codeProvinceResidence = e.target.value
     provinceResidences.forEach((provinceResidence) => {
       if (provinceResidence.code === codeProvinceResidence) {
-        console.log({ provincesName: provinceResidence.name })
         setDistrictResidences(provinceResidence.districts)
       }
     })

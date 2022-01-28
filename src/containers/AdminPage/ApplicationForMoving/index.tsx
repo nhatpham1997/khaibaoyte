@@ -41,7 +41,7 @@ function ApplicationForMoving() {
     return dataAddress[itemIndex]?.name
   }
 
-  console.log(dataAddress)
+  // console.log(dataAddress)
 
   return (
     <TableContainer component={Paper}>

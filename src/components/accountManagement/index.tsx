@@ -43,14 +43,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 const AccountManagement = (props: dataAdmin) => {
   const { isLogin, showConfirm } = useContext(GlobalContext)
   const [data, setData] = useState([...props.data])
-  console.log(data, props.data)
 
   useEffect(() => {
     setData(props.data)
   }, [props.data])
 
   const handleSearch = (e: any) => {
-    console.log(e)
     setData(e)
   }
   return (

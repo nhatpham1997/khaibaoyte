@@ -18,7 +18,6 @@ export default function BasicTimePicker({ value, setValue, error, setError }: pr
         label="Giờ"
         value={value}
         onChange={(newValue) => {
-          console.log(newValue)
           if (newValue == 'Invalid Date') {
             setError((prev: any) => ({ ...prev, time: { val: true, code: 2 } }))
           } else if (newValue == null) {

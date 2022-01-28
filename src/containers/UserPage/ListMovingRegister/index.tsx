@@ -38,10 +38,10 @@ function ListMovingRegister() {
   const getListRegister = async () => {
     try {
       const data = await axios.get('https://dbkhaibaoyte.herokuapp.com/moving_register')
-      console.log(data.data)
+      // console.log(data.data)
       setListAllRegisters(data.data)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
 
