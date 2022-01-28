@@ -6,7 +6,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
 import TableFooter from '@mui/material/TableFooter'
 import TablePagination from '@mui/material/TablePagination'
 import Box from '@mui/material/Box'
@@ -125,83 +124,76 @@ function EpidemicArea() {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650, minHeight: '88vh' }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left" sx={{ minWidth: '150px' }}>
-              Tên nhân viên
-            </TableCell>
-            <TableCell align="right">Địa chỉ khai báo</TableCell>
-            <TableCell align="right">Ngày khai báo</TableCell>
-            <TableCell align="right">Số điện thoại</TableCell>
-            <TableCell align="right">Tra cứu</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? movingDeclaration.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : movingDeclaration
-          ).map(async (item) => {
-            const data = await getLevel(item.ward)
-            console.log(data)
-            return (
-              <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  // sx={{
-                  //   color: `${
-                  //     item.casesToday > 100
-                  //       ? 'red'
-                  //       : item.casesToday > 50
-                  //       ? 'orange'
-                  //       : item.casesToday > 20
-                  //       ? 'yellow'
-                  //       : 'green'
-                  //   }`,
-                  // }}
-                >
-                  {item.fullName}
-                </TableCell>
-                <TableCell align="right">
-                  {getAddressName(item.province, item.district, item.ward)}
-                </TableCell>
-                <TableCell align="right">{item.time}</TableCell>
-                <TableCell align="right">{item.phone}</TableCell>
-                <TableCell align="right"></TableCell>
-              </TableRow>
-            )
-          })}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+    <Box>
+      <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>
+          Danh sách khai báo của nhân viên
+        </span>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650, minHeight: '88vh' }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left" sx={{ minWidth: '150px' }}>
+                Tên nhân viên
+              </TableCell>
+              <TableCell align="right">Địa chỉ khai báo</TableCell>
+              <TableCell align="right">Ngày khai báo</TableCell>
+              <TableCell align="right">Số điện thoại</TableCell>
+              <TableCell align="right">Tra cứu</TableCell>
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              align="right"
-              rowsPerPageOptions={[7, 14, 21, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={movingDeclaration.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? movingDeclaration.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : movingDeclaration
+            ).map(async (item) => {
+              const data = await getLevel(item.ward)
+              console.log(data)
+              return (
+                <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableCell component="th" scope="row">
+                    {item.fullName}
+                  </TableCell>
+                  <TableCell align="right">
+                    {getAddressName(item.province, item.district, item.ward)}
+                  </TableCell>
+                  <TableCell align="right">{item.time}</TableCell>
+                  <TableCell align="right">{item.phone}</TableCell>
+                  <TableCell align="right"></TableCell>
+                </TableRow>
+              )
+            })}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                align="right"
+                rowsPerPageOptions={[7, 14, 21, { label: 'All', value: -1 }]}
+                colSpan={3}
+                count={movingDeclaration.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    'aria-label': 'rows per page',
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Box>
   )
 }
 
