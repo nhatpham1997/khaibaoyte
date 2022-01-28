@@ -23,7 +23,7 @@ export default function LoginForm() {
   const [messPass, setMessPass] = useState('')
   const [dataUser, setDataUser] = useState<any>([])
   const history = useNavigate()
-  console.log(dataUser)
+  // console.log(dataUser)
 
   useEffect(() => {
     fetch('https://dbkhaibaoyte.herokuapp.com/user')
@@ -42,7 +42,7 @@ export default function LoginForm() {
     })
 
     const response = dataUser.filter((item: any) => item.email === data.get('email'))
-    console.log(response)
+    // console.log(response)
     if (response.length > 0) {
       setValidEmail(false)
       setMessEmail('')

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { ListItem, ListItemText, Typography, Box, Button } from '@mui/material'
 import { GlobalContext } from 'contexts'
 import axios from 'axios'
+import Confirm from 'components/Confirm'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -13,7 +14,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 const Confirmation = () => {
-  const { movingRegister, address, editMovingRegister } = useContext(GlobalContext)
+  const { movingRegister, address, editMovingRegister, showConfirm, setShowConfirm } =
+    useContext(GlobalContext)
   const params = useParams()
 
   const data = movingRegister.filter((item: any) => item.userId.toString() === params.id)
@@ -24,6 +26,7 @@ const Confirmation = () => {
       status: status,
     })
     if (response.status === 200) {
+      setShowConfirm(true)
       const index = movingRegister.findIndex((item) => item.id === id)
       const newMovingRegister = { ...movingRegister[index], status: status }
       const newData = [...movingRegister]
@@ -36,6 +39,7 @@ const Confirmation = () => {
 
   return (
     <>
+      <Confirm showConfirm={showConfirm} content="Đã xác nhận!" />
       {address.length > 0 && (
         <Item
           sx={{

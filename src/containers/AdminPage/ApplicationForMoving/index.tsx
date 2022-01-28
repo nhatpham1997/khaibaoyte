@@ -41,7 +41,7 @@ function ApplicationForMoving() {
     return dataAddress[itemIndex]?.name
   }
 
-  console.log(dataAddress)
+  // console.log(dataAddress)
 
   return (
     <TableContainer component={Paper}>
@@ -51,8 +51,8 @@ function ApplicationForMoving() {
             <TableCell>Tên nhân viên</TableCell>
             <TableCell>Điểm đi</TableCell>
             <TableCell>Điểm đến</TableCell>
+            <TableCell>Ngày đăng ký</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Số điện thoại</TableCell>
             <TableCell>Phê duyệt</TableCell>
           </TableRow>
         </TableHead>
@@ -74,8 +74,8 @@ function ApplicationForMoving() {
               <TableCell sx={{ color: `${row.status}` }}>
                 {row.wardResidenceName} - {row.districtResidenceName} - {row.provinceResidenceName}
               </TableCell>
+              <TableCell>{row.time}</TableCell>
               <TableCell>{row.email}</TableCell>
-              <TableCell>{row.phone}</TableCell>
               <TableCell sx={{ minWidth: '220px' }}>
                 {row.status === 1 ? (
                   <Typography sx={{ color: 'green', fontSize: '1.4rem', mb: '-4px' }}>

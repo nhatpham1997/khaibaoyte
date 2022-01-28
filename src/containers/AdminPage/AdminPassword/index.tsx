@@ -27,14 +27,6 @@ export default function AdminPassword() {
   const [validPassNew, setValidPassNew] = useState(false)
   const [messPassNew, setMessPassNew] = useState('')
 
-  const data1 = {
-    id: 1,
-    number1: 2,
-    number2: 3,
-  }
-  const data2 = { ...data1, number2: 11111 }
-  console.log(data1, data2)
-
   useEffect(() => {
     const fetchData = async () => {
       const dataUsers = await axios.get('https://dbkhaibaoyte.herokuapp.com/user')
@@ -50,17 +42,17 @@ export default function AdminPassword() {
       ...response,
       password: passwordNew,
     })
-    console.log(result)
+    // console.log(result)
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      currentPassword: data.get('current_password'),
-      passwordNew: data.get('password_new'),
-      passwordConfirm: data.get('password_confirm'),
-    })
+    // console.log({
+    //   currentPassword: data.get('current_password'),
+    //   passwordNew: data.get('password_new'),
+    //   passwordConfirm: data.get('password_confirm'),
+    // })
 
     const response = dataUser.filter((item: any) => item.id.toString() === id.toString())
     if (response.length < 0) {
@@ -80,7 +72,7 @@ export default function AdminPassword() {
           setValidPassConfirm(false)
           setMessPassConfirm('')
 
-          console.log(response[0], data.get('password_new'))
+          // console.log(response[0], data.get('password_new'))
           handleChangePassword(response[0], data.get('password_new'))
           alert('successful!')
         } else {
@@ -110,15 +102,15 @@ export default function AdminPassword() {
           alignItems: 'center',
         }}
       >
-        <h3 style={{ fontSize: '1.6rem' }}>Đổi Mật khẩu Admin</h3>
+        <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Đổi Mật khẩu Admin</span>
         <Box
           component="form"
           noValidate
           onSubmit={handleSubmit}
           sx={{
             mt: 1,
-            '& input': { fontSize: '1.6rem' },
-            '& .MuiOutlinedInput-input': { fontSize: '1.6rem' },
+            '& input': { fontSize: '1.4rem' },
+            '& .MuiOutlinedInput-input': { fontSize: '1.4rem' },
           }}
         >
           <TextField
@@ -169,7 +161,7 @@ export default function AdminPassword() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
+            sx={{ mt: 3, mb: 2, fontSize: '1.4rem' }}
           >
             Save
           </Button>

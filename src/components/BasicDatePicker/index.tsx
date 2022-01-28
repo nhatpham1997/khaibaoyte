@@ -20,7 +20,6 @@ export default function BasicDatePicker({ value, setValue, error, setError }: pr
         label="Tháng/Ngày/Năm"
         value={value}
         onChange={(newValue) => {
-          console.log(newValue)
           if (newValue.getTime() > new Date().getTime()) {
             setError((prev: any) => ({ ...prev, date: { val: true, code: 3 } }))
           } else if (newValue == 'Invalid Date') {

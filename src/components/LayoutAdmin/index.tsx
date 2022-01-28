@@ -140,7 +140,7 @@ function LayoutAdmin() {
         const response = await userApi.getAll()
         dataUsers(response)
       } catch (error) {
-        console.log('Failed to fetch post list: ', error)
+        // console.log('Failed to fetch post list: ', error)
       }
     }
     fetchUser()
@@ -152,7 +152,7 @@ function LayoutAdmin() {
         const response = await adminApi.getAll()
         dataAdmins(response)
       } catch (error) {
-        console.log('Failed to fetch post list: ', error)
+        // console.log('Failed to fetch post list: ', error)
       }
     }
     fetchAdmin()
@@ -164,7 +164,7 @@ function LayoutAdmin() {
         const response = await movingDeclarationApi.getAll()
         dataMovingDeclaration(response)
       } catch (error) {
-        console.log('Failed to fetch post list: ', error)
+        // console.log('Failed to fetch post list: ', error)
       }
     }
     fetchMovingDeclaration()
@@ -176,7 +176,7 @@ function LayoutAdmin() {
         const response = await movingRegisterApi.getAll()
         dataMovingRegister(response)
       } catch (error) {
-        console.log('Failed to fetch post list: ', error)
+        // console.log('Failed to fetch post list: ', error)
       }
     }
     fetchMovingRegister()
@@ -188,7 +188,7 @@ function LayoutAdmin() {
         const response = await addressApi.getAll()
         dataAddress(response.data)
       } catch (error) {
-        console.log('Failed to fetch post list: ', error)
+        // console.log('Failed to fetch post list: ', error)
       }
     }
     fetchDataAddress()

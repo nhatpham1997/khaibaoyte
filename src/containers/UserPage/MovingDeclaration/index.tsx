@@ -509,7 +509,7 @@ function MovingDeclaration() {
           setHourMS(null)
         })
         .catch((err) => {
-          console.log('Lỗi' + err)
+          // console.log('Lỗi' + err)
           setPayloadNoti({
             status: 'error',
             text: 'Khai báo di chuyển thất bại. Hệ thống bị lỗi',

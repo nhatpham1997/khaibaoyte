@@ -120,7 +120,7 @@ function EpidemicArea() {
       ]
       return data?.data?.results[0]?.data[0]?.['dtm_covid_nguy_co.nguy_co']
     } catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
 
@@ -144,7 +144,7 @@ function EpidemicArea() {
             : movingDeclaration
           ).map(async (item) => {
             const data = await getLevel(item.ward)
-            console.log(data)
+            // console.log(data)
             return (
               <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell

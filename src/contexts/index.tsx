@@ -137,8 +137,8 @@ export default function GlobalProvider({ children }: Props) {
   }
 
   const editMovingRegister = (data: movingRegister[]) => {
-    console.log(data)
-    console.log(movingRegister)
+    // console.log(data)
+    // console.log(movingRegister)
     setMovingRegister(data)
   }
 

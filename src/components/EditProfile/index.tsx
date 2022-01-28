@@ -48,7 +48,6 @@ export default function EditProfile() {
     fetch(`https://dbkhaibaoyte.herokuapp.com/user?id=${id}`)
       .then((res) => res.json())
       .then((dataUsers) => {
-        console.log(dataUsers[0])
         setDataUser(dataUsers[0])
       })
   }, [])
