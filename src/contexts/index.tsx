@@ -92,8 +92,8 @@ type InitialStateContextType = {
   dataMovingDeclaration: (data: any) => void
   movingRegister: movingRegister[]
   dataMovingRegister: (data: any) => void
-  miniSideNav: boolean
-  setMiniSideNav: (miniSideNav: boolean) => void
+  showConfirm: boolean
+  setShowConfirm: (showConfirm: boolean) => void
   editMovingRegister: (data: movingRegister[]) => void
   dataCovidLocations: (data: any) => void
   address: any[]
@@ -112,8 +112,8 @@ const initialStateContextValue: InitialStateContextType = {
   dataMovingDeclaration: () => {},
   movingRegister: [],
   dataMovingRegister: () => {},
-  miniSideNav: false,
-  setMiniSideNav: () => {},
+  showConfirm: false,
+  setShowConfirm: () => {},
   editMovingRegister: () => {},
   dataCovidLocations: () => {},
   address: [],
@@ -129,7 +129,7 @@ export default function GlobalProvider({ children }: Props) {
   const [admins, setAdmins] = useState<any>([])
   const [movingDeclaration, setMovingDeclaration] = useState<any>([])
   const [movingRegister, setMovingRegister] = useState<any>([])
-  const [miniSideNav, setMiniSideNav] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const [isLogin, setIsLogin] = useState('')
 
   const setLogin = (data: string) => {
@@ -170,8 +170,8 @@ export default function GlobalProvider({ children }: Props) {
     <GlobalContext.Provider
       value={{
         covidLocations,
-        miniSideNav,
-        setMiniSideNav,
+        showConfirm,
+        setShowConfirm,
         isLogin,
         setLogin,
         users,

@@ -145,9 +145,9 @@ export default function TravelSchedule(props: typeProps) {
                               marginBottom: '5px',
                               color: `${item.status === 1 ? '#1976d2' : 'red'}`,
                               fontWeight: 'bold',
-                              border: `${
-                                item.status === 1 ? '1px solid #1976d2' : '1px solid red'
-                              }`,
+                              // border: `${
+                              //   item.status === 1 ? '1px solid #1976d2' : '1px solid red'
+                              // }`,
                             }}
                             component="span"
                           >
@@ -180,94 +180,6 @@ export default function TravelSchedule(props: typeProps) {
                       </TimelineContent>
                     </TimelineItem>
                   </Timeline>
-                  // <ListItem
-                  //   key={index}
-                  //   sx={{
-                  //     display: 'flex',
-                  //     flexDirection: 'column',
-                  //     margin: 'auto',
-                  //     //
-                  //     // border: `${
-                  //     //   item.status === 0 || item.status === undefined
-                  //     //     ? '2px solid #1976d2'
-                  //     //     : item.status === 1
-                  //     //     ? '2px solid #1976d2'
-                  //     //     : '2px solid red'
-                  //     // }`,
-                  //     minWidth: {lg: '500px',  },
-                  //     // borderRadius: '15px',
-                  //     marginBottom: '25px',
-                  //     alignItems: 'flex-start',
-                  //     boxShadow: 3,
-                  //     '&:last-child': { marginBottom: '0' },
-                  //   }}
-                  // >
-                  //   <Box
-                  //     sx={{
-                  //       width: '100%',
-                  //       display: 'flex',
-                  //       justifyContent: 'space-between',
-                  //       borderBottom: `${
-                  //         item.status === 0 || item.status === undefined
-                  //           ? '1px solid #1976d2'
-                  //           : item.status === 1
-                  //           ? '1px solid #1976d2'
-                  //           : '1px solid red'
-                  //       }`,
-                  //     }}
-                  //   >
-                  //     <Typography
-                  //       component="span"
-                  //       m={0}
-                  //       sx={{
-                  //         fontWeight: 'bold',
-                  //         fontSize: '1.6rem',
-                  //       }}
-                  //     >
-                  //       Ngày {item.time}
-                  //     </Typography>
-                  //     {item.status !== 0 && item.status !== undefined && (
-                  //       <Typography
-                  //         sx={{
-                  //           fontSize: '1.4rem',
-                  //           borderRadius: '20px',
-                  //           padding: '3px 6px',
-                  //           marginBottom: '5px',
-                  //           color: `${item.status === 1 ? '#1976d2' : 'red'}`,
-                  //           fontWeight: 'bold',
-                  //           border: `${item.status === 1 ? '1px solid #1976d2' : '1px solid red'}`,
-                  //         }}
-                  //         component="span"
-                  //       >
-                  //         {item.status === 1 ? 'Đã duyệt' : 'Từ chối'}
-                  //       </Typography>
-                  //     )}
-                  //   </Box>
-                  //   <ListItemText
-                  //     sx={{
-                  //       color: 'black',
-                  //       width: '100%',
-                  //       margin: '10px 0',
-                  //       '& .MuiTypography-root': { fontSize: '1.4rem', fontWeight: '500' },
-                  //     }}
-                  //     primary={`Di chuyển từ: ${item.specificAddress}`}
-                  //     secondary={`${ward.name || ''} - ${district.name || ''} - ${
-                  //       province.name || ''
-                  //     }`}
-                  //   />
-                  //   <ListItemText
-                  //     sx={{
-                  //       color: 'black',
-                  //       width: '100%',
-                  //       margin: '10px 0',
-                  //       '& .MuiTypography-root': { fontSize: '1.4rem', fontWeight: '500' },
-                  //     }}
-                  //     primary={`Di chuyển tới: ${item.specificAddressResidence}`}
-                  //     secondary={`${responseWard.name || ''} - ${responseDistrict.name || ''} - ${
-                  //       responseProvince.name || ''
-                  //     }`}
-                  //   />
-                  // </ListItem>
                 )
               })}
             </DialogContent>

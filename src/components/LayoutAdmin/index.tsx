@@ -103,7 +103,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 function LayoutAdmin() {
   const {
-    miniSideNav,
     dataCovidLocations,
     isLogin,
     setLogin,

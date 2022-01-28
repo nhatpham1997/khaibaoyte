@@ -16,7 +16,6 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 const options = ['Create a merge commit', 'Squash and merge', 'Rebase and merge']
 
 function Navbar() {
-  const { miniSideNav, setMiniSideNav } = useContext(GlobalContext)
   const { setLogin } = React.useContext(GlobalContext)
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
@@ -44,10 +43,6 @@ function Navbar() {
     }
 
     setOpen(false)
-  }
-
-  const handleMenuButton = () => {
-    setMiniSideNav(!miniSideNav)
   }
 
   const handleLogout = () => {
