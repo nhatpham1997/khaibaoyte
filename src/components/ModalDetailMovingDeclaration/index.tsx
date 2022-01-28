@@ -84,7 +84,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
       <div className="modal-detail-moving-declaration-content">
         <div className="row-modal">
           <LabelHeading text="Chi tiết tờ khai di chuyển" />
-          <IconButton onClick={handleCloseModal} sx={{ background: 'silver' }} aria-label="delete">
+          <IconButton onClick={handleCloseModal} aria-label="delete">
             <CloseIcon />
           </IconButton>
         </div>
@@ -101,6 +101,7 @@ function ModalDetailMovingDeclaration({ isShow, setShowModalDetail, item }: prop
         />
         <div className="row-modal">
           <TextField
+            type="number"
             className="year-of-birth-modal"
             label="Năm sinh"
             sx={{

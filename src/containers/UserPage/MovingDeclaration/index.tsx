@@ -535,8 +535,8 @@ function MovingDeclaration() {
         }}
         InputProps={{ style: { fontSize: '1.4rem' } }}
         InputLabelProps={{ style: { fontSize: '1.4rem' } }}
-        required
         fullWidth
+        required
         value={currentUser.fullName || ''}
         onChange={handleChangeName}
         error={error.name}
@@ -544,11 +544,12 @@ function MovingDeclaration() {
       />
       <div className="row">
         <TextField
+          type="number"
           autoComplete="off"
           className="year-of-birth"
+          variant="outlined"
           label="Năm sinh"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
-          size="medium"
           InputProps={{ style: { fontSize: '1.4rem' } }}
           InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required

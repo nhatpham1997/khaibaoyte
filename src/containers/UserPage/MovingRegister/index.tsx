@@ -526,8 +526,8 @@ function MovingRegister() {
           marginTop: '1rem',
           fontSize: '3rem',
         }}
-        InputProps={{ style: { fontSize: '1.2rem' } }}
-        InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
         required
         fullWidth
         value={currentUser.fullName || ''}
@@ -549,8 +549,8 @@ function MovingRegister() {
           label="Năm sinh"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.yearOfBirth || ''}
           onChange={handleChangeYOB}
@@ -571,8 +571,8 @@ function MovingRegister() {
           label="Giới tính"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.gender || ''}
@@ -595,8 +595,8 @@ function MovingRegister() {
           label="Email"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           onChange={handleChangeEmail}
           value={currentUser.email || ''}
@@ -615,8 +615,8 @@ function MovingRegister() {
           label="Số điện thoại"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.phone || ''}
           onChange={handleChangePhone}
@@ -640,8 +640,8 @@ function MovingRegister() {
           label="Tỉnh/Thành phố"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.province || ''}
@@ -661,8 +661,8 @@ function MovingRegister() {
           label="Quận/Huyện"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.district || ''}
@@ -682,8 +682,8 @@ function MovingRegister() {
           label="Phường/Xã"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={currentUser.ward || ''}
@@ -703,8 +703,8 @@ function MovingRegister() {
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/4) - 1.5rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={currentUser.specificAddress || ''}
           onChange={handleChangeSpecificAddressResidence}
@@ -726,8 +726,8 @@ function MovingRegister() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={province}
@@ -751,8 +751,8 @@ function MovingRegister() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={district}
@@ -776,8 +776,8 @@ function MovingRegister() {
             minWidth: 'calc(calc(100%/3) - 1.333rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={ward}
@@ -801,8 +801,8 @@ function MovingRegister() {
           label="Số nhà, phố, tổ dân phố/thôn/đội"
           sx={{ marginBottom: '1rem', marginTop: '1rem', minWidth: 'calc(calc(100%/2) - 1rem)' }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           value={specificAddress}
           onChange={handleChangeSpecificAddress}

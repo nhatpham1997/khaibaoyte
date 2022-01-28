@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.info.dark,
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {},
