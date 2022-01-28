@@ -23,7 +23,7 @@ export default function LoginForm() {
   const [messPass, setMessPass] = useState('')
   const [dataUser, setDataUser] = useState<any>([])
   const history = useNavigate()
-  console.log(dataUser)
+  // console.log(dataUser)
 
   useEffect(() => {
     fetch('https://dbkhaibaoyte.herokuapp.com/user')
@@ -36,18 +36,13 @@ export default function LoginForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    // eslint-disable-next-line no-console
-    // checkLogin({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // })
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     })
 
     const response = dataUser.filter((item: any) => item.email === data.get('email'))
-    console.log(response)
+    // console.log(response)
     if (response.length > 0) {
       setValidEmail(false)
       setMessEmail('')

@@ -166,7 +166,7 @@ function EpidemicArea() {
                   </TableCell>
                   <TableCell align="right">{item.time}</TableCell>
                   <TableCell align="right">{item.phone}</TableCell>
-                  <TableCell align="right"></TableCell>
+                  <TableCell align="right">Cấp 1</TableCell>
                 </TableRow>
               )
             })}

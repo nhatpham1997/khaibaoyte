@@ -62,17 +62,3 @@ input {
   align-items: flex-start;
   justify-content: space-between;
 }
-
-/* responsive */
-@media screen and (max-width: 1200px) {
-  .wrap {
-    margin-left: 0;
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 880px) {
-  .row {
-    flex-direction: column;
-  }
-}

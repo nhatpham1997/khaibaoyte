@@ -2,7 +2,7 @@ import Box, { BoxProps } from '@mui/material/Box'
 import React, { useContext } from 'react'
 import { GlobalContext } from 'contexts'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import Grow from '@mui/material/Grow'
@@ -13,7 +13,20 @@ import MenuList from '@mui/material/MenuList'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 
-const options = ['Create a merge commit', 'Squash and merge', 'Rebase and merge']
+const options = [
+  {
+    name: 'Thay đổi thông tin cá nhân',
+    path: '/admin/personal-information',
+  },
+  {
+    name: 'Thêm quản trị viên',
+    path: '/admin/register-admin',
+  },
+  {
+    name: 'Thay đổi mật khẩu',
+    path: '/admin/admin-password',
+  },
+]
 
 function Navbar() {
   const { setLogin } = React.useContext(GlobalContext)
@@ -21,6 +34,15 @@ function Navbar() {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = React.useState(1)
+
+  const params = localStorage.getItem('adminId')
+  let dataNav: any
+  if (params !== '1') {
+    dataNav = options.filter((option: any) => option.path !== '/admin/register-admin')
+  } else {
+    dataNav = [...options]
+  }
+
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`)
   }
@@ -69,22 +91,23 @@ function Navbar() {
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
-            style={{
-              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
-            }}
+            // style={{
+            //   transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+            // }}
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu">
-                  {options.map((option, index) => (
-                    <MenuItem
-                      key={option}
-                      disabled={index === 2}
-                      selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index)}
-                    >
-                      {option}
-                    </MenuItem>
+                  {dataNav.map((option: any, index: number) => (
+                    <Link to={option.path} key={index}>
+                      <MenuItem
+                        sx={{ fontSize: '1.4rem', color: 'black' }}
+                        selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, index)}
+                      >
+                        {option.name}
+                      </MenuItem>
+                    </Link>
                   ))}
                 </MenuList>
               </ClickAwayListener>

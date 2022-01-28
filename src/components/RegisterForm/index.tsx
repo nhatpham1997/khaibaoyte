@@ -62,6 +62,9 @@ export default function RegisterForm() {
         setData({ ...data, provinceName: provinceResidence.name })
       }
     })
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, province: true }))
+    }
     setData((old) => {
       return {
         ...old,
@@ -77,6 +80,9 @@ export default function RegisterForm() {
         setWardResidences(districtResidence.wards)
       }
     })
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, district: true }))
+    }
     setData((old) => {
       return {
         ...old,
@@ -92,11 +98,168 @@ export default function RegisterForm() {
         ward: e.target.value,
       }
     })
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, ward: true }))
+    }
   }
 
   const handleSubmit = () => {
     axios.post('https://dbkhaibaoyte.herokuapp.com/user/', data).then((res) => {
       navigate('/')
+    })
+    if (!data.fullName) {
+      setError((prev) => {
+        return { ...prev, name: { val: true, code: 1 } }
+      })
+    }
+    if (!data.yearOfBirth) {
+      setError((prev) => {
+        return { ...prev, yearOfBirth: { val: true, code: 1 } }
+      })
+    }
+    if (!data.gender) {
+      setError((prev) => {
+        return { ...prev, gerder: true }
+      })
+    }
+
+    if (!data.email) {
+      setError((prev) => {
+        return { ...prev, email: { val: true, code: 1 } }
+      })
+    }
+    if (!data.phone) {
+      setError((prev) => {
+        return { ...prev, phone: { val: true, code: 1 } }
+      })
+    }
+    if (!data.province) {
+      setError((prev) => {
+        return { ...prev, provinceResidence: true }
+      })
+    }
+    if (!data.district) {
+      setError((prev) => {
+        return { ...prev, districtResidence: true }
+      })
+    }
+    if (!data.ward) {
+      setError((prev) => {
+        return { ...prev, wardResidence: true }
+      })
+    }
+    if (!data.specificAddress) {
+      setError((prev) => {
+        return { ...prev, specificAddressResidence: true }
+      })
+    }
+
+    if (!data.specificAddress) {
+      setError((prev) => {
+        return { ...prev, specificAddress: true }
+      })
+    }
+  }
+
+  const [error, setError] = useState({
+    email: { val: false, code: 0 },
+    password: { val: false, code: 0 },
+    name: { val: false, code: 0 },
+    yearOfBirth: { val: false, code: 0 },
+    gerder: false,
+    phone: { val: false, code: 0 },
+    provinceResidence: false,
+    districtResidence: false,
+    wardResidence: false,
+    specificAddressResidence: false,
+    specificAddress: false,
+  })
+
+  function handleChangeEmail(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, email: { val: true, code: 1 } }))
+    } else if (e.target.value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) === null) {
+      setError((prev) => ({ ...prev, email: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, email: { val: false, code: 0 } }))
+    }
+    setData((prev) => {
+      return { ...prev, email: e.target.value }
+    })
+  }
+  function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, fullName: { val: true, code: 1 } }))
+    } else if (
+      e.target.value.match(/^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g) ===
+      null
+    ) {
+      setError((prev) => ({ ...prev, fullName: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, fullName: { val: false, code: 0 } }))
+    }
+    setData((old) => {
+      return { ...old, fullName: e.target.value }
+    })
+  }
+
+  function handleChangeCitizen(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 1 } }))
+    } else if (
+      e.target.value.match(/^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]{3,}$/g) ===
+      null
+    ) {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, citizenIdentification: { val: false, code: 0 } }))
+    }
+    setData((old) => {
+      return { ...old, citizenIdentification: e.target.value }
+    })
+  }
+  function handleChangeYOB(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, yearOfBirth: { val: true, code: 1 } }))
+    } else if (parseInt(e.target.value) < 1900) {
+      setError((prev) => ({
+        ...prev,
+        yearOfBirth: { val: true, code: 2 },
+      }))
+    } else if (parseInt(e.target.value) > new Date().getFullYear()) {
+      setError((prev) => ({
+        ...prev,
+        yearOfBirth: { val: true, code: 3 },
+      }))
+    } else {
+      setError((prev) => ({ ...prev, yearOfBirth: { val: false, code: 0 } }))
+    }
+    setData((old) => {
+      return { ...old, yearOfBirth: e.target.value }
+    })
+  }
+  function handleChangePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, phone: { val: true, code: 1 } }))
+    } else if (e.target.value.match(/((09|03|07|08|05)+([0-9]{8})\b)/i) === null) {
+      setError((prev) => ({ ...prev, phone: { val: true, code: 2 } }))
+    } else {
+      setError((prev) => ({ ...prev, phone: { val: false, code: 0 } }))
+    }
+    setData((prev) => {
+      return { ...prev, phone: e.target.value }
+    })
+  }
+
+  // Hàm thay đổi nơi ở hiện tại
+  function handleChangeSpecificAddressResidence(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.value) {
+      setError((prev) => ({ ...prev, specificAddressResidence: true }))
+    } else {
+      setError((prev) => ({ ...prev, specificAddressResidence: false }))
+    }
+    setData((prev) => {
+      return { ...prev, specificAddress: e.target.value }
     })
   }
 
@@ -134,7 +297,7 @@ export default function RegisterForm() {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Register
+                Đăng ký tài khoản
               </Typography>
               <Box component="form" noValidate sx={{ mt: 1 }}>
                 <TextField
@@ -146,11 +309,14 @@ export default function RegisterForm() {
                   name="email"
                   autoComplete="email"
                   autoFocus
-                  // value={email}
-                  onChange={(e) =>
-                    setData((old) => {
-                      return { ...old, email: e.target.value }
-                    })
+                  onChange={handleChangeEmail}
+                  error={error.email.val}
+                  helperText={
+                    error.email.val === true && error.email.code === 1
+                      ? 'Bạn chưa nhập email'
+                      : error.email.val === true && error.email.code === 2
+                      ? 'Email không hợp lệ'
+                      : ''
                   }
                 />
                 <TextField
@@ -162,11 +328,18 @@ export default function RegisterForm() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  // value={password}
                   onChange={(e) =>
                     setData((old) => {
                       return { ...old, password: e.target.value }
                     })
+                  }
+                  error={error.password.val}
+                  helperText={
+                    error.password.val === true && error.password.code === 1
+                      ? 'Bạn chưa nhập tên'
+                      : error.password.val === true && error.password.code === 2
+                      ? 'Tên không hợp lệ'
+                      : ''
                   }
                 />
                 <TextField
@@ -178,12 +351,9 @@ export default function RegisterForm() {
                   name="fullname"
                   autoComplete="fullname"
                   autoFocus
-                  // value={fullname}
-                  onChange={(e) =>
-                    setData((old) => {
-                      return { ...old, fullName: e.target.value }
-                    })
-                  }
+                  onChange={handleChangeName}
+                  error={error.name.val}
+                  helperText={error.name.val === false ? '' : 'Vui lòng nhập trường này'}
                 />
                 <TextField
                   margin="normal"
@@ -194,10 +364,16 @@ export default function RegisterForm() {
                   name="yearofbirth"
                   autoComplete="yearofbirth"
                   autoFocufa-stack
-                  onChange={(e) =>
-                    setData((old) => {
-                      return { ...old, yearOfBirth: e.target.value }
-                    })
+                  onChange={handleChangeYOB}
+                  error={error.yearOfBirth.val}
+                  helperText={
+                    error.yearOfBirth.val === true && error.yearOfBirth.code === 1
+                      ? 'Bạn chưa nhập năm sinh'
+                      : error.yearOfBirth.val === true && error.yearOfBirth.code === 2
+                      ? 'Năm sinh không hợp lệ'
+                      : error.yearOfBirth.val === true && error.yearOfBirth.code === 3
+                      ? 'Năm sinh không thể lớn hơn năm hiện tại'
+                      : ''
                   }
                 />
                 <TextField
@@ -209,11 +385,7 @@ export default function RegisterForm() {
                   name="citizen_identification"
                   autoComplete="citizen_identification"
                   autoFocus
-                  onChange={(e) =>
-                    setData((old) => {
-                      return { ...old, citizenIdentification: e.target.value }
-                    })
-                  }
+                  onChange={handleChangeCitizen}
                 />
                 <RadioGroup
                   row
@@ -247,6 +419,10 @@ export default function RegisterForm() {
                     select
                     value={data.province}
                     onChange={handleChangeProvinceResidence}
+                    error={error.provinceResidence}
+                    helperText={
+                      error.provinceResidence === false ? '' : 'Bạn chưa chọn tỉnh/thành phố'
+                    }
                   >
                     {provinceResidences.map((provinceResidence) => (
                       <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
@@ -269,6 +445,8 @@ export default function RegisterForm() {
                     select
                     value={data.district}
                     onChange={handleChangeDistrictResidence}
+                    error={error.districtResidence}
+                    helperText={error.districtResidence === false ? '' : 'Bạn chưa chọn quận/huyện'}
                   >
                     {districtResidences.map((districtResidence) => (
                       <MenuItem key={districtResidence.code} value={districtResidence.code}>
@@ -289,8 +467,9 @@ export default function RegisterForm() {
                     InputLabelProps={{ style: { fontSize: '1.2rem' } }}
                     required
                     select
-                    // value={data.ward}
                     onChange={handleChangeWardResidence}
+                    error={error.wardResidence}
+                    helperText={error.wardResidence === false ? '' : 'Bạn chưa chọn phường/xã'}
                   >
                     {wardResidences.map((wardResidence) => (
                       <MenuItem key={wardResidence.code} value={wardResidence.code}>
@@ -308,36 +487,39 @@ export default function RegisterForm() {
                   name="specificAddress"
                   autoComplete="specificAddress"
                   autoFocus
-                  onChange={(e) =>
-                    setData((old) => {
-                      return { ...old, specificAddress: e.target.value }
-                    })
+                  onChange={handleChangeSpecificAddressResidence}
+                  error={error.specificAddressResidence}
+                  helperText={
+                    error.specificAddressResidence === false ? '' : 'Vui lòng nhập trường này'
                   }
                 />
 
                 <TextField
                   margin="normal"
                   required
-                  fullWidth
+                  style={{ width: '200px' }}
                   id="phone"
                   label="Số Điện Thoại"
                   name="phone"
                   autoComplete="phone"
                   autoFocus
-                  // value={phone}
-                  onChange={(e) =>
-                    setData((old) => {
-                      return { ...old, phone: e.target.value }
-                    })
+                  onChange={handleChangePhone}
+                  error={error.phone.val}
+                  helperText={
+                    error.phone.val === true && error.phone.code === 1
+                      ? 'Bạn chưa nhập số điện thoại'
+                      : error.phone.val === true && error.phone.code === 2
+                      ? 'Số điện thoại không hợp lệ'
+                      : ''
                   }
                 />
 
                 <Button onClick={handleSubmit} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Sign Up
+                  Đăng ký
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <NavLink to="/">{' you have an account? Sign in '}</NavLink>
+                    <NavLink to="/">{' Bạn đã có tài khoản? Đăng nhập '}</NavLink>
                   </Grid>
                 </Grid>
               </Box>
