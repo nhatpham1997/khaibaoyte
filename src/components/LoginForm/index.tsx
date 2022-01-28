@@ -99,7 +99,7 @@ export default function LoginForm() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{ fontSize: '20px' }}>
               Sign in
             </Typography>
             <Box
@@ -110,6 +110,8 @@ export default function LoginForm() {
               sx={{ mt: 1 }}
             >
               <TextField
+                inputProps={{ style: { fontSize: '14px' } }}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
                 error={validEmail}
                 margin="normal"
                 required
@@ -122,6 +124,8 @@ export default function LoginForm() {
                 helperText={messEmail}
               />
               <TextField
+                inputProps={{ style: { fontSize: '14px' } }}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
                 helperText={messPass}
                 error={validPass}
                 margin="normal"
@@ -134,7 +138,12 @@ export default function LoginForm() {
                 autoComplete="current-password"
               />
 
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, fontSize: '14px', py: '10px' }}
+              >
                 Đăng nhập
               </Button>
               <Grid container>
