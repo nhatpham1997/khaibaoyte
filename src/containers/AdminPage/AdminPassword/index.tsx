@@ -110,15 +110,15 @@ export default function AdminPassword() {
           alignItems: 'center',
         }}
       >
-        <h3 style={{ fontSize: '1.6rem' }}>Đổi Mật khẩu Admin</h3>
+        <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Đổi Mật khẩu Admin</span>
         <Box
           component="form"
           noValidate
           onSubmit={handleSubmit}
           sx={{
             mt: 1,
-            '& input': { fontSize: '1.6rem' },
-            '& .MuiOutlinedInput-input': { fontSize: '1.6rem' },
+            '& input': { fontSize: '1.4rem' },
+            '& .MuiOutlinedInput-input': { fontSize: '1.4rem' },
           }}
         >
           <TextField
@@ -169,7 +169,7 @@ export default function AdminPassword() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
+            sx={{ mt: 3, mb: 2, fontSize: '1.4rem' }}
           >
             Save
           </Button>

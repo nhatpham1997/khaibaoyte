@@ -14,6 +14,7 @@ import { GlobalContext } from 'contexts'
 import { Box, Snackbar } from '@mui/material'
 import SearchAccount from 'components/searchAccount'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import Confirm from 'components/Confirm'
 
 type dataAdmin = {
   data: {
@@ -40,7 +41,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 })
 
 const AccountManagement = (props: dataAdmin) => {
-  const { isLogin, showConfirm, setShowConfirm } = useContext(GlobalContext)
+  const { isLogin, showConfirm } = useContext(GlobalContext)
   const [data, setData] = useState([...props.data])
   console.log(data, props.data)
 
@@ -56,18 +57,8 @@ const AccountManagement = (props: dataAdmin) => {
     <>
       {isLogin !== '' && (
         <Box>
-          <Snackbar
-            open={showConfirm}
-            autoHideDuration={4000}
-            onClose={() => setShowConfirm(false)}
-          >
-            <Alert
-              severity="success"
-              sx={{ width: '30rem', color: 'white', fontSize: '1.6rem', bgcolor: '#2e7d32' }}
-            >
-              Xóa thành công!
-            </Alert>
-          </Snackbar>
+          <Confirm showConfirm={showConfirm} content="Xóa thành công!" />
+
           <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Danh sách {props.name}</span>
             <SearchAccount search={handleSearch} data={props.data} />
