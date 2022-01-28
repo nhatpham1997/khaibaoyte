@@ -120,11 +120,18 @@ export default function ForgotPassword() {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ fontSize: '18px' }}>
           Thay đổi mật khẩu
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{ mt: 1, maxWidth: { xs: '100%', lg: '60%' } }}
+        >
           <TextField
+            inputProps={{ style: { fontSize: '14px' } }}
+            InputLabelProps={{ style: { fontSize: '14px' } }}
             helperText={messPassCurrent}
             error={validPassCurrent}
             margin="normal"
@@ -138,6 +145,8 @@ export default function ForgotPassword() {
             type="password"
           />
           <TextField
+            inputProps={{ style: { fontSize: '14px' } }}
+            InputLabelProps={{ style: { fontSize: '14px' } }}
             helperText={messPassNew}
             error={validPassNew}
             margin="normal"
@@ -150,6 +159,8 @@ export default function ForgotPassword() {
             autoComplete="password_new"
           />
           <TextField
+            inputProps={{ style: { fontSize: '14px' } }}
+            InputLabelProps={{ style: { fontSize: '14px' } }}
             helperText={messPassConfirm}
             error={validPassConfirm}
             margin="normal"
@@ -162,7 +173,12 @@ export default function ForgotPassword() {
             autoComplete="password_confirm"
           />
 
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, fontSize: '14px', py: '10px' }}
+          >
             lưu mật khẩu
           </Button>
         </Box>
