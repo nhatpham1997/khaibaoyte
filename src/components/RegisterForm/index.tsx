@@ -456,7 +456,11 @@ export default function RegisterForm() {
                     }
                   >
                     {provinceResidences.map((provinceResidence) => (
-                      <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
+                      <MenuItem
+                        sx={{ fontSize: '1.4rem' }}
+                        key={provinceResidence.code}
+                        value={provinceResidence.code}
+                      >
                         {provinceResidence.name}
                       </MenuItem>
                     ))}
@@ -480,7 +484,11 @@ export default function RegisterForm() {
                     helperText={error.districtResidence === false ? '' : 'Bạn chưa chọn quận/huyện'}
                   >
                     {districtResidences.map((districtResidence) => (
-                      <MenuItem key={districtResidence.code} value={districtResidence.code}>
+                      <MenuItem
+                        sx={{ fontSize: '1.4rem' }}
+                        key={districtResidence.code}
+                        value={districtResidence.code}
+                      >
                         {districtResidence.name}
                       </MenuItem>
                     ))}
@@ -503,7 +511,11 @@ export default function RegisterForm() {
                     helperText={error.wardResidence === false ? '' : 'Bạn chưa chọn phường/xã'}
                   >
                     {wardResidences.map((wardResidence) => (
-                      <MenuItem key={wardResidence.code} value={wardResidence.code}>
+                      <MenuItem
+                        sx={{ fontSize: '1.4rem' }}
+                        key={wardResidence.code}
+                        value={wardResidence.code}
+                      >
                         {wardResidence.name}
                       </MenuItem>
                     ))}
@@ -531,7 +543,7 @@ export default function RegisterForm() {
                   InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
-                  style={{ width: '200px' }}
+                  fullWidth
                   id="phone"
                   label="Số Điện Thoại"
                   name="phone"

@@ -648,7 +648,11 @@ function MovingRegister() {
           helperText={error.provinceResidence === false ? '' : 'Bạn chưa chọn tỉnh/thành phố'}
         >
           {provinceResidences.map((provinceResidence) => (
-            <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={provinceResidence.code}
+              value={provinceResidence.code}
+            >
               {provinceResidence.name}
             </MenuItem>
           ))}
@@ -669,7 +673,11 @@ function MovingRegister() {
           helperText={error.districtResidence === false ? '' : 'Bạn chưa chọn quận/huyện'}
         >
           {districtResidences.map((districtResidence) => (
-            <MenuItem key={districtResidence.code} value={districtResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={districtResidence.code}
+              value={districtResidence.code}
+            >
               {districtResidence.name}
             </MenuItem>
           ))}
@@ -690,7 +698,11 @@ function MovingRegister() {
           helperText={error.wardResidence === false ? '' : 'Bạn chưa chọn phường/xã'}
         >
           {wardResidences.map((wardResidence) => (
-            <MenuItem key={wardResidence.code} value={wardResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={wardResidence.code}
+              value={wardResidence.code}
+            >
               {wardResidence.name}
             </MenuItem>
           ))}
@@ -734,7 +746,7 @@ function MovingRegister() {
           helperText={error.province === false ? '' : 'Bạn chưa chọn tỉnh/thành phố di chuyển'}
         >
           {provinces.map((province) => (
-            <MenuItem key={province.code} value={province.code}>
+            <MenuItem sx={{ fontSize: '1.4rem' }} key={province.code} value={province.code}>
               {province.name}
             </MenuItem>
           ))}
@@ -759,7 +771,7 @@ function MovingRegister() {
           helperText={error.district === false ? '' : 'Bạn chưa chọn quận/huyện di chuyển'}
         >
           {districts.map((district) => (
-            <MenuItem key={district.code} value={district.code}>
+            <MenuItem sx={{ fontSize: '1.4rem' }} key={district.code} value={district.code}>
               {district.name}
             </MenuItem>
           ))}
@@ -784,7 +796,7 @@ function MovingRegister() {
           helperText={error.ward === false ? '' : 'Bạn chưa chọn phường/xã di chuyển'}
         >
           {wards.map((ward) => (
-            <MenuItem key={ward.code} value={ward.code}>
+            <MenuItem sx={{ fontSize: '1.4rem' }} key={ward.code} value={ward.code}>
               {ward.name}
             </MenuItem>
           ))}
