@@ -473,6 +473,7 @@ function MovingRegister() {
       // Xóa trường id không cần thiết
 
       delete data.id
+
       const options = {
         method: 'POST',
         headers: {
@@ -491,6 +492,7 @@ function MovingRegister() {
           setShowNoti(true)
         })
         .catch((err) => {
+          // console.log('Lỗi' + err)
           setPayloadNoti({
             status: 'error',
             text: 'Đăng ký di chuyển thất bại. Hệ thống bị lỗi',

@@ -3,14 +3,11 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import axios from 'axios'
 import MenuItem from '@mui/material/MenuItem'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
-import { CssBaseline, Grid } from '@mui/material'
-import Paper from '@mui/material/Paper'
 import { useNavigate } from 'react-router-dom'
 
 const theme = createTheme()
@@ -195,7 +192,12 @@ export default function AdminPersonalInformation() {
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
             id="gender"
-            sx={{ '& .MuiTypography-root': { fontSize: '1.4rem' } }}
+            sx={{
+              '& .MuiTypography-root': { fontSize: '1.4rem' },
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '1.6rem',
+            }}
             name="Giới Tính"
             onChange={(e) =>
               setData((old: any) => {
@@ -203,7 +205,13 @@ export default function AdminPersonalInformation() {
               })
             }
           >
-            <FormControlLabel value="1" control={<Radio />} label="Nam" />
+            Giới tính:
+            <FormControlLabel
+              sx={{ marginLeft: '10px' }}
+              value="1"
+              control={<Radio />}
+              label="Nam"
+            />
             <FormControlLabel value="2" control={<Radio />} label="Nữ" />
             <FormControlLabel value="3" control={<Radio />} label="Khác" />
           </RadioGroup>
@@ -228,7 +236,11 @@ export default function AdminPersonalInformation() {
               onChange={handleChangeProvinceResidence}
             >
               {provinceResidences.map((provinceResidence) => (
-                <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
+                <MenuItem
+                  sx={{ fontSize: '1.4rem' }}
+                  key={provinceResidence.code}
+                  value={provinceResidence.code}
+                >
                   {provinceResidence.name}
                 </MenuItem>
               ))}
@@ -252,7 +264,11 @@ export default function AdminPersonalInformation() {
               onChange={handleChangeDistrictResidence}
             >
               {districtResidences.map((districtResidence) => (
-                <MenuItem key={districtResidence.code} value={districtResidence.code}>
+                <MenuItem
+                  sx={{ fontSize: '1.4rem' }}
+                  key={districtResidence.code}
+                  value={districtResidence.code}
+                >
                   {districtResidence.name}
                 </MenuItem>
               ))}
@@ -276,7 +292,11 @@ export default function AdminPersonalInformation() {
               onChange={handleChangeWardResidence}
             >
               {wardResidences.map((wardResidence) => (
-                <MenuItem key={wardResidence.code} value={wardResidence.code}>
+                <MenuItem
+                  sx={{ fontSize: '1.4rem' }}
+                  key={wardResidence.code}
+                  value={wardResidence.code}
+                >
                   {wardResidence.name}
                 </MenuItem>
               ))}

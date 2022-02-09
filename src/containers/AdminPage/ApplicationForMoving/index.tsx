@@ -13,6 +13,7 @@ import { Typography } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import { addressApi } from '../../../apis/addressApi'
+import Box from '@mui/material/Box'
 
 function ApplicationForMoving() {
   const { movingRegister, editMovingRegister } = useGlobalContext()
@@ -44,80 +45,86 @@ function ApplicationForMoving() {
   // console.log(dataAddress)
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem' } }}>
-            <TableCell>Tên nhân viên</TableCell>
-            <TableCell>Điểm đi</TableCell>
-            <TableCell>Điểm đến</TableCell>
-            <TableCell>Ngày đăng ký</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Phê duyệt</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {movingRegister.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{
-                '&:last-child td, &:last-child th': { border: 0 },
-                '& .MuiTableCell-root': { fontSize: '1.4rem' },
-              }}
-            >
-              <TableCell component="th" scope="row">
-                {row.fullName}
-              </TableCell>
-              <TableCell sx={{ color: `${row.status}` }}>
-                {row.wardName} - {row.districtName} - {row.provinceName}
-              </TableCell>
-              <TableCell sx={{ color: `${row.status}` }}>
-                {row.wardResidenceName} - {row.districtResidenceName} - {row.provinceResidenceName}
-              </TableCell>
-              <TableCell>{row.time}</TableCell>
-              <TableCell>{row.email}</TableCell>
-              <TableCell sx={{ minWidth: '220px' }}>
-                {row.status === 1 ? (
-                  <Typography sx={{ color: 'green', fontSize: '1.4rem', mb: '-4px' }}>
-                    <CheckIcon />
-                    Đã phê duyệt
-                  </Typography>
-                ) : row.status === 2 ? (
-                  <Typography sx={{ color: 'red', fontSize: '1.4rem' }}>
-                    <CloseIcon sx={{ fontSize: '2rem', px: '2', mb: '-4px' }} />
-                    Đã từ chối
-                  </Typography>
-                ) : (
-                  ''
-                )}
-                <Button
-                  variant="contained"
-                  color="success"
-                  size="small"
-                  sx={{
-                    mr: 1,
-                    display: `${row.status !== 0 ? 'none' : 'unset'}`,
-                    fontSize: '1.4rem',
-                  }}
-                  onClick={() => handleApprove(row.id, 1)}
-                >
-                  Phê duyệt
-                </Button>
-                <Button
-                  variant="contained"
-                  color="error"
-                  size="small"
-                  onClick={() => handleApprove(row.id, 2)}
-                  sx={{ display: `${row.status !== 0 ? 'none' : 'unset'}`, fontSize: '1.4rem' }}
-                >
-                  Từ chối
-                </Button>
-              </TableCell>
+    <Box>
+      <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+        <span style={{ fontSize: '1.6rem', fontWeight: 'bold' }}>Đơn xin di chuyển</span>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.4rem' } }}>
+              <TableCell>Tên nhân viên</TableCell>
+              <TableCell>Điểm đi</TableCell>
+              <TableCell>Điểm đến</TableCell>
+              <TableCell>Ngày đăng ký</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phê duyệt</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {movingRegister.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{
+                  '&:last-child td, &:last-child th': { border: 0 },
+                  '& .MuiTableCell-root': { fontSize: '1.4rem' },
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.fullName}
+                </TableCell>
+                <TableCell sx={{ color: `${row.status}` }}>
+                  {row.wardName} - {row.districtName} - {row.provinceName}
+                </TableCell>
+                <TableCell sx={{ color: `${row.status}` }}>
+                  {row.wardResidenceName} - {row.districtResidenceName} -{' '}
+                  {row.provinceResidenceName}
+                </TableCell>
+                <TableCell>{row.time}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell sx={{ minWidth: '220px' }}>
+                  {row.status === 1 ? (
+                    <Typography sx={{ color: 'green', fontSize: '1.4rem', mb: '-4px' }}>
+                      <CheckIcon />
+                      Đã phê duyệt
+                    </Typography>
+                  ) : row.status === 2 ? (
+                    <Typography sx={{ color: 'red', fontSize: '1.4rem' }}>
+                      <CloseIcon sx={{ fontSize: '2rem', px: '2', mb: '-4px' }} />
+                      Đã từ chối
+                    </Typography>
+                  ) : (
+                    ''
+                  )}
+                  <Button
+                    variant="contained"
+                    color="success"
+                    size="small"
+                    sx={{
+                      mr: 1,
+                      display: `${row.status !== 0 ? 'none' : 'unset'}`,
+                      fontSize: '1.4rem',
+                    }}
+                    onClick={() => handleApprove(row.id, 1)}
+                  >
+                    Phê duyệt
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="small"
+                    onClick={() => handleApprove(row.id, 2)}
+                    sx={{ display: `${row.status !== 0 ? 'none' : 'unset'}`, fontSize: '1.4rem' }}
+                  >
+                    Từ chối
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   )
 }
 

@@ -81,12 +81,14 @@ const AccountManagement = (props: dataAdmin) => {
                     key={row.id}
                     sx={{
                       height: '100%',
+                      borderBottom: '1px solid rgba(224, 224, 224, 1)',
                       '&:hover': {
                         backgroundColor: 'rgba(0, 0, 0, 0.05)',
                         transition: '0.2s ease-in-out',
                       },
                       '& .MuiTableCell-root': {
                         fontSize: '1.4rem !important',
+                        borderBottom: 'none',
                       },
                     }}
                   >
@@ -97,64 +99,75 @@ const AccountManagement = (props: dataAdmin) => {
                     <TableCell align="left">{row.fullName}</TableCell>
                     <TableCell align="left">{row.phone}</TableCell>
                     <TableCell align="left">{row.createdDate}</TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-evenly',
-                        '& button': {
-                          fontSize: '1.4rem',
-                        },
-                      }}
-                    >
-                      {props.name === 'Admin' && isLogin.toString() === '1' && (
-                        <>
-                          <Link
-                            to={`/admin/account-admin/${row.id}`}
-                            style={{ textDecoration: 'none' }}
+
+                    {props.name === 'Admin' && isLogin.toString() === '1' && (
+                      <TableCell
+                        align="left"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-evenly',
+                          '& button': {
+                            fontSize: '1.4rem',
+                          },
+                        }}
+                      >
+                        <Link
+                          to={`/admin/account-admin/${row.id}`}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            startIcon={<FileOpenIcon />}
                           >
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              size="small"
-                              startIcon={<FileOpenIcon />}
-                            >
-                              Xem
-                            </Button>
-                          </Link>
+                            Xem
+                          </Button>
+                        </Link>
+                        {row.id !== 1 && (
                           <ConfirmAdmin
                             id={row.id}
                             account="Admin"
                             title={`Bạn có chắc muốn xóa "${row.email}" không?`}
                             content={`Khi xác nhận thì toàn bộ thông tin tài khoản "${row.email}" bao gồm cả thông tin liên quan sẽ bị xóa!`}
                           />
-                        </>
-                      )}
-                      {props.name === 'User' && (
-                        <>
-                          <Link
-                            to={`/admin/account-user/${row.id}`}
-                            style={{ textDecoration: 'none' }}
+                        )}
+                      </TableCell>
+                    )}
+                    {props.name === 'User' && (
+                      <TableCell
+                        align="left"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-evenly',
+                          '& button': {
+                            fontSize: '1.4rem',
+                          },
+                        }}
+                      >
+                        <Link
+                          to={`/admin/account-user/${row.id}`}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            startIcon={<FileOpenIcon />}
                           >
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              size="small"
-                              startIcon={<FileOpenIcon />}
-                            >
-                              Xem
-                            </Button>
-                          </Link>
-                          <ConfirmAdmin
-                            id={row.id}
-                            account="User"
-                            title={`Bạn có chắc muốn xóa "${row.email}" không?`}
-                            content={`Khi xác nhận thì toàn bộ thông tin tài khoản "${row.email}" bao gồm cả thông tin liên quan sẽ bị xóa!`}
-                          />
-                        </>
-                      )}
-                    </TableCell>
+                            Xem
+                          </Button>
+                        </Link>
+                        <ConfirmAdmin
+                          id={row.id}
+                          account="User"
+                          title={`Bạn có chắc muốn xóa "${row.email}" không?`}
+                          content={`Khi xác nhận thì toàn bộ thông tin tài khoản "${row.email}" bao gồm cả thông tin liên quan sẽ bị xóa!`}
+                        />
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>

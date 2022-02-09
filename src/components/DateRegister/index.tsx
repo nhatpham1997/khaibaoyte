@@ -31,7 +31,7 @@ export default function DateRegister({ value, setValue, error, setError }: props
           }
           setValue(newValue)
         }}
-        InputProps={{ style: { fontSize: '1.2rem' } }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
         renderInput={(params) => (
           <TextField
             className="date"
@@ -41,7 +41,7 @@ export default function DateRegister({ value, setValue, error, setError }: props
               marginBottom: '1rem',
               marginTop: '1rem',
             }}
-            InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             required
             type="date"
             error={error?.date.val}

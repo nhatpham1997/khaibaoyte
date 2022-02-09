@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { createContext, ReactNode, useState, useContext } from 'react'
+import adminApi from '../apis/adminApi'
+// import { locationApi } from '../apis/covid'
+import movingDeclarationApi from '../apis/movingDeclaration'
+import movingRegisterApi from '../apis/movingRegister'
+import userApi from '../apis/userApi'
+import { createContext, ReactNode, useState, useEffect, useContext } from 'react'
 
 type Props = {
   children: ReactNode
@@ -98,6 +103,8 @@ type InitialStateContextType = {
   dataCovidLocations: (data: any) => void
   address: any[]
   dataAddress: (data: any) => void
+  dataCovid: any[]
+  setDataCovid: (data: any) => void
 }
 
 const initialStateContextValue: InitialStateContextType = {
@@ -118,6 +125,8 @@ const initialStateContextValue: InitialStateContextType = {
   dataCovidLocations: () => {},
   address: [],
   dataAddress: () => {},
+  dataCovid: [],
+  setDataCovid: () => {},
 }
 
 export const GlobalContext = createContext<InitialStateContextType>(initialStateContextValue)
@@ -131,6 +140,7 @@ export default function GlobalProvider({ children }: Props) {
   const [movingRegister, setMovingRegister] = useState<any>([])
   const [showConfirm, setShowConfirm] = useState(false)
   const [isLogin, setIsLogin] = useState('')
+  const [dataCovid, setDataCovid] = useState<any>([])
 
   const setLogin = (data: string) => {
     setIsLogin(data)
@@ -186,6 +196,8 @@ export default function GlobalProvider({ children }: Props) {
         dataCovidLocations,
         address,
         dataAddress,
+        dataCovid,
+        setDataCovid,
       }}
     >
       {children}
