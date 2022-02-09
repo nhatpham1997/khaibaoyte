@@ -1,16 +1,8 @@
-import { useEffect, useState } from 'react'
-import Avatar from '@mui/material/Avatar'
+import { useEffect, useRef, useState } from 'react'
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
-import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
@@ -18,7 +10,6 @@ import { MenuItem } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import Noti from 'components/Noti'
-import SendIcon from '@mui/icons-material/Send'
 
 const theme = createTheme()
 
@@ -39,6 +30,40 @@ export default function EditProfile() {
     phone: '',
     createdDate: date,
   })
+
+  // Lấy thông tin
+  const userAPI = 'https://dbkhaibaoyte.herokuapp.com/user'
+  const userId = localStorage.getItem('userId')
+
+  interface IUser {
+    id?: number
+    fullName?: string
+    yearOfBirth?: number
+    gender?: number
+    citizenIdentification?: string
+    email?: string
+    phone?: string
+    specificAddress?: string
+    province?: number
+    district?: number
+    ward?: number
+  }
+
+  const [currentUser, setCurrentUser] = useState<IUser>({})
+
+  useEffect(() => {
+    fetch(`${userAPI}/${userId}`)
+      .then((res) => res.json())
+      .then((user) => {
+        delete user.password
+        delete user.createdDate
+        delete user.createdAt
+        delete user.provinceName
+        setCurrentUser(user)
+      })
+  }, [])
+
+  const nameRef = useRef<HTMLDivElement>(null)
 
   const [dataUser, setDataUser] = useState<any>({})
 
@@ -271,6 +296,7 @@ export default function EditProfile() {
         fullWidth
         id="fullname"
         label="Họ và tên"
+        value={currentUser.fullName || ''}
         name="fullname"
         autoComplete="fullname"
         sx={{
@@ -293,6 +319,7 @@ export default function EditProfile() {
         label="Năm sinh"
         name="yearofbirth"
         autoComplete="yearofbirth"
+        value={currentUser.yearOfBirth || ''}
         sx={{
           marginBottom: '1rem',
           marginTop: '1rem',
@@ -335,7 +362,7 @@ export default function EditProfile() {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         id="gender"
-        style={{}}
+        value={currentUser.gender || ''}
         name="Giới Tính"
         onChange={(e) =>
           setData((old: any) => {
@@ -447,6 +474,7 @@ export default function EditProfile() {
         id="phone"
         label="Số Điện Thoại"
         name="phone"
+        value={currentUser.phone || ''}
         autoComplete="phone"
         sx={{
           marginBottom: '1rem',
