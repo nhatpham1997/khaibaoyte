@@ -64,6 +64,7 @@ input {
 }
 
 /* responsive */
+
 @media screen and (max-width: 1200px) {
   .wrap {
     margin-left: 0;
