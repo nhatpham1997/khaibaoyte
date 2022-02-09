@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const theme = createTheme()
@@ -26,10 +26,11 @@ export default function AdminPassword() {
   const [messPassConfirm, setMessPassConfirm] = useState('')
   const [validPassNew, setValidPassNew] = useState(false)
   const [messPassNew, setMessPassNew] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
-      const dataUsers = await axios.get('https://dbkhaibaoyte.herokuapp.com/user')
+      const dataUsers = await axios.get('https://dbkhaibaoyte.herokuapp.com/admin')
       setDataUser(dataUsers.data)
 
       setId(localStorage.getItem('adminId'))
@@ -47,7 +48,7 @@ export default function AdminPassword() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    const data: any = new FormData(event.currentTarget)
     // console.log({
     //   currentPassword: data.get('current_password'),
     //   passwordNew: data.get('password_new'),
@@ -64,31 +65,40 @@ export default function AdminPassword() {
 
       if (data.get('password_new') === data.get('current_password')) {
         setValidPassNew(true)
-        setMessPassNew('password error!')
+        setMessPassNew('mật khẩu mới không được trùng với mật khẩu cũ!')
       } else {
+        if (data.get('password_new').length < 6 && data.get('password_confirm').length < 6) {
+          setValidPassNew(true)
+          setMessPassNew('mật khẩu mới phải lớn hơn 5 kí tự')
+          setValidPassConfirm(true)
+          setMessPassConfirm(' mật khẩu mới phải lớn hơn 5 kí tự !')
+
+          return
+        }
         if (data.get('password_new') === data.get('password_confirm')) {
           setValidPassNew(false)
           setMessPassNew('')
           setValidPassConfirm(false)
           setMessPassConfirm('')
 
-          // console.log(response[0], data.get('password_new'))
           handleChangePassword(response[0], data.get('password_new'))
-          alert('successful!')
+
+          alert(' thay đổi mật khẩu thành công!')
+          navigate('/admin')
         } else {
           setValidPassConfirm(true)
-          setMessPassConfirm('Mat khau khong khop!')
+          setMessPassConfirm('Mật khẩu không trùng khớp!')
           setValidPassNew(false)
           setMessPassNew('')
         }
       }
     } else {
       setValidPassCurrent(true)
-      setMessPassCurrent('password current error!')
+      setMessPassCurrent('Mật khẩu hiện tại không đúng!')
       setValidPassNew(true)
-      setMessPassNew('MessPass Error!')
+      setMessPassNew('Mật khẩu hiện tại không đúng!')
       setValidPassConfirm(true)
-      setMessPassConfirm(' MessPassConfirm error!')
+      setMessPassConfirm('Mật khẩu hiện tại không đúng!')
     }
   }
 
@@ -122,7 +132,7 @@ export default function AdminPassword() {
             required
             fullWidth
             id="current_password"
-            label="Current Password"
+            label="Mật khẩu cũ"
             name="current_password"
             autoComplete="current_password"
             autoFocus
@@ -137,7 +147,7 @@ export default function AdminPassword() {
             required
             fullWidth
             name="password_new"
-            label="New Password"
+            label="Mật khẩu mới"
             type="password"
             id="password_new"
             autoComplete="password_new"
@@ -151,7 +161,7 @@ export default function AdminPassword() {
             required
             fullWidth
             name="password_confirm"
-            label="Confirm New Password"
+            label="Nhập lại mật khẩu mới"
             type="password"
             id="password_confirm"
             autoComplete="password_confirm"

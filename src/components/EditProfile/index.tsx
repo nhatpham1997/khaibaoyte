@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Box from '@mui/material/Box'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { MenuItem } from '@mui/material'
 import Radio from '@mui/material/Radio'
@@ -15,13 +15,14 @@ const theme = createTheme()
 
 export default function EditProfile() {
   const today = new Date()
+  const navigate = useNavigate()
   const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
 
   const [data, setData] = useState({
     fullName: '',
     yearOfBirth: '',
     citizenIdentification: '',
-    gender: Number,
+    gender: '',
     province: '',
     provinceName: '',
     district: '',
@@ -147,56 +148,25 @@ export default function EditProfile() {
   })
 
   const handleSubmit = () => {
-    axios
-      .put(`https://dbkhaibaoyte.herokuapp.com/user/${id}/`, { ...dataUser, ...data })
-      .then((res) => {
-        console.log('res', res)
-      })
-    if (!data.fullName) {
-      setError((prev) => {
-        return { ...prev, name: { val: true, code: 1 } }
-      })
-    }
-    if (!data.yearOfBirth) {
-      setError((prev) => {
-        return { ...prev, yearOfBirth: { val: true, code: 1 } }
-      })
-    }
-    if (!data.gender) {
-      setError((prev) => {
-        return { ...prev, gerder: true }
-      })
-    }
-    if (!data.phone) {
-      setError((prev) => {
-        return { ...prev, phone: { val: true, code: 1 } }
-      })
-    }
-    if (!data.province) {
-      setError((prev) => {
-        return { ...prev, provinceResidence: true }
-      })
-    }
-    if (!data.district) {
-      setError((prev) => {
-        return { ...prev, districtResidence: true }
-      })
-    }
-    if (!data.ward) {
-      setError((prev) => {
-        return { ...prev, wardResidence: true }
-      })
-    }
-    if (!data.specificAddress) {
-      setError((prev) => {
-        return { ...prev, specificAddressResidence: true }
-      })
-    }
-
-    if (!data.specificAddress) {
-      setError((prev) => {
-        return { ...prev, specificAddress: true }
-      })
+    if (
+      data.fullName !== '' &&
+      data.yearOfBirth !== '' &&
+      data.gender !== '' &&
+      data.phone !== '' &&
+      data.province !== '' &&
+      data.district !== '' &&
+      data.specificAddress !== '' &&
+      data.specificAddress !== '' &&
+      data.ward !== ''
+    ) {
+      axios
+        .put(`https://dbkhaibaoyte.herokuapp.com/user/${id}/`, { ...dataUser, ...data })
+        .then((res) => {
+          console.log('res', res)
+        })
+      navigate('/user')
+    } else {
+      alert('Vui lòng nhập đầy đủ thông tin!')
     }
   }
 
@@ -364,16 +334,49 @@ export default function EditProfile() {
         id="gender"
         value={currentUser.gender || ''}
         name="Giới Tính"
+        sx={{
+          '& .MuiTypography-root': { fontSize: '1.4rem' },
+          display: 'flex',
+          alignItems: 'center',
+          fontSize: '1.6rem',
+        }}
         onChange={(e) =>
           setData((old: any) => {
             return { ...old, gender: Number(e.target.value) }
           })
         }
       >
-        <FormControlLabel value="1" control={<Radio />} label="Nam" />
+        Giới tính:
+        <FormControlLabel sx={{ marginLeft: '10px' }} value="1" control={<Radio />} label="Nam" />
         <FormControlLabel value="2" control={<Radio />} label="Nữ" />
         <FormControlLabel value="3" control={<Radio />} label="Khác" />
       </RadioGroup>
+      <TextField
+        fullWidth
+        margin="normal"
+        required
+        id="phone"
+        label="Số Điện Thoại"
+        name="phone"
+        autoComplete="phone"
+        sx={{
+          marginBottom: '1rem',
+          marginTop: '1rem',
+          fontSize: '3rem',
+        }}
+        InputProps={{ style: { fontSize: '1.4rem' } }}
+        InputLabelProps={{ style: { fontSize: '1.4rem' } }}
+        autoFocus
+        onChange={handleChangePhone}
+        error={error.phone.val}
+        helperText={
+          error.phone.val === true && error.phone.code === 1
+            ? 'Bạn chưa nhập số điện thoại'
+            : error.phone.val === true && error.phone.code === 2
+            ? 'Số điện thoại không hợp lệ'
+            : ''
+        }
+      />
       <div className="row">
         <TextField
           id="province-residence"
@@ -384,8 +387,8 @@ export default function EditProfile() {
             minWidth: 'calc(calc(100%/4) - 1.5rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={data.province}
@@ -394,7 +397,11 @@ export default function EditProfile() {
           helperText={error.provinceResidence === false ? '' : 'Bạn chưa chọn tỉnh/thành phố'}
         >
           {provinceResidences.map((provinceResidence) => (
-            <MenuItem key={provinceResidence.code} value={provinceResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={provinceResidence.code}
+              value={provinceResidence.code}
+            >
               {provinceResidence.name}
             </MenuItem>
           ))}
@@ -408,8 +415,8 @@ export default function EditProfile() {
             minWidth: 'calc(calc(100%/4) - 1.5rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           value={data.district}
@@ -418,7 +425,11 @@ export default function EditProfile() {
           helperText={error.districtResidence === false ? '' : 'Bạn chưa chọn quận/huyện'}
         >
           {districtResidences.map((districtResidence) => (
-            <MenuItem key={districtResidence.code} value={districtResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={districtResidence.code}
+              value={districtResidence.code}
+            >
               {districtResidence.name}
             </MenuItem>
           ))}
@@ -432,8 +443,8 @@ export default function EditProfile() {
             minWidth: 'calc(calc(100%/4) - 1.5rem)',
           }}
           size="medium"
-          InputProps={{ style: { fontSize: '1.2rem' } }}
-          InputLabelProps={{ style: { fontSize: '1.2rem' } }}
+          InputProps={{ style: { fontSize: '1.4rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.4rem' } }}
           required
           select
           onChange={handleChangeWardResidence}
@@ -441,7 +452,11 @@ export default function EditProfile() {
           helperText={error.wardResidence === false ? '' : 'Bạn chưa chọn phường/xã'}
         >
           {wardResidences.map((wardResidence) => (
-            <MenuItem key={wardResidence.code} value={wardResidence.code}>
+            <MenuItem
+              sx={{ fontSize: '1.4rem' }}
+              key={wardResidence.code}
+              value={wardResidence.code}
+            >
               {wardResidence.name}
             </MenuItem>
           ))}
@@ -507,17 +522,10 @@ export default function EditProfile() {
           }}
           variant="contained"
         >
-          <NavLink
-            style={{
-              color: 'white',
-            }}
-            to="/user"
-          >
-            {' LƯU '}
-          </NavLink>
+          {' LƯU '}
         </Button>
       </div>
-      <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />/
+      <Noti payload={payloadNoti} showNoti={showNoti} setShowNoti={setShowNoti} />
     </Box>
   )
 }

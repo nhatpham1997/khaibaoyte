@@ -225,7 +225,12 @@ export default function RegisterAdmin() {
             }
           />
           <RadioGroup
-            sx={{ '& .MuiTypography-root': { fontSize: '1.4rem' } }}
+            sx={{
+              '& .MuiTypography-root': { fontSize: '1.4rem' },
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '1.6rem',
+            }}
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
             id="gender"
@@ -236,7 +241,13 @@ export default function RegisterAdmin() {
               })
             }
           >
-            <FormControlLabel value="1" control={<Radio />} label="Nam" />
+            Giới tính:
+            <FormControlLabel
+              sx={{ marginLeft: '10px' }}
+              value="1"
+              control={<Radio />}
+              label="Nam"
+            />
             <FormControlLabel value="2" control={<Radio />} label="Nữ" />
             <FormControlLabel value="3" control={<Radio />} label="Khác" />
           </RadioGroup>

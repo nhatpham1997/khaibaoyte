@@ -52,7 +52,7 @@ function ApplicationForMoving() {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem' } }}>
+            <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.4rem' } }}>
               <TableCell>Tên nhân viên</TableCell>
               <TableCell>Điểm đi</TableCell>
               <TableCell>Điểm đến</TableCell>

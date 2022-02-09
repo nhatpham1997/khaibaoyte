@@ -296,11 +296,13 @@ export default function RegisterForm() {
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              <Typography sx={{ fontSize: '2rem' }} component="h1" variant="h5">
                 Đăng ký tài khoản
               </Typography>
               <Box component="form" noValidate sx={{ mt: 1 }}>
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -320,6 +322,8 @@ export default function RegisterForm() {
                   }
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -343,6 +347,8 @@ export default function RegisterForm() {
                   }
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -356,6 +362,8 @@ export default function RegisterForm() {
                   helperText={error.name.val === false ? '' : 'Vui lòng nhập trường này'}
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -377,6 +385,8 @@ export default function RegisterForm() {
                   }
                 />
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -387,24 +397,49 @@ export default function RegisterForm() {
                   autoFocus
                   onChange={handleChangeCitizen}
                 />
+
                 <RadioGroup
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   id="gender"
                   name="Giới Tính"
+                  sx={{
+                    '& .MuiTypography-root': { fontSize: '1.4rem' },
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '1.6rem',
+                  }}
                   onChange={(e) =>
                     setData((old: any) => {
                       return { ...old, gender: Number(e.target.value) }
                     })
                   }
                 >
-                  <FormControlLabel value="1" control={<Radio />} label="Nam" />
-                  <FormControlLabel value="2" control={<Radio />} label="Nữ" />
-                  <FormControlLabel value="3" control={<Radio />} label="Khác" />
+                  Giới tính:
+                  <FormControlLabel
+                    sx={{ fontSize: '1.4rem', marginLeft: '10px' }}
+                    value="1"
+                    control={<Radio />}
+                    label="Nam"
+                  />
+                  <FormControlLabel
+                    sx={{ fontSize: '1.4rem' }}
+                    value="2"
+                    control={<Radio />}
+                    label="Nữ"
+                  />
+                  <FormControlLabel
+                    sx={{ fontSize: '1.4rem' }}
+                    value="3"
+                    control={<Radio />}
+                    label="Khác"
+                  />
                 </RadioGroup>
 
                 <div className="row">
                   <TextField
+                    InputProps={{ style: { fontSize: '1.4rem' } }}
+                    InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                     id="province-residence"
                     label="Tỉnh/Thành phố"
                     sx={{
@@ -413,8 +448,6 @@ export default function RegisterForm() {
                       minWidth: 'calc(calc(100%/4) - 1.5rem)',
                     }}
                     size="medium"
-                    InputProps={{ style: { fontSize: '1.2rem' } }}
-                    InputLabelProps={{ style: { fontSize: '1.2rem' } }}
                     required
                     select
                     value={data.province}
@@ -431,6 +464,8 @@ export default function RegisterForm() {
                     ))}
                   </TextField>
                   <TextField
+                    InputProps={{ style: { fontSize: '1.4rem' } }}
+                    InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                     id="district-residence"
                     label="Quận/Huyện"
                     sx={{
@@ -439,8 +474,6 @@ export default function RegisterForm() {
                       minWidth: 'calc(calc(100%/4) - 1.5rem)',
                     }}
                     size="medium"
-                    InputProps={{ style: { fontSize: '1.2rem' } }}
-                    InputLabelProps={{ style: { fontSize: '1.2rem' } }}
                     required
                     select
                     value={data.district}
@@ -455,6 +488,8 @@ export default function RegisterForm() {
                     ))}
                   </TextField>
                   <TextField
+                    InputProps={{ style: { fontSize: '1.4rem' } }}
+                    InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                     id="ward-residence"
                     label="Phường/Xã"
                     sx={{
@@ -463,8 +498,6 @@ export default function RegisterForm() {
                       minWidth: 'calc(calc(100%/4) - 1.5rem)',
                     }}
                     size="medium"
-                    InputProps={{ style: { fontSize: '1.2rem' } }}
-                    InputLabelProps={{ style: { fontSize: '1.2rem' } }}
                     required
                     select
                     onChange={handleChangeWardResidence}
@@ -479,6 +512,8 @@ export default function RegisterForm() {
                   </TextField>
                 </div>
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
@@ -495,6 +530,8 @@ export default function RegisterForm() {
                 />
 
                 <TextField
+                  InputProps={{ style: { fontSize: '1.4rem' } }}
+                  InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   style={{ width: '200px' }}
@@ -514,12 +551,19 @@ export default function RegisterForm() {
                   }
                 />
 
-                <Button onClick={handleSubmit} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                <Button
+                  onClick={handleSubmit}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, fontSize: '1.4rem' }}
+                >
                   Đăng ký
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <NavLink to="/">{' Bạn đã có tài khoản? Đăng nhập '}</NavLink>
+                    <NavLink style={{ fontSize: '1.4rem' }} to="/">
+                      {' Bạn đã có tài khoản? Đăng nhập '}
+                    </NavLink>
                   </Grid>
                 </Grid>
               </Box>

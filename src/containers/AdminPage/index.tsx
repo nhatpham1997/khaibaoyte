@@ -22,7 +22,7 @@ const boxContainer = {
 }
 
 const HomePage = () => {
-  const { users, admins, movingRegister } = React.useContext(GlobalContext)
+  const { users, admins, movingRegister, movingDeclaration } = React.useContext(GlobalContext)
   const data = [
     {
       title: 'Quản trị viên',
@@ -40,7 +40,7 @@ const HomePage = () => {
     },
     {
       title: 'Vùng dịch',
-      total: '6',
+      total: movingDeclaration.length,
       path: '/admin/epidemic-area',
       icon: <CoronavirusIcon fontSize={'large'} />,
       color: '#de2668',

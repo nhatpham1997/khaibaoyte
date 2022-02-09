@@ -135,7 +135,7 @@ function EpidemicArea() {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.6rem' } }}>
+            <TableRow sx={{ '& .MuiTableCell-root': { fontSize: '1.4rem' } }}>
               <TableCell align="left" sx={{ minWidth: '150px' }}>
                 Tên nhân viên
               </TableCell>
@@ -155,7 +155,7 @@ function EpidemicArea() {
                   key={item.id}
                   sx={{
                     '&:last-child td, &:last-child th': { border: 0 },
-                    '& .MuiTableCell-root': { fontSize: '1.6rem' },
+                    '& .MuiTableCell-root': { fontSize: '1.4rem' },
                   }}
                 >
                   <TableCell component="th" scope="row">
@@ -195,8 +195,8 @@ function EpidemicArea() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 ActionsComponent={TablePaginationActions}
                 sx={{
-                  fontSize: '1.6rem',
-                  '& p': { fontSize: '1.6rem' },
+                  fontSize: '1.4rem',
+                  '& p': { fontSize: '1.4rem' },
                   '& .MuiSvgIcon-root': { fontSize: '2rem' },
                 }}
               />
