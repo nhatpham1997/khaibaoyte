@@ -121,8 +121,8 @@ export default function ForgotPassword() {
           sx={{ mt: 1, maxWidth: { xs: '100%', lg: '60%' } }}
         >
           <TextField
-            inputProps={{ style: { fontSize: '14px' } }}
-            InputLabelProps={{ style: { fontSize: '14px' } }}
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassCurrent}
             error={validPassCurrent}
             margin="normal"
@@ -136,8 +136,8 @@ export default function ForgotPassword() {
             type="password"
           />
           <TextField
-            inputProps={{ style: { fontSize: '14px' } }}
-            InputLabelProps={{ style: { fontSize: '14px' } }}
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassNew}
             error={validPassNew}
             margin="normal"
@@ -150,8 +150,8 @@ export default function ForgotPassword() {
             autoComplete="password_new"
           />
           <TextField
-            inputProps={{ style: { fontSize: '14px' } }}
-            InputLabelProps={{ style: { fontSize: '14px' } }}
+            InputProps={{ style: { fontSize: '1.4rem' } }}
+            InputLabelProps={{ style: { fontSize: '1.4rem' } }}
             helperText={messPassConfirm}
             error={validPassConfirm}
             margin="normal"

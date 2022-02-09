@@ -98,8 +98,8 @@ export default function LoginAdmin() {
               }}
             >
               <TextField
-                inputProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }} // font size of input text
-                InputLabelProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }}
+                InputProps={{ style: { fontSize: '1.4rem' } }}
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                 error={validEmail}
                 margin="normal"
                 required
@@ -112,15 +112,15 @@ export default function LoginAdmin() {
                 helperText={messEmail}
               />
               <TextField
-                inputProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }} // font size of input text
-                InputLabelProps={{ style: { fontSize: '1.4rem', lineHeight: '1.4rem' } }}
+                InputProps={{ style: { fontSize: '1.4rem' } }}
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                 helperText={messPass}
                 error={validPass}
                 margin="normal"
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Mật khẩu"
                 type="password"
                 id="password"
                 autoComplete="current-password"

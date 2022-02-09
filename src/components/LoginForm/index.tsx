@@ -95,7 +95,7 @@ export default function LoginForm() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5" sx={{ fontSize: '20px' }}>
-              Sign in
+              Đăng nhập
             </Typography>
             <Box
               className="body"
@@ -105,29 +105,29 @@ export default function LoginForm() {
               sx={{ mt: 1 }}
             >
               <TextField
-                inputProps={{ style: { fontSize: '14px' } }}
-                InputLabelProps={{ style: { fontSize: '14px' } }}
+                InputProps={{ style: { fontSize: '1.4rem' } }}
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                 error={validEmail}
                 margin="normal"
                 required
                 fullWidth
                 id="email"
-                label="nhập địa chỉ email"
+                label="Nhập địa chỉ email"
                 name="email"
                 autoComplete="email"
                 autoFocus
                 helperText={messEmail}
               />
               <TextField
-                inputProps={{ style: { fontSize: '14px' } }}
-                InputLabelProps={{ style: { fontSize: '14px' } }}
+                InputProps={{ style: { fontSize: '1.4rem' } }}
+                InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                 helperText={messPass}
                 error={validPass}
                 margin="normal"
                 required
                 fullWidth
                 name="password"
-                label="nhập mật khẩu"
+                label="Nhập mật khẩu"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -144,7 +144,7 @@ export default function LoginForm() {
               <Grid container>
                 <Grid item>
                   <Link className="register" to="/register">
-                    {' Bạn chưa có tài khoản? Đăng Kí '}
+                    {' Bạn chưa có tài khoản? Đăng ký '}
                   </Link>
                 </Grid>
               </Grid>

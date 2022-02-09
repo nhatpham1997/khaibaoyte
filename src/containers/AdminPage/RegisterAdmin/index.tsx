@@ -146,7 +146,7 @@ export default function RegisterAdmin() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoFocus
             autoComplete="email"
@@ -164,7 +164,7 @@ export default function RegisterAdmin() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Mật khẩu"
             type="password"
             id="password"
             autoComplete="current-password"

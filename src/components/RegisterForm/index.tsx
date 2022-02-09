@@ -301,16 +301,16 @@ export default function RegisterForm() {
               </Typography>
               <Box component="form" noValidate sx={{ mt: 1 }}>
                 <TextField
+                  autoFocus
                   InputProps={{ style: { fontSize: '1.4rem' } }}
                   InputLabelProps={{ style: { fontSize: '1.4rem' } }}
                   margin="normal"
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
-                  autoFocus
                   onChange={handleChangeEmail}
                   error={error.email.val}
                   helperText={
@@ -328,7 +328,7 @@ export default function RegisterForm() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Mật khẩu"
                   type="password"
                   id="password"
                   autoComplete="current-password"
@@ -356,7 +356,6 @@ export default function RegisterForm() {
                   label="Họ và tên"
                   name="fullname"
                   autoComplete="fullname"
-                  autoFocus
                   onChange={handleChangeName}
                   error={error.name.val}
                   helperText={error.name.val === false ? '' : 'Vui lòng nhập trường này'}
@@ -394,7 +393,6 @@ export default function RegisterForm() {
                   label="CMND/CCCD"
                   name="citizen_identification"
                   autoComplete="citizen_identification"
-                  autoFocus
                   onChange={handleChangeCitizen}
                 />
 
@@ -521,7 +519,6 @@ export default function RegisterForm() {
                   label="Số nhà, phố, tổ dân phố/thôn/đội"
                   name="specificAddress"
                   autoComplete="specificAddress"
-                  autoFocus
                   onChange={handleChangeSpecificAddressResidence}
                   error={error.specificAddressResidence}
                   helperText={
@@ -539,7 +536,6 @@ export default function RegisterForm() {
                   label="Số Điện Thoại"
                   name="phone"
                   autoComplete="phone"
-                  autoFocus
                   onChange={handleChangePhone}
                   error={error.phone.val}
                   helperText={
